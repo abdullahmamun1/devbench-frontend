@@ -21,7 +21,7 @@ let refreshing: Promise<boolean> | null = null;
 
 function refreshSession(): Promise<boolean> {
   if (!refreshing) {
-    refreshing = baseFetch("/auth/refresh-token", { method: "POST" })
+    refreshing = baseFetch("/auth/refresh-token", { method: "POST", body: {} })
       .then(() => true)
       .catch(() => false)
       .finally(() => {

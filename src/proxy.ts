@@ -48,6 +48,9 @@ export function proxy(req: NextRequest) {
   const rule = GUARDED.find(([prefix]) => pathname.startsWith(prefix));
   if (!rule) return NextResponse.next();
 
+  // no access token, but a refresh cookie: let the client refresh
+  if (!role && hasRefresh) return NextResponse.next();
+
   if (!signedIn || !role) {
     const url = new URL("/login", req.url);
     url.searchParams.set("redirect", pathname);
