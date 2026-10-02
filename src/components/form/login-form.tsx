@@ -1,9 +1,7 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -15,9 +13,9 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useLogin } from "@/hooks";
 import { loginSchema } from "@/validation/auth.validation";
+import PasswordInput from "./password-input";
 
 export default function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false);
   const { mutate: login, isPending } = useLogin();
 
   const form = useForm({
@@ -73,34 +71,16 @@ export default function LoginForm() {
                     Forgot password?
                   </Link>
                 </div>
-                <div className="relative">
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
-                    autoComplete="current-password"
-                    className="pr-10"
-                    value={field.state.value}
-                    onChange={(e) => field.handleChange(e.target.value)}
-                    onBlur={field.handleBlur}
-                    aria-invalid={isInvalid}
-                  />
-                  <button
-                    type="button"
-                    aria-label={
-                      showPassword ? "Hide password" : "Show password"
-                    }
-                    className="absolute top-1/2 right-3 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                    onClick={() => setShowPassword((prev) => !prev)}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="size-4" />
-                    ) : (
-                      <Eye className="size-4" />
-                    )}
-                  </button>
-                </div>
+                <PasswordInput
+                  id={field.name}
+                  name={field.name}
+                  placeholder="Enter your password"
+                  autoComplete="current-password"
+                  value={field.state.value}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  onBlur={field.handleBlur}
+                  aria-invalid={isInvalid}
+                />
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
             );
