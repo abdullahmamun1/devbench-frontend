@@ -27,12 +27,12 @@ export default function RegisterForm() {
 
   const form = useForm({
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: "Abdullah",
+      email: "mamun111@gmail.com",
+      password: "Aa@12345",
+      confirmPassword: "Aa@12345",
       role: "CANDIDATE" as RegisterRole,
-      companyName: "",
+      companyName: "Omuk",
     },
     validators: { onChange: registerSchema },
     onSubmit: ({ value }) => {
