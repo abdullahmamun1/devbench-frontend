@@ -16,8 +16,8 @@ import { useRegister } from "@/hooks";
 import { cn } from "@/lib/utils";
 import type { RegisterRole } from "@/types";
 import { registerSchema } from "@/validation/auth.validation";
-import PasswordInput from "./password-input";
 import GoogleAuthButton from "../modules/auth/google-auth-button";
+import PasswordInput from "./password-input";
 
 const ROLE_OPTIONS = [
   { value: "CANDIDATE", label: "Candidate", icon: UserRound },

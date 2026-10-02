@@ -1,12 +1,17 @@
+import { History, LayoutDashboard, Mail, User } from "lucide-react";
 import type { SidebarGroup } from "@/types";
+
 export const candidateRoutes: SidebarGroup[] = [
   {
-    title: "Platform",
+    title: "Assessments",
     items: [
-      { title: "Overview", url: "/candidate" },
-      { title: "Invitations", url: "/candidate/invitations" },
-      { title: "Attempts", url: "/candidate/attempts" },
-      { title: "Profile", url: "/candidate/profile" },
+      { title: "Overview", url: "/candidate", icon: LayoutDashboard },
+      { title: "Invitations", url: "/candidate/invitations", icon: Mail },
+      { title: "My Attempts", url: "/candidate/attempts", icon: History },
     ],
+  },
+  {
+    title: "Account",
+    items: [{ title: "Profile", url: "/candidate/profile", icon: User }],
   },
 ];

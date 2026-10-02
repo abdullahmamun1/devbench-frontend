@@ -13,3 +13,11 @@ export const ROLE_HOME: Record<UserRole, string> = {
   EVALUATOR: "/company",
   CANDIDATE: "/candidate",
 };
+
+export const ROLE_LABELS: Record<UserRole, string> = {
+  ADMIN: "Admin",
+  COMPANY_OWNER: "Company Owner",
+  ASSESSMENT_CREATOR: "Assessment Creator",
+  EVALUATOR: "Evaluator",
+  CANDIDATE: "Candidate",
+};
