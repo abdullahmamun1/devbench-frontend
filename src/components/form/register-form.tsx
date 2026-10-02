@@ -8,6 +8,7 @@ import {
   FieldError,
   FieldGroup,
   FieldLabel,
+  FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
@@ -16,6 +17,7 @@ import { cn } from "@/lib/utils";
 import type { RegisterRole } from "@/types";
 import { registerSchema } from "@/validation/auth.validation";
 import PasswordInput from "./password-input";
+import GoogleAuthButton from "../modules/auth/google-auth-button";
 
 const ROLE_OPTIONS = [
   { value: "CANDIDATE", label: "Candidate", icon: UserRound },
@@ -253,6 +255,35 @@ export default function RegisterForm() {
             "Create account"
           )}
         </Button>
+        <FieldSeparator>OR</FieldSeparator>
+
+        <form.Subscribe
+          selector={(state) => ({
+            role: state.values.role,
+            companyName: state.values.companyName,
+          })}
+        >
+          {({ role, companyName }) => {
+            const needsCompanyName =
+              role === "COMPANY_OWNER" && companyName.trim().length < 2;
+
+            return (
+              <div className="space-y-2">
+                <GoogleAuthButton
+                  text="signup_with"
+                  role={role}
+                  companyName={companyName}
+                  disabled={needsCompanyName}
+                />
+                {needsCompanyName && (
+                  <p className="text-center text-xs text-muted-foreground">
+                    Enter your company name to sign up with Google
+                  </p>
+                )}
+              </div>
+            );
+          }}
+        </form.Subscribe>
       </FieldGroup>
     </form>
   );

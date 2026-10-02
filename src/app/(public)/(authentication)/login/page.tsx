@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import LoginForm from "@/components/form/login-form";
 import DemoLogin from "@/components/modules/auth/demo-login";
 import { FieldSeparator } from "@/components/ui/field";
+import GoogleAuthButton from "@/components/modules/auth/google-auth-button";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -23,6 +24,7 @@ export default function LoginPage() {
       <Suspense fallback={null}>
         <LoginForm />
         <FieldSeparator>OR</FieldSeparator>
+        <GoogleAuthButton text="signin_with" />
         <DemoLogin />
       </Suspense>
 
