@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import {
   forgotPassword,
   getMe,
+  googleLogin,
   resetPassword,
   userLogin,
   userLogout,
@@ -16,6 +17,7 @@ import {
 import { ROLE_HOME } from "@/constants/roles";
 import type {
   ApiResponse,
+  GoogleLoginPayload,
   LoginPayload,
   User,
   VerifyEmailPayload,
@@ -74,6 +76,22 @@ export function useLogin() {
         );
       }
     },
+  });
+}
+
+export function useGoogleOAuth() {
+  const completeSignIn = useCompleteSignIn();
+
+  return useMutation({
+    mutationFn: async (payload: GoogleLoginPayload) => {
+      await googleLogin(payload);
+      return getMe();
+    },
+    onSuccess: completeSignIn,
+    onError: (error) =>
+      toast.error(
+        getErrorMessage(error, "Google sign-in failed. Please try again."),
+      ),
   });
 }
 

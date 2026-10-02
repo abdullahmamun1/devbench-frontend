@@ -2,6 +2,7 @@ import apiClient from "@/lib/apiClient";
 import type {
   ApiResponse,
   ForgotPasswordPayload,
+  GoogleLoginPayload,
   LoginPayload,
   LoginResult,
   RegisterPayload,
@@ -12,6 +13,9 @@ import type {
 
 export const userLogin = (body: LoginPayload) =>
   apiClient<ApiResponse<LoginResult>>("/auth/login", { method: "POST", body });
+
+export const googleLogin = (body: GoogleLoginPayload) =>
+  apiClient<ApiResponse<LoginResult>>("/auth/google", { method: "POST", body });
 
 export const userRegister = (body: RegisterPayload) =>
   apiClient<ApiResponse<unknown>>("/auth/register", { method: "POST", body });

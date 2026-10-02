@@ -7,6 +7,12 @@ export interface LoginPayload {
   password: string;
 }
 
+export interface GoogleLoginPayload {
+  idToken: string;
+  role?: RegisterRole;
+  companyName?: string;
+}
+
 export interface LoginResult {
   accessToken: string;
   refreshToken: string;
