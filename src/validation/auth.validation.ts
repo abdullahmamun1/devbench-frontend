@@ -35,8 +35,7 @@ export const registerSchema = z
     role: z.enum(["CANDIDATE", "COMPANY_OWNER"]),
     companyName: z
       .string()
-      .max(100, "Company name should contain maximum 100 characters")
-      .optional(),
+      .max(100, "Company name should contain maximum 100 characters"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
