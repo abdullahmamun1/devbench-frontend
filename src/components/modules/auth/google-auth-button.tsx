@@ -35,7 +35,7 @@ export default function GoogleAuthButton({
     >
       <GoogleLogin
         theme="outline"
-        shape="rectangular"
+        shape="pill"
         text={text}
         width="320"
         onSuccess={({ credential }) => {
