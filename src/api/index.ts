@@ -6,3 +6,4 @@ export * from "./contact.api";
 export * from "./contact.api";
 export * from "./evaluation.api";
 export * from "./problem.api";
+export * from "./user.api";

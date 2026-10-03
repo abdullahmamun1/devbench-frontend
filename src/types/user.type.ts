@@ -19,3 +19,7 @@ export interface User {
   candidateProfile: unknown | null; // replace with a real type on Day 6
   company: { id: string; companyName: string; creditBalance: number } | null;
 }
+
+export interface UpdateProfilePayload {
+  name: string;
+}

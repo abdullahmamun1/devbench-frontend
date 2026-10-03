@@ -1,5 +1,6 @@
 import apiClient from "@/lib/apiClient";
 import type {
+  AcceptTeamPayload,
   ApiResponse,
   Company,
   CreditsResult,
@@ -25,3 +26,9 @@ export const inviteTeamMember = (body: InviteTeamPayload) =>
     method: "POST",
     body,
   });
+
+export const acceptTeamInvitation = (token: string, body?: AcceptTeamPayload) =>
+  apiClient<ApiResponse<unknown>>(
+    `/companies/team/accept/${encodeURIComponent(token)}`,
+    { method: "POST", body: body ?? {} },
+  );

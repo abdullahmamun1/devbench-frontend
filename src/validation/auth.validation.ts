@@ -5,7 +5,7 @@ const email = z.email("Email must be a proper email");
 const otp = z.string().length(6, "Enter the 6-digit code");
 
 // Strong password rules, used wherever a password is created or changed.
-const strongPassword = z
+export const strongPassword = z
   .string()
   .min(8, "Password should contain at least 8 characters")
   .max(100, "Password should contain maximum 100 characters")

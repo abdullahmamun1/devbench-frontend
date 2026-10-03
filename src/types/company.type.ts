@@ -55,3 +55,8 @@ export interface InviteTeamPayload {
   email: string;
   role: TeamRole;
 }
+
+export interface AcceptTeamPayload {
+  name: string;
+  password: string;
+}
