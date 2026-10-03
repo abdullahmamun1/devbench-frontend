@@ -1,5 +1,6 @@
 import AudienceSplit from "@/components/modules/marketing/audience-split";
 import CtaSection from "@/components/modules/marketing/cta-section";
+import FaqTeaser from "@/components/modules/marketing/faq-teaser";
 import FeatureCard from "@/components/modules/marketing/feature-card";
 import HomeHero from "@/components/modules/marketing/home-hero";
 import HowItWorks from "@/components/modules/marketing/how-it-works";
@@ -36,6 +37,7 @@ export default function HomePage() {
 
       <AudienceSplit />
       <PricingTeaser />
+      <FaqTeaser />
       <CtaSection />
     </>
   );

@@ -1,7 +1,7 @@
 import { Building2, UserRound } from "lucide-react";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 const AUDIENCES = [
   {

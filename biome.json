@@ -35,6 +35,9 @@
       },
       "suspicious": {
         "noArrayIndexKey": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       }
     },
     "domains": {

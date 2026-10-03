@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Outfit, Raleway } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/constants/site";
 import { cn } from "@/lib/utils";
 import Providers from "@/providers";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/constants/site";
 
 const ralewayHeading = Raleway({
   subsets: ["latin"],
