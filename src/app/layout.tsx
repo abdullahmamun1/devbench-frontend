@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { cn } from "@/lib/utils";
 import Providers from "@/providers";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/constants/site";
 
 const ralewayHeading = Raleway({
   subsets: ["latin"],
@@ -23,10 +24,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: { default: "DevBench", template: "%s | DevBench" },
-  description: "Developer assessment and coding platform for hiring teams.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} | Developer assessment platform`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} | Developer assessment platform`,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/images/home-hero.jpg",
+        width: 1400,
+        height: 1000,
+        alt: "DevBench",
+      },
+    ],
+  },
+  twitter: { card: "summary_large_image" },
 };
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
