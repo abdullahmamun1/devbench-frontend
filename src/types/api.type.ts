@@ -11,3 +11,5 @@ export interface ApiResponse<T> {
   data: T;
   meta?: ApiMeta;
 }
+
+export type ListQuery = Record<string, string | number | undefined>;
