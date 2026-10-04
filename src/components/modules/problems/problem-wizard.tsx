@@ -244,7 +244,6 @@ export function ProblemWizard({
                           )}
 
                         {arr.state.value.map((_, i) => (
-                          // biome-ignore lint/suspicious/noArrayIndexKey: array field rows have no stable id
                           <div
                             key={i}
                             className="space-y-3 rounded-lg border p-4"
@@ -383,7 +382,6 @@ export function ProblemWizard({
                         )}
 
                         {arr.state.value.map((_, i) => (
-                          // biome-ignore lint/suspicious/noArrayIndexKey: array field rows have no stable id
                           <div key={i} className="flex items-start gap-3">
                             <form.Field name={`mcqOptions[${i}].isCorrect`}>
                               {(f) => (

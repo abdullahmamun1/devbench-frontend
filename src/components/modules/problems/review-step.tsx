@@ -21,7 +21,6 @@ export function ReviewStep({ values }: { values: ProblemFormValues }) {
           </h4>
           <ul className="space-y-2">
             {values.testCases.map((tc, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: static review list
               <li key={i} className="rounded-lg border p-3 text-sm">
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <span>Case {i + 1}</span>
@@ -45,7 +44,6 @@ export function ReviewStep({ values }: { values: ProblemFormValues }) {
           <h4 className="text-sm font-medium">Options</h4>
           <ul className="space-y-1.5">
             {values.mcqOptions.map((o, i) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: static review list
               <li key={i} className="flex items-center gap-2 text-sm">
                 <span
                   className={

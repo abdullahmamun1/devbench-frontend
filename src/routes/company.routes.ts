@@ -18,13 +18,13 @@ export const companyRoutes: SidebarGroup[] = [
         title: "Problems",
         url: "/company/problems",
         icon: Code2,
-        roles: ["COMPANY_OWNER", "ASSESSMENT_CREATOR"],
+        roles: ["COMPANY_OWNER", "ASSESSMENT_CREATOR", "EVALUATOR"],
       },
       {
         title: "Assessments",
         url: "/company/assessments",
         icon: ClipboardList,
-        roles: ["COMPANY_OWNER", "ASSESSMENT_CREATOR"],
+        roles: ["COMPANY_OWNER", "ASSESSMENT_CREATOR", "EVALUATOR"],
       },
       {
         title: "Evaluations",
