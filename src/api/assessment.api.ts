@@ -1,5 +1,55 @@
 import apiClient from "@/lib/apiClient";
-import type { ApiResponse, Assessment, ListQuery } from "@/types";
+import type {
+  ApiResponse,
+  Assessment,
+  AssessmentProblem,
+  AttachProblemPayload,
+  CreateAssessmentPayload,
+  ListQuery,
+  UpdateAssessmentPayload,
+} from "@/types";
 
 export const getAssessments = (query?: ListQuery) =>
   apiClient<ApiResponse<Assessment[]>>("/assessments", { query });
+
+export const getAssessment = (id: string) =>
+  apiClient<ApiResponse<Assessment>>(`/assessments/${id}`);
+
+export const createAssessment = (payload: CreateAssessmentPayload) =>
+  apiClient<ApiResponse<Assessment>>("/assessments", {
+    method: "POST",
+    body: payload,
+  });
+
+export const updateAssessment = (
+  id: string,
+  payload: UpdateAssessmentPayload,
+) =>
+  apiClient<ApiResponse<Assessment>>(`/assessments/${id}`, {
+    method: "PATCH",
+    body: payload,
+  });
+
+export const deleteAssessment = (id: string) =>
+  apiClient<ApiResponse<null>>(`/assessments/${id}`, { method: "DELETE" });
+
+export const attachProblem = (id: string, payload: AttachProblemPayload) =>
+  apiClient<ApiResponse<AssessmentProblem>>(`/assessments/${id}/problems`, {
+    method: "POST",
+    body: payload,
+  });
+
+export const detachProblem = (id: string, problemId: string) =>
+  apiClient<ApiResponse<null>>(`/assessments/${id}/problems/${problemId}`, {
+    method: "DELETE",
+  });
+
+export const publishAssessment = (id: string) =>
+  apiClient<ApiResponse<Assessment>>(`/assessments/${id}/publish`, {
+    method: "POST",
+  });
+
+export const closeAssessment = (id: string) =>
+  apiClient<ApiResponse<Assessment>>(`/assessments/${id}/close`, {
+    method: "POST",
+  });
