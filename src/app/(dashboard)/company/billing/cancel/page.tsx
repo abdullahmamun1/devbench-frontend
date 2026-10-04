@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import { XCircle } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import PaymentResultCard from "@/components/modules/billing/payment-result-card";
 import { Button } from "@/components/ui/button";

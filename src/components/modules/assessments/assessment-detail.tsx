@@ -17,6 +17,7 @@ import {
 import { AssessmentProblems } from "./assessment-problems";
 import { AssessmentSettings } from "./assessment-settings";
 import { InvitationsTab } from "./invitations-tab";
+import { ResultsTab } from "./results-tab";
 
 export function AssessmentDetail({ id }: { id: string }) {
   const { get, set } = useUrlState();
@@ -54,12 +55,13 @@ export function AssessmentDetail({ id }: { id: string }) {
     );
   }
 
-  const TABS = ["problems", "invitations", "settings"] as const;
+  const ALL_TABS = ["problems", "invitations", "results", "settings"] as const;
+  const READ_ONLY_TABS = ["problems", "results"] as const;
   const canEdit = role !== "EVALUATOR";
   const problemCount = assessment.assessmentProblems?.length ?? 0;
+  const allowed: readonly string[] = canEdit ? ALL_TABS : READ_ONLY_TABS;
   const requested = get("tab");
-  const tab =
-    canEdit && TABS.some((t) => t === requested) ? requested : "problems";
+  const tab = allowed.includes(requested) ? requested : "problems";
 
   return (
     <div className="space-y-6">
@@ -112,6 +114,7 @@ export function AssessmentDetail({ id }: { id: string }) {
           {canEdit && (
             <TabsTrigger value="invitations">Invitations</TabsTrigger>
           )}
+          <TabsTrigger value="results">Results</TabsTrigger>
           {canEdit && <TabsTrigger value="settings">Settings</TabsTrigger>}
         </TabsList>
         <TabsContent value="problems" className="pt-4">
@@ -122,6 +125,9 @@ export function AssessmentDetail({ id }: { id: string }) {
             <InvitationsTab assessment={assessment} />
           </TabsContent>
         )}
+        <TabsContent value="results" className="pt-4">
+          <ResultsTab assessmentId={assessment.id} />
+        </TabsContent>
         {canEdit && (
           <TabsContent value="settings" className="pt-4">
             <AssessmentSettings assessment={assessment} />
