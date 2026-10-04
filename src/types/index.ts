@@ -4,6 +4,8 @@ export * from "./auth.type";
 export * from "./company.type";
 export * from "./contact.type";
 export * from "./evaluation.type";
+export * from "./invitation.type";
+export * from "./payment.type";
 export * from "./problem.type";
 export * from "./sidebar.type";
 export * from "./user.type";

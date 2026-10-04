@@ -4,6 +4,7 @@ import type {
   ApiResponse,
   Assessment,
   AssessmentProblem,
+  AssessmentResults,
   AttachProblemPayload,
   CreateAssessmentPayload,
   UpdateAssessmentPayload,
@@ -53,3 +54,6 @@ export const closeAssessment = (id: string) =>
   apiClient<ApiResponse<Assessment>>(`/assessments/${id}/close`, {
     method: "POST",
   });
+
+export const getAssessmentResults = (id: string) =>
+  apiClient<ApiResponse<AssessmentResults>>(`/assessments/${id}/results`);

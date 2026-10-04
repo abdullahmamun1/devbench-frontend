@@ -47,3 +47,25 @@ export interface AttachProblemPayload {
   order: number;
   points: number;
 }
+
+export interface AssessmentResultRow {
+  attemptId: string;
+  candidate: { id: string; name: string; email: string };
+  status: "IN_PROGRESS" | "SUBMITTED";
+  totalScore: number | null;
+  passed: boolean | null;
+  startedAt: string | null;
+  submissions: {
+    problemId: string;
+    submissionResult: {
+      score: number;
+      maxScore: number;
+      status: "PASSED" | "FAILED" | "PARTIAL" | "PENDING_REVIEW";
+    } | null;
+  }[];
+}
+
+export interface AssessmentResults {
+  assessment: { id: string; title: string; passingScore: number };
+  results: AssessmentResultRow[];
+}

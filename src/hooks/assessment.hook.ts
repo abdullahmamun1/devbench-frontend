@@ -14,6 +14,7 @@ import {
   deleteAssessment,
   detachProblem,
   getAssessment,
+  getAssessmentResults,
   getAssessments,
   publishAssessment,
   updateAssessment,
@@ -117,3 +118,11 @@ export const useCloseAssessment = (id: string) =>
     "Assessment closed",
     "Could not close assessment",
   );
+
+export const useAssessmentResults = (id: string) =>
+  useQuery({
+    queryKey: ["assessments", "results", id],
+    queryFn: () => getAssessmentResults(id),
+    select: (res) => res.data,
+    enabled: Boolean(id),
+  });
