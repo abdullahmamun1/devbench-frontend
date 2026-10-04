@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import AccessDenied from "@/components/auth/access-denied";
+import RestrictedNotice from "@/components/shared/restricted-notice";
 import { useCreateProblem, useRole } from "@/hooks";
 import { ProblemWizard } from "./problem-wizard";
 
@@ -10,7 +10,14 @@ export function CreateProblemForm() {
   const role = useRole();
   const { mutate, isPending } = useCreateProblem();
 
-  if (role === "EVALUATOR") return <AccessDenied />;
+  if (role === "EVALUATOR") {
+    return (
+      <RestrictedNotice
+        backHref="/company/problems"
+        backLabel="Back to problem bank"
+      />
+    );
+  }
 
   return (
     <ProblemWizard

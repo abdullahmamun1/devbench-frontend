@@ -1,12 +1,23 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCreateAssessment } from "@/hooks";
+import RestrictedNotice from "@/components/shared/restricted-notice";
+import { useCreateAssessment, useRole } from "@/hooks";
 import { AssessmentForm } from "./assessment-form";
 
 export function CreateAssessmentForm() {
   const router = useRouter();
+  const role = useRole();
   const { mutate, isPending } = useCreateAssessment();
+
+  if (role === "EVALUATOR") {
+    return (
+      <RestrictedNotice
+        backHref="/company/assessments"
+        backLabel="Back to assessments"
+      />
+    );
+  }
 
   return (
     <AssessmentForm
