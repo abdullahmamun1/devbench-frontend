@@ -1,6 +1,11 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   createProblem,
@@ -9,8 +14,20 @@ import {
   getProblems,
   updateProblem,
 } from "@/api";
-import type { UpdateProblemPayload } from "@/types";
+import type { ListQuery, ProblemType, UpdateProblemPayload } from "@/types";
 import { getErrorMessage } from "@/utils/error";
+
+export type ProblemListQuery = ListQuery & {
+  type?: ProblemType;
+  search?: string;
+};
+
+export const useProblems = (query: ProblemListQuery) =>
+  useQuery({
+    queryKey: ["problems", "list", query],
+    queryFn: () => getProblems(query),
+    placeholderData: keepPreviousData,
+  });
 
 // Only the total is needed, so ask for one row
 export function useProblemCount(enabled = true) {

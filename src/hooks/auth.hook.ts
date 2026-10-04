@@ -33,6 +33,11 @@ export function useGetMe() {
   });
 }
 
+export function useRole() {
+  const { data } = useGetMe();
+  return data?.data?.role;
+}
+
 // Shared by login and email verification: store the user, then go to the
 // role's home page (or the ?redirect= target if it belongs to that role).
 function useCompleteSignIn() {
