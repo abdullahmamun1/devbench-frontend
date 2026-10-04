@@ -1,13 +1,13 @@
+import type { ProblemListQuery } from "@/hooks";
 import apiClient from "@/lib/apiClient";
 import type {
   ApiResponse,
   CreateProblemPayload,
-  ListQuery,
   Problem,
   UpdateProblemPayload,
 } from "@/types";
 
-export const getProblems = (query?: ListQuery) =>
+export const getProblems = (query?: ProblemListQuery) =>
   apiClient<ApiResponse<Problem[]>>("/problems", { query });
 
 export const getProblem = (id: string) =>
