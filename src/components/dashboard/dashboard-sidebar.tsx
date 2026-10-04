@@ -11,10 +11,12 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { usePendingEvaluationCount } from "@/hooks";
 import { ROLE_HOME } from "@/constants/roles";
 import type { User } from "@/types";
 import { filterRoutesByRole, getRoutesForRole } from "@/utils/sidebar";
@@ -35,6 +37,12 @@ export function DashboardSidebar({ user }: { user: User }) {
       : user.role === "CANDIDATE"
         ? "Candidate portal"
         : (user.company?.companyName ?? "Company workspace");
+
+  const canReview =
+    user.role === "COMPANY_OWNER" ||
+    user.role === "ASSESSMENT_CREATOR" ||
+    user.role === "EVALUATOR";
+  const { data: pendingCount } = usePendingEvaluationCount(canReview);
 
   return (
     <Sidebar>
@@ -67,6 +75,9 @@ export function DashboardSidebar({ user }: { user: User }) {
                       {Icon && <Icon />}
                       <span>{title}</span>
                     </SidebarMenuButton>
+                    {url === "/company/evaluations" && pendingCount ? (
+                      <SidebarMenuBadge>{pendingCount}</SidebarMenuBadge>
+                    ) : null}
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>

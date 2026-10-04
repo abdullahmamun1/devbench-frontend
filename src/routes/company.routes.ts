@@ -30,7 +30,7 @@ export const companyRoutes: SidebarGroup[] = [
         title: "Evaluations",
         url: "/company/evaluations",
         icon: ClipboardCheck,
-        roles: ["COMPANY_OWNER", "EVALUATOR"],
+        roles: ["COMPANY_OWNER", "ASSESSMENT_CREATOR", "EVALUATOR"],
       },
     ],
   },
