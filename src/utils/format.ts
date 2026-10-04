@@ -15,3 +15,12 @@ const dateTime = new Intl.DateTimeFormat("en-US", {
 export function formatDateTime(value: string): string {
   return dateTime.format(new Date(value));
 }
+
+const usd = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+});
+
+export function formatCents(cents: number): string {
+  return usd.format(cents / 100);
+}
