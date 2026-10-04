@@ -16,6 +16,7 @@ import {
 } from "@/hooks";
 import { AssessmentProblems } from "./assessment-problems";
 import { AssessmentSettings } from "./assessment-settings";
+import { InvitationsTab } from "./invitations-tab";
 
 export function AssessmentDetail({ id }: { id: string }) {
   const { get, set } = useUrlState();
@@ -53,9 +54,12 @@ export function AssessmentDetail({ id }: { id: string }) {
     );
   }
 
+  const TABS = ["problems", "invitations", "settings"] as const;
   const canEdit = role !== "EVALUATOR";
   const problemCount = assessment.assessmentProblems?.length ?? 0;
-  const tab = get("tab") === "settings" && canEdit ? "settings" : "problems";
+  const requested = get("tab");
+  const tab =
+    canEdit && TABS.some((t) => t === requested) ? requested : "problems";
 
   return (
     <div className="space-y-6">
@@ -105,11 +109,19 @@ export function AssessmentDetail({ id }: { id: string }) {
       >
         <TabsList>
           <TabsTrigger value="problems">Problems</TabsTrigger>
+          {canEdit && (
+            <TabsTrigger value="invitations">Invitations</TabsTrigger>
+          )}
           {canEdit && <TabsTrigger value="settings">Settings</TabsTrigger>}
         </TabsList>
         <TabsContent value="problems" className="pt-4">
           <AssessmentProblems assessment={assessment} canEdit={canEdit} />
         </TabsContent>
+        {canEdit && (
+          <TabsContent value="invitations" className="pt-4">
+            <InvitationsTab assessment={assessment} />
+          </TabsContent>
+        )}
         {canEdit && (
           <TabsContent value="settings" className="pt-4">
             <AssessmentSettings assessment={assessment} />
