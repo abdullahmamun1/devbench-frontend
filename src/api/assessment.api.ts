@@ -1,3 +1,4 @@
+import type { AssessmentListQuery } from "@/hooks";
 import apiClient from "@/lib/apiClient";
 import type {
   ApiResponse,
@@ -5,11 +6,10 @@ import type {
   AssessmentProblem,
   AttachProblemPayload,
   CreateAssessmentPayload,
-  ListQuery,
   UpdateAssessmentPayload,
 } from "@/types";
 
-export const getAssessments = (query?: ListQuery) =>
+export const getAssessments = (query?: AssessmentListQuery) =>
   apiClient<ApiResponse<Assessment[]>>("/assessments", { query });
 
 export const getAssessment = (id: string) =>

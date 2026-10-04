@@ -1,6 +1,11 @@
 "use client";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
   attachProblem,
@@ -13,8 +18,22 @@ import {
   publishAssessment,
   updateAssessment,
 } from "@/api";
-import type { AttachProblemPayload, UpdateAssessmentPayload } from "@/types";
+import type {
+  AssessmentStatus,
+  AttachProblemPayload,
+  ListQuery,
+  UpdateAssessmentPayload,
+} from "@/types";
 import { getErrorMessage } from "@/utils/error";
+
+export type AssessmentListQuery = ListQuery & { status?: AssessmentStatus };
+
+export const useAssessments = (query: AssessmentListQuery) =>
+  useQuery({
+    queryKey: ["assessments", "list", query],
+    queryFn: () => getAssessments(query),
+    placeholderData: keepPreviousData,
+  });
 
 export function useAssessmentCount(enabled = true) {
   return useQuery({
