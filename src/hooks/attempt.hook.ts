@@ -15,15 +15,18 @@ export const useMyAttempts = () =>
     queryFn: getMyAttempts,
   });
 
-export const useAttempt = (id: string, options?: { live?: boolean }) =>
-  useQuery({
-    queryKey: ["attempts", "detail", id],
+export const useAttempt = (id: string, options?: { live?: boolean }) => {
+  const live = options?.live ?? false;
+  return useQuery({
+    queryKey: ["attempts", live ? "exam" : "detail", id],
     queryFn: () => getAttempt(id),
     retry: false,
-    // live = the exam runner, which owns the answers locally
-    refetchOnWindowFocus: !options?.live,
-    staleTime: options?.live ? Number.POSITIVE_INFINITY : 0,
+    // The runner owns the answers locally, so it must never refetch under them.
+    refetchOnWindowFocus: !live,
+    staleTime: live ? Number.POSITIVE_INFINITY : 0,
+    gcTime: live ? 0 : undefined,
   });
+};
 
 // Starts a new attempt or resumes an IN_PROGRESS one, then opens the exam.
 export const useStartAttempt = () => {
