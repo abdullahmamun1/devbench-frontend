@@ -6,14 +6,21 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
+  acceptInvitation,
   createInvitation,
+  getInvitationPreview,
   getInvitations,
   resendInvitation,
   revokeInvitation,
 } from "@/api";
-import type { InvitationStatus, ListQuery } from "@/types";
+import type {
+  AcceptInvitationPayload,
+  InvitationStatus,
+  ListQuery,
+} from "@/types";
 import { getErrorMessage } from "@/utils/error";
 
 export type InvitationListQuery = ListQuery & { status?: InvitationStatus };
@@ -81,3 +88,33 @@ export function useRevokeInvitation(assessmentId: string) {
       toast.error(getErrorMessage(e, "Could not revoke invitation")),
   });
 }
+
+export const useInvitationPreview = (token: string) =>
+  useQuery({
+    queryKey: ["invitations", "preview", token],
+    queryFn: () => getInvitationPreview(token),
+    retry: false,
+    staleTime: 60 * 1000,
+  });
+
+export const useAcceptInvitation = (token: string) => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (body?: AcceptInvitationPayload) =>
+      acceptInvitation(token, body),
+    onSuccess: (_res, body) => {
+      queryClient.invalidateQueries({ queryKey: ["invitations"] });
+      if (body) {
+        // New account: backend does not log them in.
+        toast.success("Account created. Log in to start your assessment.");
+        router.replace("/login");
+      } else {
+        toast.success("Invitation accepted.");
+        router.replace("/candidate");
+      }
+      router.refresh();
+    },
+  });
+};

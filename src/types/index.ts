@@ -1,5 +1,7 @@
+export * from "./admin.type";
 export * from "./api.type";
 export * from "./assessment.type";
+export * from "./attempt.type";
 export * from "./auth.type";
 export * from "./company.type";
 export * from "./contact.type";

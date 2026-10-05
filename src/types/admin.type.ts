@@ -1,0 +1,57 @@
+export type UserStatus = "ACTIVE" | "SUSPENDED" | "DELETED";
+export type CompanyStatus = "ACTIVE" | "SUSPENDED";
+
+export interface AdminCompany {
+  id: string;
+  companyName: string;
+  status: CompanyStatus;
+  creditBalance: number;
+  createdAt: string;
+  _count: { users: number; assessments: number };
+}
+
+export interface AdminCandidate {
+  id: string;
+  name: string;
+  email: string;
+  status: UserStatus;
+  emailVerified: boolean;
+  createdAt: string;
+  _count: { attempts: number };
+}
+
+export interface AuditLog {
+  id: string;
+  action: string;
+  entityType: string;
+  entityId: string;
+  metadata: Record<string, unknown> | null;
+  createdAt: string;
+  actor: { id: string; name: string; email: string; role: string };
+}
+
+export interface PlatformStats {
+  companyCount: number;
+  candidateCount: number;
+  assessmentsRun: number;
+  revenueInCents: number;
+}
+
+export interface AdjustCreditsPayload {
+  companyId: string;
+  amount: number;
+  reason: string;
+}
+
+export interface AdminListQuery {
+  page?: number;
+  limit?: number;
+  search?: string;
+}
+
+export interface AuditLogQuery {
+  page?: number;
+  limit?: number;
+  entityType?: string;
+  entityId?: string;
+}
