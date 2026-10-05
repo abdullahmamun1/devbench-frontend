@@ -47,6 +47,7 @@ export interface AdminListQuery {
   page?: number;
   limit?: number;
   search?: string;
+  status?: string;
 }
 
 export interface AuditLogQuery {

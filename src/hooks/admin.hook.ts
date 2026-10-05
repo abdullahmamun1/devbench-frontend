@@ -13,6 +13,8 @@ import {
   getAuditLogs,
   getPlatformStats,
   getPlatformTrends,
+  reactivateCompany,
+  reactivateUser,
   suspendCompany,
   suspendUser,
 } from "@/api";
@@ -66,6 +68,12 @@ export const useSuspendCompany = () =>
 
 export const useSuspendUser = () =>
   useAdminMutation(suspendUser, "User status updated");
+
+export const useReactivateCompany = () =>
+  useAdminMutation(reactivateCompany, "Company reactivated");
+
+export const useReactivateUser = () =>
+  useAdminMutation(reactivateUser, "User reactivated");
 
 export const useDeleteUser = () => useAdminMutation(deleteUser, "User deleted");
 

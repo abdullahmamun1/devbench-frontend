@@ -36,6 +36,16 @@ export const suspendUser = (id: string) =>
     method: "PATCH",
   });
 
+export const reactivateCompany = (id: string) =>
+  apiClient<ApiResponse<unknown>>(`/admin/companies/${id}/reactivate`, {
+    method: "PATCH",
+  });
+
+export const reactivateUser = (id: string) =>
+  apiClient<ApiResponse<unknown>>(`/admin/users/${id}/reactivate`, {
+    method: "PATCH",
+  });
+
 export const deleteUser = (id: string) =>
   apiClient<ApiResponse<null>>(`/admin/users/${id}`, { method: "DELETE" });
 
