@@ -15,13 +15,14 @@ export const useMyAttempts = () =>
     queryFn: getMyAttempts,
   });
 
-export const useAttempt = (id: string) =>
+export const useAttempt = (id: string, options?: { live?: boolean }) =>
   useQuery({
     queryKey: ["attempts", "detail", id],
     queryFn: () => getAttempt(id),
     retry: false,
-    refetchOnWindowFocus: false,
-    staleTime: Number.POSITIVE_INFINITY,
+    // live = the exam runner, which owns the answers locally
+    refetchOnWindowFocus: !options?.live,
+    staleTime: options?.live ? Number.POSITIVE_INFINITY : 0,
   });
 
 // Starts a new attempt or resumes an IN_PROGRESS one, then opens the exam.
