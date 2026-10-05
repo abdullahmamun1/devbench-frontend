@@ -8,10 +8,14 @@ import type {
   AuditLog,
   AuditLogQuery,
   PlatformStats,
+  PlatformTrendPoint,
 } from "@/types";
 
 export const getPlatformStats = () =>
   apiClient<ApiResponse<PlatformStats>>("/admin/stats");
+
+export const getPlatformTrends = () =>
+  apiClient<ApiResponse<PlatformTrendPoint[]>>("/admin/stats/trends");
 
 export const getAdminCompanies = (query?: AdminListQuery) =>
   apiClient<ApiResponse<AdminCompany[]>>("/admin/companies", { query });

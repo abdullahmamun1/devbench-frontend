@@ -55,3 +55,11 @@ export interface AuditLogQuery {
   entityType?: string;
   entityId?: string;
 }
+
+export interface PlatformTrendPoint {
+  month: string; // "YYYY-MM"
+  companies: number;
+  candidates: number;
+  attempts: number;
+  revenueInCents: number;
+}

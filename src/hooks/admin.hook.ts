@@ -12,6 +12,7 @@ import {
   getAdminCompanies,
   getAuditLogs,
   getPlatformStats,
+  getPlatformTrends,
   suspendCompany,
   suspendUser,
 } from "@/api";
@@ -20,6 +21,9 @@ import { getErrorMessage } from "@/utils/error";
 
 export const usePlatformStats = () =>
   useQuery({ queryKey: ["admin", "stats"], queryFn: getPlatformStats });
+
+export const usePlatformTrends = () =>
+  useQuery({ queryKey: ["admin", "trends"], queryFn: getPlatformTrends });
 
 export const useAdminCompanies = (query: AdminListQuery) =>
   useQuery({
