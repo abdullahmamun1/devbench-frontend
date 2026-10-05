@@ -123,9 +123,12 @@ export default function QuestionPanel({
 
         {problem.type === "CODING" && (
           <CodeAnswer
+            modelPath={`question-${item.problemId}`}
             value={answer?.code ?? ""}
-            onChange={(code) => onChange({ code })}
+            language={answer?.language}
             disabled={disabled}
+            onCodeChange={(code) => onChange({ code })}
+            onLanguageChange={(language) => onChange({ language })}
           />
         )}
       </CardContent>

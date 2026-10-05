@@ -5,6 +5,7 @@ export * from "./auth.hook";
 export * from "./company.hook";
 export * from "./contact.hook";
 export * from "./countdown.hook";
+export * from "./dark-mode.hook";
 export * from "./debounce.hook";
 export * from "./evaluation.hook";
 export * from "./invitation.hook";

@@ -247,6 +247,39 @@ function ExamSession({
   const item = problems[current];
   const locked = finishing !== null;
 
+  // Warn before the tab is closed or reloaded while the exam is running.
+  useEffect(() => {
+    if (locked) return;
+    const onBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+    };
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
+  }, [locked]);
+
+  // The browser back button would silently leave the exam, so hold the page.
+  useEffect(() => {
+    if (locked) return;
+    window.history.pushState(null, "", window.location.href);
+    const onPopState = () => {
+      window.history.pushState(null, "", window.location.href);
+      toast.info(
+        "Use Submit to finish. Going back is disabled during the exam.",
+      );
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [locked]);
+
+  // Switching tabs or minimising can end in a closed tab, so send edits now.
+  useEffect(() => {
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") flushPending();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => document.removeEventListener("visibilitychange", onVisibility);
+  }, [flushPending]);
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-10 flex flex-wrap items-center gap-3 border-b bg-background px-4 py-3">

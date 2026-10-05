@@ -1,3 +1,4 @@
+import { DEFAULT_LANGUAGE } from "@/constants/exam";
 import type {
   AttemptProblem,
   AttemptSubmission,
@@ -8,6 +9,7 @@ export interface Answer {
   selectedOptionId?: string;
   answerText?: string;
   code?: string;
+  language?: string;
 }
 
 export type Answers = Record<string, Answer>;
@@ -21,6 +23,7 @@ export function answersFromSubmissions(
       selectedOptionId: s.selectedOptionId ?? undefined,
       answerText: s.answerText ?? undefined,
       code: s.code ?? undefined,
+      language: s.language ?? undefined,
     };
   }
   return answers;
@@ -52,7 +55,11 @@ export function buildPayload(
     case "WRITTEN":
       return { problemId, answerText: answer.answerText };
     default:
-      return { problemId, code: answer.code };
+      return {
+        problemId,
+        code: answer.code,
+        language: answer.language ?? DEFAULT_LANGUAGE,
+      };
   }
 }
 
