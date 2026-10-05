@@ -15,6 +15,17 @@ export interface InvitationRow {
   action: InvitationAction;
 }
 
+export type AttemptFilterKey = "IN_PROGRESS" | "AWAITING_REVIEW" | "GRADED";
+
+export interface AttemptDisplay {
+  // Badge status understood by StatusBadge
+  badge: string;
+  // Value used by the filter tabs
+  filterKey: AttemptFilterKey;
+  scoreLabel: string;
+  live: boolean;
+}
+
 // A submitted attempt with no score still has answers waiting for an evaluator.
 export function isAwaitingReview(
   attempt: Pick<MyAttempt, "status" | "totalScore">,
@@ -90,4 +101,33 @@ export function buildInvitationRows(
     }
     return { invitation, displayStatus: "ACCEPTED", action: "start" };
   });
+}
+
+// One place that decides how an attempt is described, so the overview,
+// history and detail pages never disagree.
+export function getAttemptDisplay(attempt: MyAttempt): AttemptDisplay {
+  if (isLiveAttempt(attempt)) {
+    return {
+      badge: "IN_PROGRESS",
+      filterKey: "IN_PROGRESS",
+      scoreLabel: "In progress",
+      live: true,
+    };
+  }
+  if (attempt.totalScore === null) {
+    // Submitted with open answers, or expired and not finalised yet.
+    // Both read as "awaiting review" to the candidate.
+    return {
+      badge: "PENDING_REVIEW",
+      filterKey: "AWAITING_REVIEW",
+      scoreLabel: "Awaiting review",
+      live: false,
+    };
+  }
+  return {
+    badge: "SUBMITTED",
+    filterKey: "GRADED",
+    scoreLabel: String(attempt.totalScore),
+    live: false,
+  };
 }
