@@ -22,6 +22,8 @@ export interface AdminCandidate {
 
 export interface AuditLog {
   id: string;
+  actorId: string;
+  actorRole: string;
   action: string;
   entityType: string;
   entityId: string;
