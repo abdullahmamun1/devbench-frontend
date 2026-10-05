@@ -23,7 +23,13 @@ import { useUpdateProfile } from "@/hooks";
 import type { User } from "@/types";
 import { updateAccountSchema } from "@/validation/company.validation";
 
-export default function AccountForm({ user }: { user: User }) {
+export default function AccountForm({
+  user,
+  description = "Your name appears to your teammates.",
+}: {
+  user: User;
+  description?: string;
+}) {
   const { mutate: save, isPending } = useUpdateProfile();
 
   const form = useForm({
@@ -39,7 +45,7 @@ export default function AccountForm({ user }: { user: User }) {
     <Card>
       <CardHeader>
         <CardTitle>Your account</CardTitle>
-        <CardDescription>Your name appears to your teammates.</CardDescription>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <form

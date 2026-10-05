@@ -80,7 +80,7 @@ export default function QuestionPanel({
                 <label
                   key={option.id}
                   className={cn(
-                    "flex w-full cursor-pointer items-center gap-3 rounded-xl border p-4 text-sm transition-colors hover:bg-muted/50 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-60",
+                    "flex w-full cursor-pointer items-center gap-3 rounded-xl border p-4 text-sm transition-colors hover:bg-muted/50 has-focus-visible:ring-2 has-focus-visible:ring-primary has-disabled:cursor-not-allowed has-disabled:opacity-60",
                     selected && "border-primary bg-primary/5",
                   )}
                 >

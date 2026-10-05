@@ -129,12 +129,14 @@ export default function CompanyOverview() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard
-          title="Credit balance"
-          value={user.company?.creditBalance ?? 0}
-          icon={Coins}
-          description="One credit per invitation"
-        />
+        {isOwner && (
+          <StatCard
+            title="Credit balance"
+            value={user.company?.creditBalance ?? 0}
+            icon={Coins}
+            description="One credit per invitation"
+          />
+        )}
         {canManageContent && (
           <StatCard
             title="Problems"
