@@ -1,7 +1,8 @@
-export default function CandidateDashboard() {
-  return (
-    <div>
-      <h1>Candidate</h1>
-    </div>
-  );
+import type { Metadata } from "next";
+import CandidateOverview from "@/components/modules/candidate/candidate-overview";
+
+export const metadata: Metadata = { title: "Overview" };
+
+export default function CandidatePage() {
+  return <CandidateOverview />;
 }

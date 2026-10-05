@@ -13,6 +13,7 @@ import {
   createInvitation,
   getInvitationPreview,
   getInvitations,
+  getMyInvitations,
   resendInvitation,
   revokeInvitation,
 } from "@/api";
@@ -34,6 +35,12 @@ export const useInvitations = (
     queryFn: () => getInvitations(assessmentId, query),
     placeholderData: keepPreviousData,
     enabled: Boolean(assessmentId),
+  });
+
+export const useMyInvitations = () =>
+  useQuery({
+    queryKey: ["invitations", "mine"],
+    queryFn: getMyInvitations,
   });
 
 // Sending or revoking changes the credit balance, and the first invitation

@@ -6,6 +6,7 @@ import type {
   Invitation,
   InvitationPreview,
   ListQuery,
+  MyInvitation,
   User,
 } from "@/types";
 
@@ -14,6 +15,9 @@ export const getInvitations = (assessmentId: string, query?: ListQuery) =>
     `/assessments/${assessmentId}/invitations`,
     { query },
   );
+
+export const getMyInvitations = () =>
+  apiClient<ApiResponse<MyInvitation[]>>("/invitations/me");
 
 export const createInvitation = (
   assessmentId: string,

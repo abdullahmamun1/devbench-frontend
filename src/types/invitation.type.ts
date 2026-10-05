@@ -8,6 +8,19 @@ export interface Invitation {
   createdAt: string;
 }
 
+export interface MyInvitation {
+  id: string;
+  status: InvitationStatus;
+  expiresAt: string;
+  createdAt: string;
+  assessment: {
+    id: string;
+    title: string;
+    durationMinutes: number;
+    status: "DRAFT" | "PUBLISHED" | "CLOSED";
+  };
+}
+
 export interface CreateInvitationPayload {
   candidateEmail: string;
 }
