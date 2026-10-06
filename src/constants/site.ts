@@ -1,10 +1,13 @@
 export const SITE_NAME = "DevBench";
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+export const SITE_TAGLINE = "Hire developers with real coding assessments";
 
 export const SITE_DESCRIPTION =
-  "DevBench helps hiring teams build timed coding, MCQ and written assessments, invite candidates by email and review every attempt in one place.";
+  "DevBench helps companies create coding, multiple-choice and written assessments, invite candidates, and review results in one place.";
+
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+).replace(/\/$/, "");
 
 export const NAV_LINKS = [
   { label: "Features", href: "/features" },
