@@ -27,7 +27,13 @@ export default function UserMenu({ user }: { user: User }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        render={<Button variant="ghost" className="h-auto gap-2 px-2 py-1.5" />}
+        render={
+          <Button
+            variant="ghost"
+            aria-label={`Account menu for ${user.name}`}
+            className="h-auto gap-2 px-2 py-1.5"
+          />
+        }
       >
         <Avatar className="size-8">
           <AvatarFallback>{getInitials(user.name)}</AvatarFallback>

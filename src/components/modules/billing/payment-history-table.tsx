@@ -38,7 +38,10 @@ const columns: DataTableColumn<Payment>[] = [
 export function PaymentHistoryTable() {
   const { get, set } = useUrlState();
   const page = Number(get("page", "1")) || 1;
-  const { data, isLoading } = usePaymentHistory({ page, limit: LIMIT });
+  const { data, isLoading, isError, refetch } = usePaymentHistory({
+    page,
+    limit: LIMIT,
+  });
 
   return (
     <section className="space-y-3">
@@ -54,6 +57,9 @@ export function PaymentHistoryTable() {
         getRowKey={(p) => p.id}
         isLoading={isLoading}
         skeletonRows={LIMIT}
+        isError={isError}
+        errorTitle="Could not load payments"
+        onRetry={() => refetch()}
         empty={
           <EmptyState
             title="No payments yet"

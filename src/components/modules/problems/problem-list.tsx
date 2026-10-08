@@ -37,7 +37,7 @@ export function ProblemList() {
   const type = isProblemType(typeParam) ? typeParam : undefined;
   const search = get("search");
 
-  const { data, isLoading } = useProblems({
+  const { data, isLoading, isError, refetch } = useProblems({
     page,
     limit: LIMIT,
     type,
@@ -131,6 +131,9 @@ export function ProblemList() {
         getRowKey={(p) => p.id}
         isLoading={isLoading}
         skeletonRows={LIMIT}
+        isError={isError}
+        errorTitle="Could not load problems"
+        onRetry={() => refetch()}
         empty={
           <EmptyState
             title={hasFilters ? "No matching problems" : "No problems yet"}

@@ -48,7 +48,7 @@ export function InvitationsTab({ assessment }: { assessment: Assessment }) {
   const statusParam = get(PARAM);
   const status = isStatus(statusParam) ? statusParam : undefined;
 
-  const { data, isLoading } = useInvitations(assessment.id, {
+  const { data, isLoading, isError, refetch } = useInvitations(assessment.id, {
     page,
     limit: LIMIT,
     status,
@@ -126,6 +126,9 @@ export function InvitationsTab({ assessment }: { assessment: Assessment }) {
         getRowKey={(i) => i.id}
         isLoading={isLoading}
         skeletonRows={5}
+        isError={isError}
+        errorTitle="Could not load invitations"
+        onRetry={() => refetch()}
         empty={
           <EmptyState
             title={

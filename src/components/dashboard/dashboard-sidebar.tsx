@@ -15,6 +15,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { ROLE_HOME } from "@/constants/roles";
 import { usePendingEvaluationCount } from "@/hooks";
@@ -27,6 +28,11 @@ const ROOT_URLS = new Set<string>(Object.values(ROLE_HOME));
 export function DashboardSidebar({ user }: { user: User }) {
   const pathname = usePathname();
   const groups = filterRoutesByRole(getRoutesForRole(user.role), user.role);
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const closeOnMobile = () => {
+    if (isMobile) setOpenMobile(false);
+  };
 
   const isActive = (url: string) =>
     pathname === url || (!ROOT_URLS.has(url) && pathname.startsWith(`${url}/`));
@@ -47,7 +53,11 @@ export function DashboardSidebar({ user }: { user: User }) {
   return (
     <Sidebar>
       <SidebarHeader className="border-b">
-        <Link href="/" className="flex items-center gap-2 px-2 py-1.5">
+        <Link
+          href="/"
+          onClick={closeOnMobile}
+          className="flex items-center gap-2 px-2 py-1.5"
+        >
           <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Code2 className="size-5" />
           </span>
@@ -69,7 +79,13 @@ export function DashboardSidebar({ user }: { user: User }) {
                 {group.items.map(({ title, url, icon: Icon }) => (
                   <SidebarMenuItem key={url}>
                     <SidebarMenuButton
-                      render={<Link href={url} />}
+                      render={
+                        <Link
+                          href={url}
+                          onClick={closeOnMobile}
+                          aria-current={isActive(url) ? "page" : undefined}
+                        />
+                      }
                       isActive={isActive(url)}
                     >
                       {Icon && <Icon />}

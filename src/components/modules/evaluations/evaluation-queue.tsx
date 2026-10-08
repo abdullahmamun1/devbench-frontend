@@ -79,7 +79,10 @@ export function EvaluationQueue() {
   const { get, set } = useUrlState();
   const page = Number(get("page", "1")) || 1;
 
-  const { data, isLoading } = useEvaluations({ page, limit: LIMIT });
+  const { data, isLoading, isError, refetch } = useEvaluations({
+    page,
+    limit: LIMIT,
+  });
   const total = data?.meta?.total ?? 0;
 
   return (
@@ -106,6 +109,9 @@ export function EvaluationQueue() {
         getRowKey={(e) => e.id}
         isLoading={isLoading}
         skeletonRows={LIMIT}
+        isError={isError}
+        errorTitle="Could not load the review queue"
+        onRetry={() => refetch()}
         empty={
           <EmptyState
             icon={ClipboardCheck}

@@ -25,7 +25,8 @@
       "recommended": true,
       "a11y": {
         "noLabelWithoutControl": "off",
-        "useValidAriaRole": "off"
+        "useValidAriaRole": "off",
+        "useSemanticElements": "off"
       },
       "performance": {
         "noImgElement": "off"

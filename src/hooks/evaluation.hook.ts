@@ -18,6 +18,7 @@ export function usePendingEvaluationCount(enabled = true) {
     select: (res) => res.meta?.total ?? 0,
     enabled,
     retry: false,
+    refetchInterval: 60_000,
   });
 }
 

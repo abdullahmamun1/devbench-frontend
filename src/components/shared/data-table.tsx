@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import ErrorState from "./error-state";
 
 export interface DataTableColumn<T> {
   key: string;
@@ -24,6 +25,10 @@ interface DataTableProps<T> {
   skeletonRows?: number;
   /** Shown instead of the table when there are no rows */
   empty?: ReactNode;
+  /** The request failed. Shown only when there are no rows to display */
+  isError?: boolean;
+  errorTitle?: string;
+  onRetry?: () => void;
 }
 
 export default function DataTable<T>({
@@ -33,8 +38,15 @@ export default function DataTable<T>({
   isLoading = false,
   skeletonRows = 6,
   empty,
+  isError = false,
+  errorTitle,
+  onRetry,
 }: DataTableProps<T>) {
   const rows = data ?? [];
+
+  if (isError && !isLoading && rows.length === 0) {
+    return <ErrorState title={errorTitle} onRetry={onRetry} />;
+  }
 
   if (!isLoading && rows.length === 0 && empty) {
     return <>{empty}</>;

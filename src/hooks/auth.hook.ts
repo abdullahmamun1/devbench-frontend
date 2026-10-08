@@ -108,7 +108,8 @@ export function useRegister() {
       toast.success("Account created. Check your email for the 6-digit code.");
       router.push(`/verify-email?email=${encodeURIComponent(variables.email)}`);
     },
-    onError: (error) => toast.error(getErrorMessage(error)),
+    onError: (error) =>
+      toast.error(getErrorMessage(error, "Could not create your account")),
   });
 }
 
@@ -125,7 +126,8 @@ export function useVerifyEmail() {
       toast.success("Email verified. Welcome to DevBench!");
       completeSignIn(res);
     },
-    onError: (error) => toast.error(getErrorMessage(error)),
+    onError: (error) =>
+      toast.error(getErrorMessage(error, "Could not verify your email")),
   });
 }
 
@@ -140,7 +142,8 @@ export function useForgotPassword() {
         `/reset-password?email=${encodeURIComponent(variables.email)}`,
       );
     },
-    onError: (error) => toast.error(getErrorMessage(error)),
+    onError: (error) =>
+      toast.error(getErrorMessage(error, "Could not send the reset code")),
   });
 }
 
@@ -153,7 +156,8 @@ export function useResetPassword() {
       toast.success("Password updated. You can log in now.");
       router.push("/login");
     },
-    onError: (error) => toast.error(getErrorMessage(error)),
+    onError: (error) =>
+      toast.error(getErrorMessage(error, "Could not reset your password")),
   });
 }
 

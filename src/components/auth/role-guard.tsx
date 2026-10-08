@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { type ReactNode, useEffect } from "react";
+import { ROLE_HOME } from "@/constants/roles";
 import { useGetMe } from "@/hooks";
 import type { UserRole } from "@/types";
 import AccessDenied from "./access-denied";
@@ -40,5 +41,10 @@ export default function RoleGuard({ children, roles }: IProps) {
     return <>{children}</>;
   }
 
-  return <AccessDenied />;
+  return (
+    <AccessDenied
+      homeHref={ROLE_HOME[user.role]}
+      homeLabel="Back to my dashboard"
+    />
+  );
 }

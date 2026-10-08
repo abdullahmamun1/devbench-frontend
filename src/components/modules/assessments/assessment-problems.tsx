@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import ConfirmDialog from "@/components/shared/confirm-dialog";
+import EmptyState from "@/components/shared/empty-state";
 import StatusBadge from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { useDetachProblem } from "@/hooks";
@@ -20,11 +22,7 @@ export function AssessmentProblems({
   canEdit,
 }: AssessmentProblemsProps) {
   const [adding, setAdding] = useState(false);
-  const {
-    mutate: detach,
-    isPending,
-    variables,
-  } = useDetachProblem(assessment.id);
+  const { mutate: detach, isPending } = useDetachProblem(assessment.id);
 
   const items = assessment.assessmentProblems ?? [];
   const locked = (assessment._count?.invitations ?? 0) > 0;
@@ -33,6 +31,10 @@ export function AssessmentProblems({
   const attachedIds = new Set(items.map((i) => i.problemId));
   const scoreTooHigh =
     items.length > 0 && assessment.passingScore > totalPoints;
+  const [toRemove, setToRemove] = useState<{
+    problemId: string;
+    title: string;
+  } | null>(null);
 
   return (
     <div className="space-y-4">
@@ -66,12 +68,10 @@ export function AssessmentProblems({
       )}
 
       {items.length === 0 ? (
-        <div className="rounded-xl border border-dashed p-8 text-center">
-          <p className="font-medium">No problems attached</p>
-          <p className="text-sm text-muted-foreground">
-            Add at least one problem before you can publish.
-          </p>
-        </div>
+        <EmptyState
+          title="No problems attached"
+          description="Add at least one problem before you can publish."
+        />
       ) : (
         <ul className="divide-y rounded-xl border">
           {items.map((item, index) => (
@@ -98,10 +98,13 @@ export function AssessmentProblems({
                   <Button
                     variant="outline"
                     size="sm"
-                    disabled={
-                      locked || (isPending && variables === item.problemId)
+                    disabled={locked}
+                    onClick={() =>
+                      setToRemove({
+                        problemId: item.problemId,
+                        title: item.problem.title,
+                      })
                     }
-                    onClick={() => detach(item.problemId)}
                   >
                     Remove
                   </Button>
@@ -118,6 +121,19 @@ export function AssessmentProblems({
         nextOrder={nextOrder}
         open={adding}
         onOpenChange={setAdding}
+      />
+      <ConfirmDialog
+        open={Boolean(toRemove)}
+        onOpenChange={(o) => !o && setToRemove(null)}
+        title="Remove this problem?"
+        description={`"${toRemove?.title ?? "This problem"}" will be taken out of the assessment. It stays in your problem bank.`}
+        confirmLabel="Remove"
+        destructive
+        isPending={isPending}
+        onConfirm={() => {
+          if (!toRemove) return;
+          detach(toRemove.problemId, { onSuccess: () => setToRemove(null) });
+        }}
       />
     </div>
   );

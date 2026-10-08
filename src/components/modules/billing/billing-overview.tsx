@@ -10,7 +10,7 @@ import { CreditTransactionsTable } from "./credit-transactions-table";
 import { PaymentHistoryTable } from "./payment-history-table";
 
 export function BillingOverview() {
-  const { data, isLoading } = useCredits();
+  const { data, isLoading, isError } = useCredits();
 
   return (
     <div className="space-y-8">
@@ -25,9 +25,11 @@ export function BillingOverview() {
         <div className="grid gap-4 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-1">
           <StatCard
             title="Credit balance"
-            value={data?.data.creditBalance ?? 0}
+            value={isError ? "Unavailable" : (data?.data.creditBalance ?? 0)}
             icon={Coins}
-            description="One credit per invitation"
+            description={
+              isError ? "Refresh to try again" : "One credit per invitation"
+            }
             isLoading={isLoading}
           />
           <StatCard

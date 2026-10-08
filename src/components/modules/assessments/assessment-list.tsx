@@ -35,7 +35,7 @@ export function AssessmentList() {
   const statusParam = get("status");
   const status = isStatus(statusParam) ? statusParam : undefined;
 
-  const { data, isLoading } = useAssessments({
+  const { data, isLoading, isError, refetch } = useAssessments({
     page,
     limit: LIMIT,
     status,
@@ -136,6 +136,9 @@ export function AssessmentList() {
         getRowKey={(a) => a.id}
         isLoading={isLoading}
         skeletonRows={LIMIT}
+        isError={isError}
+        errorTitle="Could not load assessments"
+        onRetry={() => refetch()}
         empty={
           <EmptyState
             title={

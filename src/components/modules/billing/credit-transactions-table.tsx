@@ -41,7 +41,7 @@ const columns: DataTableColumn<CreditTransaction>[] = [
 ];
 
 export function CreditTransactionsTable() {
-  const { data, isLoading } = useCredits();
+  const { data, isLoading, isError, refetch } = useCredits();
 
   return (
     <section className="space-y-3">
@@ -57,6 +57,9 @@ export function CreditTransactionsTable() {
         getRowKey={(t) => t.id}
         isLoading={isLoading}
         skeletonRows={5}
+        isError={isError}
+        errorTitle="Could not load credit activity"
+        onRetry={() => refetch()}
         empty={
           <EmptyState
             title="No credit activity yet"

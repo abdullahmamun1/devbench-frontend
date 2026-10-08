@@ -118,7 +118,7 @@ export const useAcceptInvitation = (token: string) => {
         toast.success("Account created. Log in to start your assessment.");
         router.replace("/login");
       } else {
-        toast.success("Invitation accepted.");
+        toast.success("Invitation accepted");
         router.replace("/candidate");
       }
       router.refresh();
