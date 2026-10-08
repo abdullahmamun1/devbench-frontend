@@ -101,6 +101,7 @@ function PreviewSkeleton() {
 
 function NewCandidateForm({ token }: { token: string }) {
   const accept = useAcceptInvitation(token);
+  const loginHref = `/login?redirect=${encodeURIComponent(`/invitations/accept/${token}`)}`;
 
   const form = useForm({
     defaultValues: { name: "", password: "", confirmPassword: "" },
@@ -204,7 +205,7 @@ function NewCandidateForm({ token }: { token: string }) {
           {errorStatus === 400 ? (
             <>
               {" "}
-              <Link href="/login" className="font-medium underline">
+              <Link href={loginHref} className="font-medium underline">
                 Log in
               </Link>{" "}
               and open this link again.
@@ -229,7 +230,10 @@ function NewCandidateForm({ token }: { token: string }) {
 
       <p className="text-center text-muted-foreground text-sm">
         Already have an account?{" "}
-        <Link href="/login" className="font-medium text-foreground underline">
+        <Link
+          href={loginHref}
+          className="font-medium text-foreground underline"
+        >
           Log in
         </Link>{" "}
         with the invited email, then open this link again.

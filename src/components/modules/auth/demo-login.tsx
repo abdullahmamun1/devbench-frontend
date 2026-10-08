@@ -32,29 +32,32 @@ export default function DemoLogin() {
         key={key}
         type="button"
         variant="outline"
-        title={hint}
         disabled={isPending}
+        aria-label={`Log in as ${label}. ${hint}`}
         onClick={() => mutate({ email, password })}
-        className="h-auto flex-col gap-1 px-2 py-2.5 text-xs"
+        className="h-auto flex-col gap-1 px-2 py-2.5 text-center text-xs whitespace-normal"
       >
         {isLoading ? <Spinner /> : <Icon className="size-4" />}
         <span className="font-semibold">{label}</span>
+        <span className="hidden text-[11px] font-normal text-muted-foreground sm:block">
+          {hint}
+        </span>
       </Button>
     );
   };
 
   return (
-    <div className="space-y-3">
-      <p className="text-center text-sm font-medium mt-5">
+    <section aria-labelledby="demo-login-title" className="space-y-3 pt-2">
+      <h2 id="demo-login-title" className="text-center text-sm font-medium">
         Quick demo login{" "}
-        <span className="text-muted-foreground">(one click)</span>
-      </p>
-      <div className="grid gap-2 sm:grid-cols-3">
+        <span className="font-normal text-muted-foreground">(one click)</span>
+      </h2>
+      <div className="grid grid-cols-3 gap-2">
         {DEMO_ACCOUNTS.filter((a) => a.group === "primary").map(renderButton)}
       </div>
-      <div className="grid gap-2 sm:grid-cols-2">
+      <div className="grid grid-cols-2 gap-2">
         {DEMO_ACCOUNTS.filter((a) => a.group === "team").map(renderButton)}
       </div>
-    </div>
+    </section>
   );
 }

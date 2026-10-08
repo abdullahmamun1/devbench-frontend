@@ -29,12 +29,12 @@ export default function RegisterForm() {
 
   const form = useForm({
     defaultValues: {
-      name: "Abdullah",
-      email: "mamun111@gmail.com",
-      password: "Aa@12345",
-      confirmPassword: "Aa@12345",
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
       role: "CANDIDATE" as RegisterRole,
-      companyName: "Omuk",
+      companyName: "",
     },
     validators: { onChange: registerSchema },
     onSubmit: ({ value }) => {
@@ -125,8 +125,10 @@ export default function RegisterForm() {
                   <Input
                     id={field.name}
                     name={field.name}
+                    type="email"
+                    inputMode="email"
                     placeholder="you@company.com"
-                    autoComplete="off"
+                    autoComplete="email"
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                     onBlur={field.handleBlur}

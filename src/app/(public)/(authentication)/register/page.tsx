@@ -13,7 +13,7 @@ export default function RegisterPage() {
   return (
     <div className="space-y-5">
       <div className="space-y-1 text-center">
-        <h1 className="text-2xl font-bold">Create your account</h1>
+        <h1 className="text-4xl font-bold">Create your account</h1>
         <p className="text-sm text-muted-foreground">
           We&apos;ll email you a 6-digit code to verify it
         </p>

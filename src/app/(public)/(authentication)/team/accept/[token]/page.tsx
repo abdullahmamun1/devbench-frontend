@@ -17,7 +17,7 @@ export default async function AcceptTeamPage({
   return (
     <div className="space-y-6">
       <div className="space-y-1 text-center">
-        <h1 className="text-2xl font-bold">Join your team</h1>
+        <h1 className="text-4xl font-bold">Join your team</h1>
         <p className="text-sm text-muted-foreground">
           You&apos;ve been invited to a DevBench company workspace
         </p>

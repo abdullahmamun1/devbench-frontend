@@ -14,7 +14,6 @@ import {
   userRegister,
   verifyEmail,
 } from "@/api";
-import { ROLE_HOME } from "@/constants/roles";
 import type {
   ApiResponse,
   GoogleLoginPayload,
@@ -23,6 +22,7 @@ import type {
   VerifyEmailPayload,
 } from "@/types";
 import { getErrorMessage } from "@/utils/error";
+import { getPostLoginPath } from "@/utils/redirect";
 
 export function useGetMe() {
   return useQuery({
@@ -46,12 +46,11 @@ function useCompleteSignIn() {
   const searchParams = useSearchParams();
 
   return (res: ApiResponse<User>) => {
-    const home = ROLE_HOME[res.data.role];
-    const redirect = searchParams.get("redirect");
-
     queryClient.clear();
     queryClient.setQueryData(["user"], res);
-    router.replace(redirect?.startsWith(home) ? redirect : home);
+    router.replace(
+      getPostLoginPath(searchParams.get("redirect"), res.data.role),
+    );
     router.refresh(); // lets the proxy see the new cookies
   };
 }

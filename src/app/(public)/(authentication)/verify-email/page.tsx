@@ -14,7 +14,7 @@ export default function VerifyEmailPage() {
   return (
     <div className="space-y-6">
       <div className="space-y-1 text-center">
-        <h1 className="text-2xl font-bold">Check your email</h1>
+        <h1 className="text-4xl font-bold">Check your email</h1>
         <p className="text-sm text-muted-foreground">
           Enter the 6-digit code we just sent you
         </p>
@@ -26,14 +26,11 @@ export default function VerifyEmailPage() {
       </Suspense>
 
       <p className="text-center text-sm text-muted-foreground">
-        Didn&apos;t get a code?{" "}
-        <Link
-          href="/register"
-          className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
-        >
-          Register again with the same email
-        </Link>{" "}
-        to receive a new one.
+        Didn&apos;t get a code? Check your spam folder, or{" "}
+        <Link href="/register" className="...">
+          go back to register
+        </Link>
+        .
       </p>
     </div>
   );

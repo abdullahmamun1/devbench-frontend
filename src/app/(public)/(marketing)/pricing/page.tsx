@@ -14,8 +14,6 @@ export const metadata = buildMetadata({
 });
 
 export default function PricingPage() {
-  const cents = Number(process.env.NEXT_PUBLIC_CREDIT_PRICE_CENTS) || 100;
-
   return (
     <>
       <PageHero

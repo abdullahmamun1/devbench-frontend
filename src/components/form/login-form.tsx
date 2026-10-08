@@ -2,6 +2,7 @@
 
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -12,26 +13,59 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useLogin } from "@/hooks";
+import { getErrorMessage, getErrorStatus } from "@/utils/error";
 import { loginSchema } from "@/validation/auth.validation";
 import PasswordInput from "./password-input";
 
 export default function LoginForm() {
   const { mutate: login, isPending } = useLogin();
+  const [blockedMessage, setBlockedMessage] = useState("");
 
   const form = useForm({
     defaultValues: { email: "", password: "" },
     validators: { onSubmit: loginSchema },
-    onSubmit: ({ value }) => login(value),
+    onSubmit: ({ value }) => {
+      setBlockedMessage("");
+      login(value, {
+        onError: (error) => {
+          const message = getErrorMessage(error);
+          // 403 that is not "please verify" means the account is blocked.
+          // Unverified users are already redirected by the hook.
+          if (getErrorStatus(error) === 403 && !/verify/i.test(message)) {
+            setBlockedMessage(message);
+          }
+        },
+      });
+    },
   });
 
   return (
     <form
+      noValidate
       className="flex flex-col gap-6"
       onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
       }}
     >
+      {blockedMessage && (
+        <div
+          role="alert"
+          className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm"
+        >
+          <p className="font-medium text-destructive">{blockedMessage}</p>
+          <p className="mt-1 text-muted-foreground">
+            If you think this is a mistake,{" "}
+            <Link
+              href="/contact"
+              className="underline underline-offset-4 hover:text-foreground"
+            >
+              contact support
+            </Link>
+            .
+          </p>
+        </div>
+      )}
       <FieldGroup className="gap-4">
         <form.Field name="email">
           {(field) => {
@@ -44,7 +78,9 @@ export default function LoginForm() {
                   id={field.name}
                   name={field.name}
                   placeholder="you@company.com"
-                  autoComplete="off"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="username"
                   value={field.state.value}
                   onChange={(e) => field.handleChange(e.target.value)}
                   onBlur={field.handleBlur}
