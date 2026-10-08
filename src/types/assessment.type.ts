@@ -42,10 +42,8 @@ export interface CreateAssessmentPayload {
 
 export type UpdateAssessmentPayload = Partial<CreateAssessmentPayload>;
 
-export interface AttachProblemPayload {
-  problemId: string;
-  order: number;
-  points: number;
+export interface AttachProblemsPayload {
+  problems: { problemId: string; points: number }[];
 }
 
 export interface AssessmentResultRow {

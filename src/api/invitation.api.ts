@@ -4,6 +4,7 @@ import type {
   ApiResponse,
   CreateInvitationPayload,
   Invitation,
+  InvitationDelivery,
   InvitationPreview,
   ListQuery,
   MyInvitation,
@@ -23,13 +24,13 @@ export const createInvitation = (
   assessmentId: string,
   body: CreateInvitationPayload,
 ) =>
-  apiClient<ApiResponse<Invitation>>(
+  apiClient<ApiResponse<InvitationDelivery>>(
     `/assessments/${assessmentId}/invitations`,
     { method: "POST", body },
   );
 
 export const resendInvitation = (assessmentId: string, invitationId: string) =>
-  apiClient<ApiResponse<unknown>>(
+  apiClient<ApiResponse<InvitationDelivery>>(
     `/assessments/${assessmentId}/invitations/${invitationId}/resend`,
     { method: "POST" },
   );

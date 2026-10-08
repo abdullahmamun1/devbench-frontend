@@ -27,7 +27,6 @@ export function AssessmentProblems({
   const items = assessment.assessmentProblems ?? [];
   const locked = (assessment._count?.invitations ?? 0) > 0;
   const totalPoints = items.reduce((sum, i) => sum + i.points, 0);
-  const nextOrder = items.reduce((max, i) => Math.max(max, i.order), -1) + 1;
   const attachedIds = new Set(items.map((i) => i.problemId));
   const scoreTooHigh =
     items.length > 0 && assessment.passingScore > totalPoints;
@@ -47,7 +46,7 @@ export function AssessmentProblems({
         </div>
         {canEdit && (
           <Button onClick={() => setAdding(true)} disabled={locked}>
-            Add problem
+            Add problems
           </Button>
         )}
       </div>
@@ -118,7 +117,6 @@ export function AssessmentProblems({
       <AttachProblemDialog
         assessmentId={assessment.id}
         attachedIds={attachedIds}
-        nextOrder={nextOrder}
         open={adding}
         onOpenChange={setAdding}
       />

@@ -1,5 +1,8 @@
 export type InvitationStatus = "PENDING" | "ACCEPTED" | "EXPIRED" | "REVOKED";
 
+// Returned by create and resend: false when the email could not be delivered
+export type InvitationDelivery = Invitation & { emailSent: boolean };
+
 export interface Invitation {
   id: string;
   candidateEmail: string;

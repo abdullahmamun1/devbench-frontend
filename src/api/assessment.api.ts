@@ -6,6 +6,7 @@ import type {
   AssessmentProblem,
   AssessmentResults,
   AttachProblemPayload,
+  AttachProblemsPayload,
   CreateAssessmentPayload,
   UpdateAssessmentPayload,
 } from "@/types";
@@ -39,6 +40,12 @@ export const attachProblem = (id: string, payload: AttachProblemPayload) =>
     method: "POST",
     body: payload,
   });
+
+export const attachProblems = (id: string, payload: AttachProblemsPayload) =>
+  apiClient<ApiResponse<AssessmentProblem[]>>(
+    `/assessments/${id}/problems/bulk`,
+    { method: "POST", body: payload },
+  );
 
 export const detachProblem = (id: string, problemId: string) =>
   apiClient<ApiResponse<null>>(`/assessments/${id}/problems/${problemId}`, {

@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-query";
 import { toast } from "sonner";
 import {
-  attachProblem,
+  attachProblems,
   closeAssessment,
   createAssessment,
   deleteAssessment,
@@ -21,7 +21,7 @@ import {
 } from "@/api";
 import type {
   AssessmentStatus,
-  AttachProblemPayload,
+  AttachProblemsPayload,
   ListQuery,
   UpdateAssessmentPayload,
 } from "@/types";
@@ -91,11 +91,12 @@ export const useDeleteAssessment = () =>
     "Could not delete assessment",
   );
 
-export const useAttachProblem = (id: string) =>
+
+export const useAttachProblems = (id: string) =>
   useAssessmentMutation(
-    (payload: AttachProblemPayload) => attachProblem(id, payload),
-    "Problem added",
-    "Could not add problem",
+    (payload: AttachProblemsPayload) => attachProblems(id, payload),
+    "Problems added",
+    "Could not add problems",
   );
 
 export const useDetachProblem = (id: string) =>

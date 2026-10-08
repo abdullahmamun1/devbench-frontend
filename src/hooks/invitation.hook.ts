@@ -59,8 +59,14 @@ export function useCreateInvitation(assessmentId: string) {
   return useMutation({
     mutationFn: (candidateEmail: string) =>
       createInvitation(assessmentId, { candidateEmail }),
-    onSuccess: (_res, email) => {
-      toast.success(`Invitation sent to ${email}`);
+    onSuccess: (res, email) => {
+      if (res.data.emailSent) {
+        toast.success(`Invitation sent to ${email}`);
+      } else {
+        toast.warning(
+          `Invitation created for ${email}, but the email could not be sent. Use Resend to try again.`,
+        );
+      }
       refresh();
     },
     onError: (e) =>
@@ -73,8 +79,12 @@ export function useResendInvitation(assessmentId: string) {
   return useMutation({
     mutationFn: (invitationId: string) =>
       resendInvitation(assessmentId, invitationId),
-    onSuccess: () => {
-      toast.success("Invitation resent");
+    onSuccess: (res) => {
+      if (res.data.emailSent) {
+        toast.success("Invitation resent");
+      } else {
+        toast.warning("The email could not be sent. Please try again shortly.");
+      }
       qc.invalidateQueries({ queryKey: ["invitations", assessmentId] });
     },
     onError: (e) =>
