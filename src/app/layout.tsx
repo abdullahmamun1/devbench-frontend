@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Outfit, Raleway } from "next/font/google";
+import { Geist_Mono, Outfit, Raleway } from "next/font/google";
 import "./globals.css";
+import SkipLink from "@/components/shared/skip-link";
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -16,11 +17,6 @@ const ralewayHeading = Raleway({
 });
 
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-sans" });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -72,7 +68,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={cn(
         "h-full",
         "antialiased",
-        geistSans.variable,
         geistMono.variable,
         "font-sans",
         outfit.variable,
@@ -80,6 +75,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       )}
     >
       <body className="min-h-full flex flex-col">
+        <SkipLink />
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -27,7 +27,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <DashboardSidebar user={user} />
-      <SidebarInset>
+      <SidebarInset id="main-content" tabIndex={-1} className="outline-none">
         <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mx-1 h-5" />

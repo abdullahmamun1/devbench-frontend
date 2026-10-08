@@ -296,7 +296,11 @@ function ExamSession({
         </Button>
       </header>
 
-      <main className="mx-auto grid w-full max-w-6xl flex-1 gap-6 p-4 lg:grid-cols-[220px_1fr]">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="mx-auto grid w-full max-w-6xl flex-1 gap-6 p-4 outline-none lg:grid-cols-[220px_1fr]"
+      >
         <ExamNavigator
           problems={problems}
           answers={answers}

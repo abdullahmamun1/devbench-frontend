@@ -1,11 +1,13 @@
 "use client";
 
 import { Building2, ClipboardCheck, Users, Wallet } from "lucide-react";
+import dynamic from "next/dynamic";
 import StatCard from "@/components/shared/stat-card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { usePlatformStats, usePlatformTrends } from "@/hooks";
 import type { PlatformTrendPoint } from "@/types";
 import { formatCents } from "@/utils/format";
-import TrendChart, { type TrendDatum } from "./trend-chart";
+import type { TrendDatum } from "./trend-chart";
 
 const count = (n: number) => String(n);
 
@@ -15,6 +17,10 @@ function series(
 ): TrendDatum[] {
   return (points ?? []).map((p) => ({ month: p.month, value: pick(p) }));
 }
+const TrendChart = dynamic(() => import("./trend-chart"), {
+  ssr: false,
+  loading: () => <Skeleton className="h-72 w-full rounded-xl" />,
+});
 
 export default function AdminOverview() {
   const stats = usePlatformStats();
