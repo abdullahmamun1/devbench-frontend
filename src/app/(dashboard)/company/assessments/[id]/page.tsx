@@ -1,5 +1,8 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { AssessmentDetail } from "@/components/modules/assessments/assessment-detail";
+
+export const metadata: Metadata = { title: "Assessments" };
 
 export default async function AssessmentDetailPage({
   params,

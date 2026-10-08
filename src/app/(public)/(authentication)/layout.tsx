@@ -2,6 +2,7 @@ import { Check, Code2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import Logo from "@/components/layout/public/logo";
 
 const HIGHLIGHTS = [
   "Build timed coding, MCQ and written assessments",
@@ -57,12 +58,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       {/* Form panel: 60% */}
       <main className="flex min-h-svh flex-col">
         <div className="flex justify-center px-6 pt-6 lg:hidden">
-          <Link href="/" className="flex items-center gap-2 text-lg font-bold">
-            <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Code2 className="size-5" />
-            </span>
-            DevBench
-          </Link>
+          <Logo />
         </div>
         <div className="flex flex-1 items-center justify-center px-6 py-6 sm:px-10">
           <div className="w-full max-w-xl">{children}</div>

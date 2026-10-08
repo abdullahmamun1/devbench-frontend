@@ -1,5 +1,8 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { AssessmentList } from "@/components/modules/assessments/assessment-list";
+
+export const metadata: Metadata = { title: "Assessments" };
 
 export default function AssessmentsPage() {
   return (

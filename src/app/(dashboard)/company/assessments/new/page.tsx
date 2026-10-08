@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import { CreateAssessmentForm } from "@/components/modules/assessments/create-assessment-form";
+
+export const metadata: Metadata = { title: "New assessment" };
 
 export default function NewAssessmentPage() {
   return (

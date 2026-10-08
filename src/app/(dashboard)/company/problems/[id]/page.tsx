@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import { ProblemDetail } from "@/components/modules/problems/problem-detail";
+
+export const metadata: Metadata = { title: "Problem" };
 
 export default async function ProblemDetailPage({
   params,

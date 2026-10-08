@@ -7,15 +7,17 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  CREDIT_PRESETS,
+  CREDIT_PRICE_CENTS,
+  MAX_CREDITS,
+  MIN_CREDITS,
+} from "@/constants/billing";
 import { useGetMe } from "@/hooks";
 import { cn } from "@/lib/utils";
 
-const MIN = 1;
-const MAX = 1000;
-const PRESETS = [10, 50, 100, 500];
-
 const clamp = (value: number) =>
-  Math.min(MAX, Math.max(MIN, Math.round(value)));
+  Math.min(MAX_CREDITS, Math.max(MIN_CREDITS, Math.round(value)));
 
 const money = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -23,8 +25,7 @@ const money = new Intl.NumberFormat("en-US", {
 });
 
 export default function CreditCalculator() {
-  const centsPerCredit =
-    Number(process.env.NEXT_PUBLIC_CREDIT_PRICE_CENTS) || 100;
+  const centsPerCredit = CREDIT_PRICE_CENTS;
   const [credits, setCredits] = useState(50);
   const [text, setText] = useState("50");
 
@@ -55,23 +56,23 @@ export default function CreditCalculator() {
             id="credits"
             type="number"
             inputMode="numeric"
-            min={MIN}
-            max={MAX}
+            min={MIN_CREDITS}
+            max={MAX_CREDITS}
             value={text}
             onChange={(e) => {
               setText(e.target.value);
               const parsed = Number(e.target.value);
-              if (Number.isFinite(parsed) && parsed >= MIN) {
+              if (Number.isFinite(parsed) && parsed >= MIN_CREDITS) {
                 setCredits(clamp(parsed));
               }
             }}
-            onBlur={() => update(Number(text) || MIN)}
+            onBlur={() => update(Number(text) || MIN_CREDITS)}
           />
           <input
             type="range"
             aria-label="Credits"
-            min={MIN}
-            max={MAX}
+            min={MIN_CREDITS}
+            max={MAX_CREDITS}
             value={credits}
             onChange={(e) => update(Number(e.target.value))}
             className="w-full accent-primary"
@@ -79,7 +80,7 @@ export default function CreditCalculator() {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {PRESETS.map((preset) => (
+          {CREDIT_PRESETS.map((preset) => (
             <Button
               key={preset}
               type="button"
@@ -98,7 +99,9 @@ export default function CreditCalculator() {
             {credits} {credits === 1 ? "credit" : "credits"} at{" "}
             {money.format(centsPerCredit / 100)} each
           </div>
-          <p className="text-2xl font-bold">{money.format(total)}</p>
+          <p className="text-2xl font-bold" aria-live="polite">
+            {money.format(total)}
+          </p>
         </div>
 
         {cta ? (

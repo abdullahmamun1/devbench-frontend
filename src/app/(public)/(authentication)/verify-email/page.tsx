@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Verify your email",
   description:
     "Enter the 6-digit code we emailed you to activate your DevBench account.",
+  robots: { index: false, follow: false },
 };
 
 export default function VerifyEmailPage() {

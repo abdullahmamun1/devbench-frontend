@@ -1,6 +1,6 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import RoleGuard from "@/components/auth/role-guard";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: { default: "Assessment", template: "%s | DevBench" },

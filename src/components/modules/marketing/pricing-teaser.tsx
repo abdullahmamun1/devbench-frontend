@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
+import { CREDIT_PRICE_CENTS } from "@/constants/billing";
 
 export default function PricingTeaser() {
-  const cents = Number(process.env.NEXT_PUBLIC_CREDIT_PRICE_CENTS) || 100;
-  const price = (cents / 100).toFixed(2);
+  const price = (CREDIT_PRICE_CENTS / 100).toFixed(2);
 
   return (
     <section className="border-y bg-muted/30">

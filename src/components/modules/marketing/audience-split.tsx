@@ -29,6 +29,7 @@ const AUDIENCES = [
 export default function AudienceSplit() {
   return (
     <section className="mx-auto grid max-w-7xl gap-6 px-4 py-16 sm:px-6 md:grid-cols-2">
+      <h2 className="sr-only">Who DevBench is for</h2>
       {AUDIENCES.map(({ icon: Icon, title, points, cta }) => (
         <Card key={title}>
           <CardContent className="space-y-5">

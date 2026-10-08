@@ -1,5 +1,8 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ProblemList } from "@/components/modules/problems/problem-list";
+
+export const metadata: Metadata = { title: "Problem bank" };
 
 export default function ProblemsPage() {
   return (

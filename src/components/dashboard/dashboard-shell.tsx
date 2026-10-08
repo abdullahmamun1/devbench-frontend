@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useGetMe } from "@/hooks";
 import { findRouteTitle, getRoutesForRole } from "@/utils/sidebar";
+import ThemeToggle from "../shared/theme-toggle";
 import CreditBadge from "./credit-badge";
 import { DashboardSidebar } from "./dashboard-sidebar";
 import UserMenu from "./user-menu";
@@ -33,6 +34,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
           <p className="font-semibold">{title}</p>
 
           <div className="ml-auto flex items-center gap-2">
+            <ThemeToggle />
             <CreditBadge user={user} />
             <UserMenu user={user} />
           </div>

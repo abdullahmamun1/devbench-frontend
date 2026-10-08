@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import { CreateProblemForm } from "@/components/modules/problems/create-problem-form";
+
+export const metadata: Metadata = { title: "New problem" };
 
 export default function NewProblemPage() {
   return (

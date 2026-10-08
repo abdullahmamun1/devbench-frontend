@@ -5,6 +5,7 @@ import ForgotPasswordForm from "@/components/form/forgot-password-form";
 export const metadata: Metadata = {
   title: "Forgot password",
   description: "Request a 6-digit code to reset your DevBench password.",
+  robots: { index: false, follow: false },
 };
 
 export default function ForgotPasswordPage() {

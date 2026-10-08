@@ -1,8 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Outfit, Raleway } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "sonner";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/constants/site";
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TAGLINE,
+  SITE_URL,
+} from "@/constants/site";
 import { cn } from "@/lib/utils";
 import Providers from "@/providers";
 
@@ -23,8 +27,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -39,6 +41,14 @@ export const metadata: Metadata = {
     title: `${SITE_NAME} | ${SITE_TAGLINE}`,
     description: SITE_DESCRIPTION,
     url: "/",
+    images: [
+      {
+        url: "/images/home-hero.jpg",
+        width: 1400,
+        height: 1000,
+        alt: SITE_NAME,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -58,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn(
         "h-full",
         "antialiased",
@@ -70,7 +81,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
-        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

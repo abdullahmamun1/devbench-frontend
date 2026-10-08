@@ -3,6 +3,7 @@ import CreditCalculator from "@/components/modules/marketing/credit-calculator";
 import CtaSection from "@/components/modules/marketing/cta-section";
 import FeatureCard from "@/components/modules/marketing/feature-card";
 import PageHero from "@/components/modules/marketing/page-hero";
+import { CREDIT_PRICE_CENTS } from "@/constants/billing";
 import { buildMetadata } from "@/utils/metadata";
 
 export const metadata = buildMetadata({
@@ -19,7 +20,7 @@ export default function PricingPage() {
     <>
       <PageHero
         title="Pay only for the candidates you invite"
-        description={`One credit costs $${(cents / 100).toFixed(2)} and each invitation uses one credit. No subscription, no contract.`}
+        description={`One credit costs $${(CREDIT_PRICE_CENTS / 100).toFixed(2)} and each invitation uses one credit. No subscription, no contract.`}
       />
 
       <section className="px-4 py-14 sm:px-6">

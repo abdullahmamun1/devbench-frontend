@@ -1,6 +1,6 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import AuthGuard from "@/components/auth/auth-guard";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: { default: "Dashboard", template: "%s | DevBench" },

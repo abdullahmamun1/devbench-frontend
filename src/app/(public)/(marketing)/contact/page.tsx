@@ -1,4 +1,5 @@
 import { Mail, MessageSquare } from "lucide-react";
+import Link from "next/link";
 import ContactForm from "@/components/form/contact-form";
 import PageHero from "@/components/modules/marketing/page-hero";
 import { Card, CardContent } from "@/components/ui/card";
@@ -57,12 +58,12 @@ export default function ContactPage() {
 
           <p className="text-sm text-muted-foreground">
             Looking for a quick answer? Check the{" "}
-            <a
+            <Link
               href="/faq"
               className="underline underline-offset-4 hover:text-foreground"
             >
               FAQ
-            </a>{" "}
+            </Link>
             first.
           </p>
         </div>
