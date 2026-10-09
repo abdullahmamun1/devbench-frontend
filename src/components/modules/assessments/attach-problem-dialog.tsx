@@ -81,7 +81,8 @@ export function AttachProblemDialog({
       if (allShownSelected) {
         for (const p of available) next.delete(p.id);
       } else {
-        for (const p of available) if (!next.has(p.id)) next.set(p.id, p.points);
+        for (const p of available)
+          if (!next.has(p.id)) next.set(p.id, p.points);
       }
       return next;
     });

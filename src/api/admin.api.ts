@@ -4,6 +4,7 @@ import type {
   AdminCandidate,
   AdminCompany,
   AdminListQuery,
+  AdminPayment,
   ApiResponse,
   AuditLog,
   AuditLogQuery,
@@ -22,6 +23,9 @@ export const getAdminCompanies = (query?: AdminListQuery) =>
 
 export const getAdminCandidates = (query?: AdminListQuery) =>
   apiClient<ApiResponse<AdminCandidate[]>>("/admin/candidates", { query });
+
+export const getAdminPayments = (query?: AdminListQuery) =>
+  apiClient<ApiResponse<AdminPayment[]>>("/admin/payments", { query });
 
 export const getAuditLogs = (query?: AuditLogQuery) =>
   apiClient<ApiResponse<AuditLog[]>>("/admin/audit-logs", { query });

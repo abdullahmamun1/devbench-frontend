@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useProblemDraftStore } from "@/store/problem-draft.store";
 import { useProblemWizardStore } from "@/store/problem-wizard.store";
 import type { CreateProblemPayload, ProblemType } from "@/types";
 import {
@@ -41,6 +42,7 @@ const TYPE_OPTIONS: { value: ProblemType; label: string; hint: string }[] = [
 interface ProblemWizardProps {
   initialValues?: ProblemFormValues;
   lockType?: boolean;
+  persistDraft?: boolean;
   submitLabel?: string;
   isSubmitting?: boolean;
   onSubmit: (payload: CreateProblemPayload) => void;
@@ -56,22 +58,37 @@ const toFieldName = (path: PropertyKey[]) =>
 export function ProblemWizard({
   initialValues = PROBLEM_FORM_DEFAULTS,
   lockType = false,
+  persistDraft = false,
   submitLabel = "Create problem",
   isSubmitting = false,
   onSubmit,
 }: ProblemWizardProps) {
-  const { step, setStep, reset } = useProblemWizardStore();
+  const local = useProblemWizardStore();
+  const draft = useProblemDraftStore();
+
+  const step = persistDraft ? draft.step : local.step;
+  const setStep = persistDraft ? draft.setStep : local.setStep;
+  const resetLocal = local.reset;
 
   useEffect(() => {
-    reset();
-    return reset;
-  }, [reset]);
+    if (persistDraft) return;
+    resetLocal();
+    return resetLocal;
+  }, [persistDraft, resetLocal]);
 
   const form = useForm({
     defaultValues: initialValues,
     validators: { onChange: problemFormSchema },
     onSubmit: ({ value }) => onSubmit(toProblemPayload(value)),
   });
+
+  const setDraftValues = draft.setValues;
+
+  useEffect(() => {
+    if (!persistDraft) return;
+    const sub = form.store.subscribe(() => setDraftValues(form.state.values));
+    return () => sub.unsubscribe();
+  }, [form, persistDraft, setDraftValues]);
 
   const lastStep = STEPS.length - 1;
 

@@ -5,7 +5,6 @@ import type {
   Assessment,
   AssessmentProblem,
   AssessmentResults,
-  AttachProblemPayload,
   AttachProblemsPayload,
   CreateAssessmentPayload,
   UpdateAssessmentPayload,
@@ -34,12 +33,6 @@ export const updateAssessment = (
 
 export const deleteAssessment = (id: string) =>
   apiClient<ApiResponse<null>>(`/assessments/${id}`, { method: "DELETE" });
-
-export const attachProblem = (id: string, payload: AttachProblemPayload) =>
-  apiClient<ApiResponse<AssessmentProblem>>(`/assessments/${id}/problems`, {
-    method: "POST",
-    body: payload,
-  });
 
 export const attachProblems = (id: string, payload: AttachProblemsPayload) =>
   apiClient<ApiResponse<AssessmentProblem[]>>(

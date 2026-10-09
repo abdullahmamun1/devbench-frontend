@@ -1,3 +1,5 @@
+import { PaymentStatus } from "./payment.type";
+
 export type UserStatus = "ACTIVE" | "SUSPENDED" | "DELETED";
 export type CompanyStatus = "ACTIVE" | "SUSPENDED";
 
@@ -18,6 +20,16 @@ export interface AdminCandidate {
   emailVerified: boolean;
   createdAt: string;
   _count: { attempts: number };
+}
+
+export interface AdminPayment {
+  id: string;
+  amount: number;
+  status: PaymentStatus;
+  creditsPurchased: number;
+  stripeSessionId: string;
+  createdAt: string;
+  company: { id: string; companyName: string };
 }
 
 export interface AuditLog {

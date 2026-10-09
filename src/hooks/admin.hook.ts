@@ -10,6 +10,7 @@ import {
   deleteUser,
   getAdminCandidates,
   getAdminCompanies,
+  getAdminPayments,
   getAuditLogs,
   getPlatformStats,
   getPlatformTrends,
@@ -38,6 +39,13 @@ export const useAdminCandidates = (query: AdminListQuery) =>
   useQuery({
     queryKey: ["admin", "candidates", query],
     queryFn: () => getAdminCandidates(query),
+    placeholderData: keepPreviousData,
+  });
+
+export const useAdminPayments = (query: AdminListQuery) =>
+  useQuery({
+    queryKey: ["admin", "payments", query],
+    queryFn: () => getAdminPayments(query),
     placeholderData: keepPreviousData,
   });
 

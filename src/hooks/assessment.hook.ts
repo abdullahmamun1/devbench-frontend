@@ -91,7 +91,6 @@ export const useDeleteAssessment = () =>
     "Could not delete assessment",
   );
 
-
 export const useAttachProblems = (id: string) =>
   useAssessmentMutation(
     (payload: AttachProblemsPayload) => attachProblems(id, payload),
