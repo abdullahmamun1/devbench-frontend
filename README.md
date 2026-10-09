@@ -4,7 +4,7 @@ Web app for DevBench, a developer assessment platform. Companies build coding, M
 
 | | |
 |---|---|
-| Live site | _add after deployment_ |
+| Live site | https://devbench-frontend-ten.vercel.app/ |
 | Backend API | https://devbench-backend.vercel.app/ |
 | Backend repo | https://github.com/abdullahmamun1/devbench-backend-api |
 
