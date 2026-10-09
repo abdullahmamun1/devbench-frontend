@@ -1,4 +1,4 @@
-import { PaymentStatus } from "./payment.type";
+import type { PaymentStatus } from "./payment.type";
 
 export type UserStatus = "ACTIVE" | "SUSPENDED" | "DELETED";
 export type CompanyStatus = "ACTIVE" | "SUSPENDED";
