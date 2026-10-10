@@ -93,7 +93,7 @@ export function ProblemWizard({
   const lastStep = STEPS.length - 1;
 
   const goNext = async () => {
-    await form.validateAllFields("change");
+    await form.validate("change");
     const result = problemFormSchema.safeParse(form.state.values);
     const stepIssues = result.success
       ? []
