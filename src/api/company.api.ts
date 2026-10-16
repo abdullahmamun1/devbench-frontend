@@ -3,6 +3,7 @@ import type {
   AcceptTeamPayload,
   ApiResponse,
   Company,
+  CompanyActivity,
   CreditsResult,
   InviteTeamPayload,
   UpdateCompanyPayload,
@@ -11,6 +12,9 @@ import type {
 
 export const getMyCompany = () =>
   apiClient<ApiResponse<Company>>("/companies/me");
+
+export const getCompanyActivity = () =>
+  apiClient<ApiResponse<CompanyActivity>>("/companies/me/activity");
 
 export const updateCompany = (body: UpdateCompanyPayload) =>
   apiClient<ApiResponse<UpdatedCompany>>("/companies/me", {

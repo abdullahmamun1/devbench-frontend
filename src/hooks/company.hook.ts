@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
   acceptTeamInvitation,
+  getCompanyActivity,
   getCredits,
   getMyCompany,
   inviteTeamMember,
@@ -13,6 +14,15 @@ import {
 } from "@/api";
 import type { AcceptTeamPayload } from "@/types";
 import { getErrorMessage } from "@/utils/error";
+
+// Dashboard charts: monthly activity, outcomes and scores by type
+export const useCompanyActivity = (enabled = true) =>
+  useQuery({
+    queryKey: ["company", "activity"],
+    queryFn: getCompanyActivity,
+    select: (res) => res.data,
+    enabled,
+  });
 
 export function useMyCompany(enabled = true) {
   return useQuery({

@@ -26,7 +26,7 @@ function Histogram({ data }: { data: AssessmentInsights }) {
     data.maxScore > 0 ? (data.passingScore / data.maxScore) * 100 : null;
 
   return (
-    <section className="space-y-4 rounded-2xl border p-5">
+    <section className="relative space-y-4 rounded-2xl border p-5">
       <div className="flex items-center gap-2">
         <ChartColumn className="size-5 text-primary" aria-hidden="true" />
         <h3 className="font-semibold">Score distribution</h3>
@@ -102,7 +102,7 @@ function Histogram({ data }: { data: AssessmentInsights }) {
 
 function QuestionTable({ data }: { data: AssessmentInsights }) {
   return (
-    <section className="space-y-4 rounded-2xl border p-5">
+    <section className="relative space-y-4 rounded-2xl border p-5">
       <div className="flex items-center gap-2">
         <Lightbulb className="size-5 text-primary" aria-hidden="true" />
         <h3 className="font-semibold">Question analysis</h3>
@@ -124,7 +124,7 @@ function QuestionTable({ data }: { data: AssessmentInsights }) {
             compares the top and bottom 27% of candidates: a good question is
             answered better by stronger candidates.
           </p>
-          <ul className="divide-y rounded-xl border">
+          <ul className="divide-y rounded-2xl border">
             {data.questions.map((q) => {
               const sep = separation(q.discrimination);
               return (

@@ -11,6 +11,7 @@ import {
   type LucideIcon,
   UsersRound,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import DataTable, {
   type DataTableColumn,
@@ -19,6 +20,7 @@ import EmptyState from "@/components/shared/empty-state";
 import StatCard from "@/components/shared/stat-card";
 import StatusBadge from "@/components/shared/status-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ROLE_LABELS } from "@/constants/roles";
 import {
   useAssessmentCount,
@@ -67,6 +69,12 @@ const ACTIONS: {
     roles: ["COMPANY_OWNER"],
   },
 ];
+
+// recharts only loads when the dashboard renders its charts
+const ActivityCharts = dynamic(() => import("./activity-charts"), {
+  ssr: false,
+  loading: () => <Skeleton className="h-80 w-full rounded-2xl" />,
+});
 
 // "-" when a request failed, so one broken endpoint doesn't blank the page
 const countValue = (query: UseQueryResult<number>) =>
@@ -178,6 +186,8 @@ export default function CompanyOverview() {
           />
         )}
       </div>
+
+      <ActivityCharts />
 
       <Card>
         <CardHeader>

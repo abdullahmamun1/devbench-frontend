@@ -8,6 +8,7 @@ import {
   Mail,
   PlayCircle,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useMemo } from "react";
 import DataTable, {
@@ -18,6 +19,7 @@ import StatCard from "@/components/shared/stat-card";
 import StatusBadge from "@/components/shared/status-badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGetMe, useMyAttempts, useMyInvitations } from "@/hooks";
 import type { MyAttempt } from "@/types";
 import {
@@ -26,6 +28,12 @@ import {
   isOpenInvitation,
 } from "@/utils/attempt";
 import { formatDateTime } from "@/utils/format";
+
+// recharts only loads when the dashboard renders its charts
+const ScoreCharts = dynamic(() => import("./score-charts"), {
+  ssr: false,
+  loading: () => <Skeleton className="h-80 w-full rounded-2xl" />,
+});
 
 function scoreLabel(attempt: MyAttempt) {
   if (attempt.status === "IN_PROGRESS") return "In progress";
@@ -131,6 +139,8 @@ export default function CandidateOverview() {
           description="Waiting for an evaluator"
         />
       </div>
+
+      {attempts && attempts.length > 0 && <ScoreCharts attempts={attempts} />}
 
       {stats?.live && (
         <Card className="border-primary/40 bg-primary/5">

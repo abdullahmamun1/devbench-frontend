@@ -109,7 +109,7 @@ export default function TrendChart({
           </p>
         ) : (
           // Series color: the brand primary, checked by check:contrast in both themes.
-          <div className="[--viz-series:var(--chart-1)]">
+          <div className="relative [--viz-series:var(--chart-1)]">
             <div className="h-56 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 {kind === "line" ? (

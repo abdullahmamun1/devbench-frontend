@@ -60,3 +60,14 @@ export interface AcceptTeamPayload {
   name: string;
   password: string;
 }
+
+// GET /companies/me/activity, for the dashboard charts
+export interface CompanyActivity {
+  months: { month: string; invitations: number; submissions: number }[];
+  outcomes: { passed: number; failed: number; awaitingReview: number };
+  byType: {
+    type: "CODING" | "MCQ" | "WRITTEN";
+    graded: number;
+    averagePercent: number | null;
+  }[];
+}

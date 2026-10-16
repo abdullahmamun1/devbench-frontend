@@ -10,9 +10,12 @@ export interface MyAttempt {
   startedAt: string | null;
   expiresAt: string | null;
   totalScore: number | null;
+  // Sum of the assessment's problem points
+  maxScore: number;
   assessment: {
     id: string;
     title: string;
+    passingScore: number;
     company: { companyName: string };
   };
 }
