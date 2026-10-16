@@ -1,3 +1,4 @@
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { FOOTER_LINKS, SITE_NAME } from "@/constants/site";
 import Logo from "./logo";
@@ -16,19 +17,29 @@ export default function Footer() {
 
         <nav
           aria-label="Footer"
-          className="grid grid-cols-2 gap-8 sm:grid-cols-3"
+          className="grid grid-cols-2 gap-8 sm:grid-cols-4"
         >
           {FOOTER_LINKS.map((group) => (
             <div key={group.title} className="space-y-3">
               <p className="text-sm font-semibold">{group.title}</p>
               <ul className="space-y-2">
                 {group.links.map((link) => (
-                  <li key={link.href}>
+                  <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-muted-foreground hover:text-foreground"
+                      {...(link.external && {
+                        target: "_blank",
+                        rel: "noreferrer",
+                      })}
+                      className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
                     >
                       {link.label}
+                      {link.external && (
+                        <ArrowUpRight
+                          className="size-3"
+                          aria-label="(opens in a new tab)"
+                        />
+                      )}
                     </Link>
                   </li>
                 ))}

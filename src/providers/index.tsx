@@ -1,5 +1,6 @@
 "use client";
 import type { ReactNode } from "react";
+import SamePageAnchors from "@/components/shared/same-page-anchors";
 import ThemedToaster from "@/components/shared/themed-toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import QueryProvider from "./query.provider";
@@ -17,6 +18,7 @@ export default function Providers({ children }: { children: ReactNode }) {
         <TooltipProvider>{children}</TooltipProvider>
       </QueryProvider>
       <ThemedToaster />
+      <SamePageAnchors />
     </ThemeProvider>
   );
 }
