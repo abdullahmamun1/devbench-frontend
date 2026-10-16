@@ -1,6 +1,16 @@
-import { Compass } from "lucide-react";
+import {
+  ArrowRight,
+  CircleHelp,
+  CreditCard,
+  LayoutGrid,
+  type LucideIcon,
+  Mail,
+} from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import Footer from "@/components/layout/public/footer";
+import Header from "@/components/layout/public/header";
+import StatusPage from "@/components/shared/status-page";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -8,34 +18,102 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+const SUGGESTIONS: {
+  label: string;
+  description: string;
+  href: string;
+  icon: LucideIcon;
+}[] = [
+  {
+    label: "Features",
+    description: "The full product",
+    href: "/features",
+    icon: LayoutGrid,
+  },
+  {
+    label: "Pricing",
+    description: "Credits, not seats",
+    href: "/pricing",
+    icon: CreditCard,
+  },
+  {
+    label: "FAQ",
+    description: "Common questions",
+    href: "/faq",
+    icon: CircleHelp,
+  },
+  {
+    label: "Contact",
+    description: "Talk to a person",
+    href: "/contact",
+    icon: Mail,
+  },
+];
+
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-4 text-center">
-      <div className="flex size-16 items-center justify-center rounded-full bg-muted">
-        <Compass className="size-8 text-muted-foreground" aria-hidden="true" />
-      </div>
-      <div className="space-y-2">
-        <p className="font-medium text-muted-foreground text-sm">Error 404</p>
-        <h1 className="font-semibold text-3xl tracking-tight">
-          This page does not exist
-        </h1>
-        <p className="mx-auto max-w-md text-muted-foreground">
-          The link may be broken, or the page may have been moved. Check the
-          address or head back to a page that works.
-        </p>
-      </div>
-      <div className="flex flex-wrap justify-center gap-3">
-        <Button render={<Link href="/" />} nativeButton={false}>
-          Back to home
-        </Button>
-        <Button
-          variant="outline"
-          render={<Link href="/login" />}
-          nativeButton={false}
+    <>
+      <Header />
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="flex flex-1 flex-col outline-none"
+      >
+        <StatusPage
+          code="404"
+          eyebrow="Page not found"
+          title="This page took a wrong turn"
+          description="The link may be broken, or the page may have moved. Check the address, or pick up from one of these."
+          actions={
+            <>
+              <Button
+                variant="brand"
+                size="lg"
+                render={<Link href="/" />}
+                nativeButton={false}
+              >
+                Back to home
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                render={<Link href="/login" />}
+                nativeButton={false}
+              >
+                Go to login
+              </Button>
+            </>
+          }
         >
-          Go to login
-        </Button>
-      </div>
-    </main>
+          <nav
+            aria-label="Suggested pages"
+            className="mt-14 grid w-full max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-4"
+          >
+            {SUGGESTIONS.map(({ label, description, href, icon: Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                className="group flex items-center gap-3 rounded-2xl border bg-card/80 p-4 text-left backdrop-blur transition-[border-color,translate,box-shadow] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+              >
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="size-5" aria-hidden="true" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-semibold">{label}</span>
+                  <span className="block text-sm text-muted-foreground">
+                    {description}
+                  </span>
+                </span>
+                <ArrowRight
+                  className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                  aria-hidden="true"
+                />
+              </Link>
+            ))}
+          </nav>
+        </StatusPage>
+      </main>
+      <Footer />
+    </>
   );
 }
