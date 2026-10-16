@@ -11,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { DEMO_ACCOUNTS, type DemoAccount } from "@/constants/demo-accounts";
-import { useLogin } from "@/hooks";
 
 const ICONS = {
   admin: ShieldCheck,
@@ -24,19 +23,26 @@ const ICONS = {
 // The company owner sees the most of the product, so it leads for recruiters
 const FEATURED = "company";
 
-export default function DemoLogin() {
-  const { mutate, isPending, variables } = useLogin();
+export default function DemoLogin({
+  onPick,
+  busy,
+  pendingEmail,
+}: {
+  onPick: (account: { email: string; password: string }) => void;
+  busy: boolean;
+  pendingEmail: string | null;
+}) {
+  const isPending = busy;
   const featured = DEMO_ACCOUNTS.find((a) => a.key === FEATURED);
   const others = DEMO_ACCOUNTS.filter((a) => a.key !== FEATURED);
 
-  const loading = (account: DemoAccount) =>
-    isPending && variables?.email === account.email;
+  const loading = (account: DemoAccount) => pendingEmail === account.email;
 
   return (
     <section
       id="demo-login"
       aria-labelledby="demo-login-title"
-      className="space-y-3 rounded-3xl border bg-muted/40 p-4"
+      className="space-y-3 rounded-2xl border bg-muted/40 p-4"
     >
       <h2 id="demo-login-title" className="text-center font-semibold">
         Explore with a demo account{" "}
@@ -50,7 +56,7 @@ export default function DemoLogin() {
           disabled={isPending}
           aria-label={`Log in as ${featured.label}. ${featured.hint}`}
           onClick={() =>
-            mutate({ email: featured.email, password: featured.password })
+            onPick({ email: featured.email, password: featured.password })
           }
           className="h-auto w-full justify-start gap-3 rounded-2xl px-4 py-3.5 text-left whitespace-normal"
         >
@@ -79,7 +85,7 @@ export default function DemoLogin() {
               disabled={isPending}
               aria-label={`Log in as ${account.label}. ${account.hint}`}
               onClick={() =>
-                mutate({ email: account.email, password: account.password })
+                onPick({ email: account.email, password: account.password })
               }
               className="h-auto justify-start gap-2.5 rounded-2xl bg-card px-3 py-2.5 text-left whitespace-normal"
             >

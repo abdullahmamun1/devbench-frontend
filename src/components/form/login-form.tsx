@@ -2,7 +2,7 @@
 
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -18,7 +18,25 @@ import { focusFirstInvalid, shake } from "@/utils/form";
 import { loginSchema } from "@/validation/auth.validation";
 import PasswordInput from "./password-input";
 
-export default function LoginForm() {
+// A demo account picked from the demo panel. `nonce` makes picking the same
+// account twice still count, and `done` clears the pick once it's handled.
+export interface DemoPick {
+  email: string;
+  password: string;
+  nonce: number;
+  done: () => void;
+}
+
+// Long enough to see the fields fill in before the form signs in
+const AUTOFILL_PAUSE_MS = 450;
+
+export default function LoginForm({
+  demoPick = null,
+  onPendingChange,
+}: {
+  demoPick?: DemoPick | null;
+  onPendingChange?: (pending: boolean) => void;
+}) {
   const { mutate: login, isPending } = useLogin();
   const [blockedMessage, setBlockedMessage] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
@@ -42,6 +60,22 @@ export default function LoginForm() {
       });
     },
   });
+
+  useEffect(() => {
+    onPendingChange?.(isPending);
+  }, [isPending, onPendingChange]);
+
+  // Demo buttons: fill the fields visibly, then submit like a normal login
+  useEffect(() => {
+    if (!demoPick) return;
+    form.setFieldValue("email", demoPick.email);
+    form.setFieldValue("password", demoPick.password);
+    const timer = setTimeout(() => {
+      form.handleSubmit();
+      demoPick.done();
+    }, AUTOFILL_PAUSE_MS);
+    return () => clearTimeout(timer);
+  }, [demoPick, form]);
 
   return (
     <form

@@ -36,6 +36,20 @@ const FRONTEND_REPO = `${GITHUB}/devbench-frontend`;
 const BACKEND_REPO = `${GITHUB}/devbench-backend-api`;
 const POSTMAN = `${BACKEND_REPO}/blob/main/DevBench-Backend.postman_collection.json`;
 
+export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
+
+// Footer social links. Optional ones only show when their URL is configured,
+// so the footer never links to a made-up profile.
+export const SOCIAL_LINKS = [
+  { key: "github", label: "GitHub", href: GITHUB },
+  {
+    key: "linkedin",
+    label: "LinkedIn",
+    href: process.env.NEXT_PUBLIC_LINKEDIN_URL ?? "",
+  },
+  { key: "x", label: "X (Twitter)", href: process.env.NEXT_PUBLIC_X_URL ?? "" },
+].filter((link) => link.href);
+
 // Main navigation. Desktop renders the groups as dropdown panels, mobile as an
 // accordion. Every link points at a real page, section anchor or repository.
 export const NAV_MENU: NavMenuEntry[] = [

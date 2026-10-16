@@ -31,9 +31,7 @@ export default function UserMenu({
   onNavigate?: () => void;
 }) {
   const { mutate: logout, isPending } = useLogout();
-  // The admin portal has no profile page
-  const profileUrl =
-    user.role === "ADMIN" ? null : `${ROLE_HOME[user.role]}/profile`;
+  const profileUrl = `${ROLE_HOME[user.role]}/profile`;
 
   return (
     <SidebarMenu>
@@ -80,14 +78,12 @@ export default function UserMenu({
               </DropdownMenuLabel>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            {profileUrl && (
-              <DropdownMenuItem
-                render={<Link href={profileUrl} onClick={onNavigate} />}
-              >
-                <UserIcon />
-                Profile
-              </DropdownMenuItem>
-            )}
+            <DropdownMenuItem
+              render={<Link href={profileUrl} onClick={onNavigate} />}
+            >
+              <UserIcon />
+              Profile
+            </DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
               disabled={isPending}

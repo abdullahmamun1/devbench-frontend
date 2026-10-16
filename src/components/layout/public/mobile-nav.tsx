@@ -123,6 +123,7 @@ export default function MobileNav() {
 
         <div className="border-t p-4">
           <HeaderActions
+            variant="list"
             onNavigate={close}
             className="flex-col items-stretch *:w-full"
           />
