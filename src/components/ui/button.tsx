@@ -7,7 +7,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        default: "bg-primary text-primary-foreground hover:bg-primary/85",
+        // Hero and key CTAs: gradient, soft glow, lift and a shine sweep on hover
+        brand:
+          "relative overflow-hidden bg-linear-to-br from-primary to-[color-mix(in_oklch,var(--primary),var(--foreground)_22%)] font-semibold text-primary-foreground shadow-lg shadow-primary/25 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/35 before:pointer-events-none before:absolute before:inset-0 before:-translate-x-full before:bg-linear-to-r before:from-transparent before:via-white/25 before:to-transparent before:transition-transform before:duration-700 hover:before:translate-x-full motion-reduce:hover:translate-y-0 motion-reduce:before:hidden [&>svg:last-child:not(:first-child)]:transition-transform hover:[&>svg:last-child:not(:first-child)]:translate-x-1 motion-reduce:hover:[&>svg:last-child:not(:first-child)]:translate-x-0",
         outline:
           "border-border bg-input/30 hover:bg-input/50 hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         secondary:
@@ -20,14 +23,15 @@ const buttonVariants = cva(
       },
       size: {
         default:
-          "h-9 gap-1.5 px-3 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",
-        xs: "h-6 gap-1 px-2.5 text-xs has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-8 gap-1 px-3 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        lg: "h-10 gap-1.5 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
-        icon: "size-9",
-        "icon-xs": "size-6 [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm": "size-8",
-        "icon-lg": "size-10",
+          "h-10 gap-2 px-4 text-[0.9375rem] has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
+        xs: "h-7 gap-1 px-2.5 text-xs has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
+        sm: "h-9 gap-1.5 px-3.5 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",
+        lg: "h-12 gap-2 px-6 text-base has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4 [&_svg:not([class*='size-'])]:size-5",
+        xl: "h-14 gap-2.5 px-8 text-lg has-data-[icon=inline-end]:pr-6 has-data-[icon=inline-start]:pl-6 [&_svg:not([class*='size-'])]:size-5",
+        icon: "size-10",
+        "icon-xs": "size-7 [&_svg:not([class*='size-'])]:size-3",
+        "icon-sm": "size-9",
+        "icon-lg": "size-12 [&_svg:not([class*='size-'])]:size-5",
       },
     },
     defaultVariants: {

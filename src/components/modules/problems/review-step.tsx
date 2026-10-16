@@ -47,13 +47,13 @@ export function ReviewStep({ values }: { values: ProblemFormValues }) {
               <li key={i} className="flex items-center gap-2 text-sm">
                 <span
                   className={
-                    o.isCorrect ? "font-medium text-emerald-600" : undefined
+                    o.isCorrect ? "font-medium text-brand-2" : undefined
                   }
                 >
                   {String.fromCharCode(65 + i)}. {o.text}
                 </span>
                 {o.isCorrect && (
-                  <span className="text-xs text-emerald-600">(correct)</span>
+                  <span className="text-xs text-brand-2">(correct)</span>
                 )}
               </li>
             ))}

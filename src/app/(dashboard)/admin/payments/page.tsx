@@ -1,6 +1,6 @@
-import { AdminPayments } from "@/components/modules/admin/admin-payments";
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { AdminPayments } from "@/components/modules/admin/admin-payments";
 
 export const metadata: Metadata = { title: "Payments" };
 

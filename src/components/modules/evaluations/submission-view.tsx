@@ -65,8 +65,8 @@ export function SubmissionView({
               <span
                 className={
                   submission.selectedOption.isCorrect
-                    ? "text-emerald-600"
-                    : "text-red-600"
+                    ? "text-brand-2"
+                    : "text-destructive"
                 }
               >
                 ({submission.selectedOption.isCorrect ? "correct" : "incorrect"}

@@ -2,15 +2,13 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 const TONES = {
-  success:
-    "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300",
+  success: "bg-brand-2/12 text-brand-2",
   warning:
-    "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300",
-  danger: "bg-red-100 text-red-700 dark:bg-red-500/15 dark:text-red-300",
-  info: "bg-blue-100 text-blue-700 dark:bg-blue-500/15 dark:text-blue-300",
-  violet:
-    "bg-violet-100 text-violet-700 dark:bg-violet-500/15 dark:text-violet-300",
-  teal: "bg-teal-100 text-teal-700 dark:bg-teal-500/15 dark:text-teal-300",
+    "bg-brand-3/25 text-brand-3-foreground dark:bg-brand-3/15 dark:text-brand-3",
+  danger: "bg-destructive/12 text-destructive",
+  info: "bg-primary/12 text-primary",
+  highlight:
+    "bg-brand-3/25 text-brand-3-foreground dark:bg-brand-3/15 dark:text-brand-3",
   neutral: "bg-muted text-muted-foreground",
 } as const;
 
@@ -44,9 +42,12 @@ const STATUS_TONE: Record<string, Tone> = {
   ADJUSTMENT: "info",
   // problem types
   CODING: "info",
-  MCQ: "violet",
-  WRITTEN: "teal",
+  MCQ: "highlight",
+  WRITTEN: "success",
 };
+
+// Acronyms that "capitalize" would turn into "Mcq"
+const LABELS: Record<string, string> = { MCQ: "MCQ" };
 
 export default function StatusBadge({
   status,
@@ -60,9 +61,9 @@ export default function StatusBadge({
   return (
     <Badge
       variant="secondary"
-      className={cn("capitalize", TONES[tone], className)}
+      className={cn(!LABELS[status] && "capitalize", TONES[tone], className)}
     >
-      {status.toLowerCase().replaceAll("_", " ")}
+      {LABELS[status] ?? status.toLowerCase().replaceAll("_", " ")}
     </Badge>
   );
 }

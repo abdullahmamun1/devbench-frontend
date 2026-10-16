@@ -6,7 +6,11 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <Header />
-      <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="flex-1 text-[1.0625rem] outline-none"
+      >
         {children}
       </main>
       <Footer />

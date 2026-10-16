@@ -15,7 +15,7 @@ interface AssessmentProblemsProps {
 }
 
 const WARNING_CLASS =
-  "rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200";
+  "rounded-lg border border-brand-3/50 bg-brand-3/25 p-3 text-sm text-brand-3-foreground dark:bg-brand-3/15 dark:text-brand-3";
 
 export function AssessmentProblems({
   assessment,

@@ -32,11 +32,11 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           <h1 style={{ fontSize: "1.75rem", fontWeight: 600 }}>
             DevBench ran into a problem
           </h1>
-          <p style={{ maxWidth: "28rem", color: "#6b7280" }}>
+          <p style={{ maxWidth: "28rem", color: "#59606f" }}>
             The application failed to load. Reloading usually fixes it.
           </p>
           {error.digest ? (
-            <p style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+            <p style={{ fontSize: "0.75rem", color: "#59606f" }}>
               Reference: {error.digest}
             </p>
           ) : null}
@@ -47,7 +47,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
               padding: "0.5rem 1.25rem",
               borderRadius: "0.5rem",
               border: "none",
-              background: "#111827",
+              background: "#4f46e5",
               color: "#ffffff",
               fontSize: "0.95rem",
               cursor: "pointer",

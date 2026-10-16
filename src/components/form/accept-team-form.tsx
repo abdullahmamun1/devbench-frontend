@@ -22,7 +22,7 @@ function ErrorBox({ message }: { message: string }) {
   return (
     <p
       role="alert"
-      className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300"
+      className="rounded-lg border border-destructive/30 bg-destructive/12 px-3 py-2 text-sm text-destructive"
     >
       {message}
     </p>

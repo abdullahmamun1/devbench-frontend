@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Outfit, Raleway } from "next/font/google";
+import { Geist_Mono, Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import SkipLink from "@/components/shared/skip-link";
 import {
@@ -11,7 +11,7 @@ import {
 import { cn } from "@/lib/utils";
 import Providers from "@/providers";
 
-const ralewayHeading = Raleway({
+const spaceGroteskHeading = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-heading",
 });
@@ -55,8 +55,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    { media: "(prefers-color-scheme: light)", color: "#fbfcfe" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0d16" },
   ],
 };
 
@@ -71,7 +71,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         geistMono.variable,
         "font-sans",
         outfit.variable,
-        ralewayHeading.variable,
+        spaceGroteskHeading.variable,
       )}
     >
       <body className="min-h-full flex flex-col">

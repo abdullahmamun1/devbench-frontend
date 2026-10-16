@@ -108,8 +108,8 @@ export default function TrendChart({
             Could not load this chart.
           </p>
         ) : (
-          // Series color: blue, validated on the light and dark surfaces.
-          <div className="[--viz-series:#2a78d6] dark:[--viz-series:#3987e5]">
+          // Series color: the brand primary, checked by check:contrast in both themes.
+          <div className="[--viz-series:var(--chart-1)]">
             <div className="h-56 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 {kind === "line" ? (

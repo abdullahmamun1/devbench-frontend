@@ -17,7 +17,7 @@ export default function CreditBadge({ user }: { user: User }) {
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-sm font-medium hover:bg-muted",
         isEmpty
-          ? "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-300"
+          ? "border-brand-3/50 bg-brand-3/25 text-brand-3-foreground dark:bg-brand-3/15 dark:text-brand-3"
           : "bg-muted/50",
       )}
     >

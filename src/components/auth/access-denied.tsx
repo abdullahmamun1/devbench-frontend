@@ -11,8 +11,8 @@ export default function AccessDenied({
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30 px-4">
       <div className="w-full max-w-md rounded-2xl border bg-background p-8 text-center shadow-sm">
-        <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-red-100 dark:bg-red-500/15">
-          <ShieldAlert className="size-8 text-red-500 dark:text-red-400" />
+        <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-destructive/12">
+          <ShieldAlert className="size-8 text-destructive" />
         </div>
 
         <h1 className="text-2xl font-bold tracking-tight">Access denied</h1>
