@@ -1,5 +1,6 @@
 "use client";
 
+import { Ban, Send } from "lucide-react";
 import { useState } from "react";
 import ConfirmDialog from "@/components/shared/confirm-dialog";
 import DataTable, {
@@ -89,16 +90,22 @@ export function InvitationsTab({ assessment }: { assessment: Assessment }) {
         i.status === "PENDING" ? (
           <div className="flex justify-end gap-2">
             <Button
-              variant="outline"
+              variant="soft"
               size="sm"
               disabled={resend.isPending && resend.variables === i.id}
               onClick={() => resend.mutate(i.id)}
             >
+              <Send />
               {resend.isPending && resend.variables === i.id
                 ? "Sending..."
                 : "Resend"}
             </Button>
-            <Button variant="outline" size="sm" onClick={() => setToRevoke(i)}>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => setToRevoke(i)}
+            >
+              <Ban />
               Revoke
             </Button>
           </div>

@@ -179,7 +179,7 @@ export default function CandidateOverview() {
                 >
                   <div>
                     <p className="font-medium">{invitation.assessment.title}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-sm text-muted-foreground">
                       {invitation.assessment.durationMinutes} minutes
                       {` \u00b7 Expires ${formatDateTime(invitation.expiresAt)}`}
                     </p>

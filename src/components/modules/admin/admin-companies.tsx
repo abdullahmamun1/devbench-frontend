@@ -1,5 +1,6 @@
 "use client";
 
+import { Ban, Coins, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import ConfirmDialog from "@/components/shared/confirm-dialog";
 import DataTable, {
@@ -92,11 +93,17 @@ export function AdminCompanies() {
       className: "text-right",
       cell: (c) => (
         <div className="flex justify-end gap-2">
-          <Button variant="outline" size="sm" onClick={() => setToAdjust(c)}>
+          <Button variant="soft" size="sm" onClick={() => setToAdjust(c)}>
+            <Coins />
             Credits
           </Button>
           {c.status === "ACTIVE" ? (
-            <Button variant="outline" size="sm" onClick={() => setToSuspend(c)}>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => setToSuspend(c)}
+            >
+              <Ban />
               Suspend
             </Button>
           ) : (
@@ -105,6 +112,7 @@ export function AdminCompanies() {
               size="sm"
               onClick={() => setToReactivate(c)}
             >
+              <RotateCcw />
               Reactivate
             </Button>
           )}

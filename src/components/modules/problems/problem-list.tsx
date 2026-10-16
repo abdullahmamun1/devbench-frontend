@@ -1,5 +1,6 @@
 "use client";
 
+import { Eye, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import DataTable, {
@@ -92,15 +93,21 @@ export function ProblemList() {
       cell: (p) => (
         <div className="flex justify-end gap-2">
           <Button
-            variant="outline"
+            variant="soft"
             size="sm"
             nativeButton={false}
             render={<Link href={`/company/problems/${p.id}`} />}
           >
+            {canEdit ? <Pencil /> : <Eye />}
             {canEdit ? "Edit" : "View"}
           </Button>
           {canEdit && (
-            <Button variant="outline" size="sm" onClick={() => setToDelete(p)}>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => setToDelete(p)}
+            >
+              <Trash2 />
               Delete
             </Button>
           )}

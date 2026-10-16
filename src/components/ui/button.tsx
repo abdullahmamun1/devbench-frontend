@@ -17,8 +17,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+        // Tinted primary: row actions and secondary calls to action
+        soft: "border-primary/20 bg-primary/10 font-semibold text-primary hover:border-primary/35 hover:bg-primary/15 aria-expanded:bg-primary/15 dark:bg-primary/15 dark:hover:bg-primary/25",
         destructive:
-          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+          "border-destructive/20 bg-destructive/10 font-semibold text-destructive hover:border-destructive/35 hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {

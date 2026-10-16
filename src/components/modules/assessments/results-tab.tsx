@@ -62,7 +62,7 @@ const columns: DataTableColumn<RankedRow>[] = [
     cell: (r) => (
       <div className="min-w-0">
         <p className="truncate font-medium">{r.candidate.name}</p>
-        <p className="truncate text-xs text-muted-foreground">
+        <p className="truncate text-sm text-muted-foreground">
           {r.candidate.email}
         </p>
       </div>
@@ -77,7 +77,7 @@ const columns: DataTableColumn<RankedRow>[] = [
         <div>
           <span className="font-medium">{r.totalScore ?? "-"}</span>
           {waiting > 0 && (
-            <p className="text-xs text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               {waiting} awaiting review
             </p>
           )}

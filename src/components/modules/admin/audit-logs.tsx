@@ -1,5 +1,6 @@
 "use client";
 
+import { Eye } from "lucide-react";
 import { useState } from "react";
 import DataTable, {
   type DataTableColumn,
@@ -53,7 +54,7 @@ export function AuditLogs() {
       cell: (log) => (
         <div className="min-w-0">
           <p className="truncate">{log.actor.name}</p>
-          <p className="truncate text-xs text-muted-foreground">
+          <p className="truncate text-sm text-muted-foreground">
             {log.actor.email}
           </p>
         </div>
@@ -69,7 +70,7 @@ export function AuditLogs() {
             type="button"
             title={`Show everything for ${log.entityId}`}
             onClick={() => set({ entityId: log.entityId })}
-            className="font-mono text-xs text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+            className="font-mono text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
           >
             {shortId(log.entityId)}
           </button>
@@ -81,7 +82,8 @@ export function AuditLogs() {
       header: "",
       className: "text-right",
       cell: (log) => (
-        <Button variant="outline" size="sm" onClick={() => setSelected(log)}>
+        <Button variant="soft" size="sm" onClick={() => setSelected(log)}>
+          <Eye />
           Details
         </Button>
       ),

@@ -1,5 +1,6 @@
 "use client";
 
+import { Eye, Play } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
@@ -108,6 +109,7 @@ export function CandidateInvitations() {
           case "start":
             return (
               <Button size="sm" onClick={() => setToStart(r)}>
+                <Play />
                 Start
               </Button>
             );
@@ -118,23 +120,25 @@ export function CandidateInvitations() {
                 nativeButton={false}
                 render={<Link href={`/attempt/${r.attempt?.id}`} />}
               >
+                <Play />
                 Continue
               </Button>
             );
           case "view":
             return (
               <Button
-                variant="outline"
+                variant="soft"
                 size="sm"
                 nativeButton={false}
                 render={<Link href={`/candidate/attempts/${r.attempt?.id}`} />}
               >
+                <Eye />
                 View result
               </Button>
             );
           case "check-email":
             return (
-              <span className="text-xs text-muted-foreground">
+              <span className="text-sm text-muted-foreground">
                 Open the link in your email
               </span>
             );

@@ -53,13 +53,17 @@ export default function DataTable<T>({
   }
 
   return (
-    <div className="rounded-xl border">
+    <div className="overflow-hidden rounded-2xl border bg-card shadow-xs">
       <Table>
         <TableHeader>
           <TableRow>
             {columns.map((column) => (
               <TableHead key={column.key} className={column.className}>
-                {column.header}
+                {column.header === "" ? (
+                  <span className="sr-only">Actions</span>
+                ) : (
+                  column.header
+                )}
               </TableHead>
             ))}
           </TableRow>

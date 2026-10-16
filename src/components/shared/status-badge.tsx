@@ -61,8 +61,17 @@ export default function StatusBadge({
   return (
     <Badge
       variant="secondary"
-      className={cn(!LABELS[status] && "capitalize", TONES[tone], className)}
+      className={cn(
+        "h-6 gap-1.5 px-2.5 text-[0.8125rem] font-semibold",
+        !LABELS[status] && "capitalize",
+        TONES[tone],
+        className,
+      )}
     >
+      <span
+        aria-hidden="true"
+        className="size-1.5 shrink-0 rounded-full bg-current opacity-80"
+      />
       {LABELS[status] ?? status.toLowerCase().replaceAll("_", " ")}
     </Badge>
   );

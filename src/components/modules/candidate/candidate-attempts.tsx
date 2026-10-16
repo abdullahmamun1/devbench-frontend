@@ -1,5 +1,6 @@
 "use client";
 
+import { Eye, Play } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 import DataTable, {
@@ -31,7 +32,7 @@ const columns: DataTableColumn<MyAttempt>[] = [
     cell: (a) => (
       <div>
         <p className="font-medium">{a.assessment.title}</p>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           {a.assessment.company.companyName}
         </p>
       </div>
@@ -71,16 +72,18 @@ const columns: DataTableColumn<MyAttempt>[] = [
           nativeButton={false}
           render={<Link href={`/attempt/${a.id}`} />}
         >
+          <Play />
           Continue
         </Button>
       ) : (
         <Button
-          variant="outline"
+          variant="soft"
           size="sm"
           nativeButton={false}
           render={<Link href={`/candidate/attempts/${a.id}`} />}
         >
-          Open
+          <Eye />
+          View result
         </Button>
       ),
   },

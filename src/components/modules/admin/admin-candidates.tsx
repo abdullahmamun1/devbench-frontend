@@ -1,5 +1,6 @@
 "use client";
 
+import { Ban, RotateCcw, Trash2 } from "lucide-react";
 import { useState } from "react";
 import ConfirmDialog from "@/components/shared/confirm-dialog";
 import DataTable, {
@@ -60,7 +61,7 @@ export function AdminCandidates() {
       cell: (c) => (
         <div className="min-w-0">
           <p className="truncate font-medium">{c.name}</p>
-          <p className="truncate text-xs text-muted-foreground">{c.email}</p>
+          <p className="truncate text-sm text-muted-foreground">{c.email}</p>
         </div>
       ),
     },
@@ -98,7 +99,12 @@ export function AdminCandidates() {
       cell: (c) => (
         <div className="flex justify-end gap-2">
           {c.status === "ACTIVE" ? (
-            <Button variant="outline" size="sm" onClick={() => setToSuspend(c)}>
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => setToSuspend(c)}
+            >
+              <Ban />
               Suspend
             </Button>
           ) : (
@@ -107,10 +113,16 @@ export function AdminCandidates() {
               size="sm"
               onClick={() => setToReactivate(c)}
             >
+              <RotateCcw />
               Reactivate
             </Button>
           )}
-          <Button variant="outline" size="sm" onClick={() => setToDelete(c)}>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => setToDelete(c)}
+          >
+            <Trash2 />
             Delete
           </Button>
         </div>

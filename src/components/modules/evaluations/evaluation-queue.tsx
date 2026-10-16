@@ -24,7 +24,7 @@ const columns: DataTableColumn<PendingEvaluation>[] = [
       return (
         <div className="min-w-0">
           <p className="truncate font-medium">{candidate.name}</p>
-          <p className="truncate text-xs text-muted-foreground">
+          <p className="truncate text-sm text-muted-foreground">
             {candidate.email}
           </p>
         </div>
@@ -70,6 +70,7 @@ const columns: DataTableColumn<PendingEvaluation>[] = [
         nativeButton={false}
         render={<Link href={`/company/evaluations/${e.id}`} />}
       >
+        <ClipboardCheck />
         Review
       </Button>
     ),
