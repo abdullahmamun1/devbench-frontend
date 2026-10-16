@@ -65,7 +65,7 @@ export default function TablePagination({
               <span
                 key={`ellipsis-${index}`}
                 aria-hidden="true"
-                className="px-2 text-muted-foreground"
+                className="hidden px-2 text-muted-foreground sm:inline"
               >
                 …
               </span>
@@ -77,11 +77,17 @@ export default function TablePagination({
                 aria-label={`Page ${item}`}
                 aria-current={item === page ? "page" : undefined}
                 onClick={() => onPageChange(item)}
+                // Phones show "Page x of y" instead of every number
+                className="hidden sm:inline-flex"
               >
                 {item}
               </Button>
             ),
           )}
+
+          <span className="px-3 text-sm font-medium sm:hidden">
+            Page {page} of {totalPages}
+          </span>
 
           <Button
             variant="outline"

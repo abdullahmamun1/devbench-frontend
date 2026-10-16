@@ -80,7 +80,7 @@ export function PaymentSuccess() {
           </>
         }
       >
-        <div className="w-full max-w-xs divide-y rounded-lg border text-sm">
+        <div className="w-full max-w-xs divide-y rounded-2xl border text-sm">
           <div className="flex justify-between p-3">
             <span className="text-muted-foreground">Credits</span>
             <span className="font-medium">{payment.creditsPurchased}</span>

@@ -6,6 +6,8 @@ import DataTable, {
   type DataTableColumn,
 } from "@/components/shared/data-table";
 import EmptyState from "@/components/shared/empty-state";
+import FilterTabs from "@/components/shared/filter-tabs";
+import SearchInput from "@/components/shared/search-input";
 import StatusBadge from "@/components/shared/status-badge";
 import TablePagination from "@/components/shared/table-pagination";
 import { Button } from "@/components/ui/button";
@@ -14,6 +16,11 @@ import type { PendingEvaluation } from "@/types";
 import { formatDateTime } from "@/utils/format";
 
 const LIMIT = 10;
+
+const TYPE_OPTIONS = [
+  { label: "Coding", value: "CODING" },
+  { label: "Written", value: "WRITTEN" },
+];
 
 const columns: DataTableColumn<PendingEvaluation>[] = [
   {
@@ -80,10 +87,15 @@ const columns: DataTableColumn<PendingEvaluation>[] = [
 export function EvaluationQueue() {
   const { get, set } = useUrlState();
   const page = Number(get("page", "1")) || 1;
+  const type = get("type");
+  const search = get("search");
+  const hasFilters = Boolean(type || search);
 
   const { data, isLoading, isError, refetch } = useEvaluations({
     page,
     limit: LIMIT,
+    type: type || undefined,
+    search: search || undefined,
   });
   const total = data?.meta?.total ?? 0;
 
@@ -105,6 +117,11 @@ export function EvaluationQueue() {
         </p>
       </div>
 
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <FilterTabs options={TYPE_OPTIONS} paramKey="type" />
+        <SearchInput placeholder="Search candidate or assessment..." />
+      </div>
+
       <DataTable
         columns={columns}
         data={data?.data}
@@ -117,8 +134,14 @@ export function EvaluationQueue() {
         empty={
           <EmptyState
             icon={ClipboardCheck}
-            title="Nothing waiting for review"
-            description="When a candidate submits a coding or written answer, it shows up here."
+            title={
+              hasFilters ? "No matching answers" : "Nothing waiting for review"
+            }
+            description={
+              hasFilters
+                ? "Try a different type or search term."
+                : "When a candidate submits a coding or written answer, it shows up here."
+            }
           />
         }
       />

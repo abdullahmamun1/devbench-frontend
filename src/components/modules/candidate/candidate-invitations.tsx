@@ -10,9 +10,12 @@ import DataTable, {
 } from "@/components/shared/data-table";
 import EmptyState from "@/components/shared/empty-state";
 import FilterTabs from "@/components/shared/filter-tabs";
+import SearchInput from "@/components/shared/search-input";
 import StatusBadge from "@/components/shared/status-badge";
+import TablePagination from "@/components/shared/table-pagination";
 import { Button } from "@/components/ui/button";
 import {
+  useLocalTable,
   useMyAttempts,
   useMyInvitations,
   useStartAttempt,
@@ -29,6 +32,9 @@ const STATUS_OPTIONS = [
   { label: "Submitted", value: "SUBMITTED" },
   { label: "Expired", value: "EXPIRED" },
 ];
+
+const matchesTitle = (r: InvitationRow, term: string) =>
+  r.invitation.assessment.title.toLowerCase().includes(term);
 
 export function CandidateInvitations() {
   const { get } = useUrlState();
@@ -49,9 +55,11 @@ export function CandidateInvitations() {
     [invitations, attempts],
   );
 
-  const visible = status
-    ? rows.filter((r) => r.displayStatus === status)
-    : rows;
+  const visible = useMemo(
+    () => (status ? rows.filter((r) => r.displayStatus === status) : rows),
+    [rows, status],
+  );
+  const table = useLocalTable(visible, { matches: matchesTitle });
 
   const isLoading = invitationsQuery.isLoading || attemptsQuery.isLoading;
   const hasError = invitationsQuery.isError || attemptsQuery.isError;
@@ -160,24 +168,41 @@ export function CandidateInvitations() {
 
   return (
     <div className="space-y-4">
-      <FilterTabs options={STATUS_OPTIONS} paramKey="status" />
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <FilterTabs options={STATUS_OPTIONS} paramKey="status" />
+        <SearchInput
+          placeholder="Search assessments..."
+          onSearch={table.setTerm}
+        />
+      </div>
 
       <DataTable
         columns={columns}
-        data={visible}
+        data={table.pageRows}
         getRowKey={(r) => r.invitation.id}
         isLoading={isLoading}
         skeletonRows={5}
         empty={
           <EmptyState
-            title={status ? "Nothing in this status" : "No invitations yet"}
+            title={
+              status || table.isFiltered
+                ? "No matching invitations"
+                : "No invitations yet"
+            }
             description={
-              status
-                ? "Try a different tab."
+              status || table.isFiltered
+                ? "Try a different tab or search term."
                 : "When a company invites you to an assessment, it will show up here."
             }
           />
         }
+      />
+
+      <TablePagination
+        page={table.page}
+        limit={table.pageSize}
+        total={table.total}
+        onPageChange={table.setPage}
       />
 
       <ConfirmDialog

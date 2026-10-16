@@ -5,9 +5,16 @@ import DataTable, {
   type DataTableColumn,
 } from "@/components/shared/data-table";
 import EmptyState from "@/components/shared/empty-state";
+import FilterTabs from "@/components/shared/filter-tabs";
+import SearchInput from "@/components/shared/search-input";
 import StatCard from "@/components/shared/stat-card";
 import StatusBadge from "@/components/shared/status-badge";
-import { useAssessmentInsights, useAssessmentResults } from "@/hooks";
+import TablePagination from "@/components/shared/table-pagination";
+import {
+  useAssessmentInsights,
+  useAssessmentResults,
+  useLocalTable,
+} from "@/hooks";
 import type { AssessmentResultRow, RankingEntry } from "@/types";
 import { formatDateTime } from "@/utils/format";
 import { AssessmentInsightsPanels } from "./assessment-insights";
@@ -48,6 +55,18 @@ function rankRows(
     ...withRank.filter((r) => r.rank === null),
   ];
 }
+
+const RESULT_OPTIONS = [
+  { label: "Passed", value: "PASSED" },
+  { label: "Failed", value: "FAILED" },
+  { label: "Awaiting review", value: "PENDING_REVIEW" },
+  { label: "In progress", value: "IN_PROGRESS" },
+];
+
+const matchesCandidate = (r: RankedRow, term: string) =>
+  r.candidate.name.toLowerCase().includes(term) ||
+  r.candidate.email.toLowerCase().includes(term);
+const hasVerdict = (r: RankedRow, value: string) => verdict(r) === value;
 
 const columns: DataTableColumn<RankedRow>[] = [
   {
@@ -116,6 +135,10 @@ export function ResultsTab({ assessmentId }: { assessmentId: string }) {
   const insights = useAssessmentInsights(assessmentId);
 
   const rows = rankRows(data?.results ?? [], insights.data?.ranking);
+  const table = useLocalTable(rows, {
+    matches: matchesCandidate,
+    filter: hasVerdict,
+  });
   const scored = rows.filter((r) => r.totalScore !== null);
   const passed = rows.filter((r) => r.passed === true).length;
   const decided = rows.filter((r) => r.passed !== null).length;
@@ -175,18 +198,43 @@ export function ResultsTab({ assessmentId }: { assessmentId: string }) {
         />
       </div>
 
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <FilterTabs
+          options={RESULT_OPTIONS}
+          value={table.filterValue}
+          onValueChange={table.setFilter}
+        />
+        <SearchInput
+          placeholder="Search candidates..."
+          onSearch={table.setTerm}
+        />
+      </div>
+
       <DataTable
         columns={columns}
-        data={rows}
+        data={table.pageRows}
         getRowKey={(r) => r.attemptId}
         isLoading={isLoading}
         skeletonRows={5}
         empty={
           <EmptyState
-            title="No attempts yet"
-            description="Results appear here once invited candidates start the assessment."
+            title={
+              table.isFiltered ? "No matching candidates" : "No attempts yet"
+            }
+            description={
+              table.isFiltered
+                ? "Try a different result or search term."
+                : "Results appear here once invited candidates start the assessment."
+            }
           />
         }
+      />
+
+      <TablePagination
+        page={table.page}
+        limit={table.pageSize}
+        total={table.total}
+        onPageChange={table.setPage}
       />
 
       <AssessmentInsightsPanels

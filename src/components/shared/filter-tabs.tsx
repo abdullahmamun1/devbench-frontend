@@ -8,6 +8,9 @@ interface FilterTabsProps {
   paramKey?: string;
   allLabel?: string;
   className?: string;
+  /** Local mode: the selected value and a setter, instead of the URL */
+  value?: string;
+  onValueChange?: (value: string) => void;
 }
 
 export default function FilterTabs({
@@ -15,9 +18,11 @@ export default function FilterTabs({
   paramKey = "status",
   allLabel = "All",
   className,
+  value,
+  onValueChange,
 }: FilterTabsProps) {
   const { get, set } = useUrlState();
-  const current = get(paramKey);
+  const current = onValueChange ? (value ?? "") : get(paramKey);
   const items = [{ label: allLabel, value: "" }, ...options];
 
   return (
@@ -34,7 +39,11 @@ export default function FilterTabs({
             key={item.value || "all"}
             type="button"
             aria-pressed={active}
-            onClick={() => set({ [paramKey]: item.value })}
+            onClick={() =>
+              onValueChange
+                ? onValueChange(item.value)
+                : set({ [paramKey]: item.value })
+            }
             className={cn(
               "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
               active

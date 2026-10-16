@@ -4,8 +4,10 @@ import DataTable, {
   type DataTableColumn,
 } from "@/components/shared/data-table";
 import EmptyState from "@/components/shared/empty-state";
+import FilterTabs from "@/components/shared/filter-tabs";
 import StatusBadge from "@/components/shared/status-badge";
-import { useCredits } from "@/hooks";
+import TablePagination from "@/components/shared/table-pagination";
+import { useCredits, useLocalTable } from "@/hooks";
 import type { CreditTransaction } from "@/types";
 import { formatDateTime } from "@/utils/format";
 
@@ -15,6 +17,15 @@ function signedAmount(t: CreditTransaction): string {
   if (t.type === "DEDUCTION") return `-${t.amount}`;
   return String(t.amount);
 }
+
+const TYPE_OPTIONS = [
+  { label: "Purchases", value: "PURCHASE" },
+  { label: "Invitations", value: "DEDUCTION" },
+  { label: "Refunds", value: "REFUND" },
+  { label: "Adjustments", value: "ADJUSTMENT" },
+];
+
+const byType = (t: CreditTransaction, type: string) => t.type === type;
 
 const columns: DataTableColumn<CreditTransaction>[] = [
   {
@@ -42,6 +53,10 @@ const columns: DataTableColumn<CreditTransaction>[] = [
 
 export function CreditTransactionsTable() {
   const { data, isLoading, isError, refetch } = useCredits();
+  const table = useLocalTable(data?.data.recentTransactions, {
+    pageSize: 8,
+    filter: byType,
+  });
 
   return (
     <section className="space-y-3">
@@ -51,9 +66,14 @@ export function CreditTransactionsTable() {
           Your last 20 transactions.
         </p>
       </div>
+      <FilterTabs
+        options={TYPE_OPTIONS}
+        value={table.filterValue}
+        onValueChange={table.setFilter}
+      />
       <DataTable
         columns={columns}
-        data={data?.data.recentTransactions}
+        data={table.pageRows}
         getRowKey={(t) => t.id}
         isLoading={isLoading}
         skeletonRows={5}
@@ -62,10 +82,24 @@ export function CreditTransactionsTable() {
         onRetry={() => refetch()}
         empty={
           <EmptyState
-            title="No credit activity yet"
-            description="Purchases, invitations and refunds will show up here."
+            title={
+              table.isFiltered
+                ? "No transactions of this type"
+                : "No credit activity yet"
+            }
+            description={
+              table.isFiltered
+                ? "Pick another type to see more."
+                : "Purchases, invitations and refunds will show up here."
+            }
           />
         }
+      />
+      <TablePagination
+        page={table.page}
+        limit={table.pageSize}
+        total={table.total}
+        onPageChange={table.setPage}
       />
     </section>
   );

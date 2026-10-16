@@ -11,6 +11,8 @@ interface SearchInputProps {
   placeholder?: string;
   delay?: number;
   className?: string;
+  /** Local mode: report the term here instead of writing it to the URL */
+  onSearch?: (term: string) => void;
 }
 
 export default function SearchInput({
@@ -18,9 +20,10 @@ export default function SearchInput({
   placeholder = "Search...",
   delay = 400,
   className,
+  onSearch,
 }: SearchInputProps) {
   const { get, set } = useUrlState();
-  const urlValue = get(paramKey);
+  const urlValue = onSearch ? "" : get(paramKey);
 
   const [value, setValue] = useState(urlValue);
   const debounced = useDebounce(value, delay);
@@ -31,11 +34,14 @@ export default function SearchInput({
     const next = debounced.trim();
     if (next === lastPushed.current) return;
     lastPushed.current = next;
-    set({ [paramKey]: next });
+    if (onSearch) onSearch(next);
+    else set({ [paramKey]: next });
   }, [debounced]);
 
-  // URL -> input, only for outside changes (back button, reset filters)
+  // URL -> input, only for outside changes (back button, reset filters).
+  // Local mode has no URL value to follow.
   useEffect(() => {
+    if (onSearch) return;
     if (urlValue !== lastPushed.current) {
       lastPushed.current = urlValue;
       setValue(urlValue);

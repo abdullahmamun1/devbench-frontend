@@ -11,6 +11,7 @@ export * from "./debounce.hook";
 export * from "./evaluation.hook";
 export * from "./insights.hook";
 export * from "./invitation.hook";
+export * from "./local-table.hook";
 export * from "./payment.hook";
 export * from "./problem.hook";
 export * from "./url-state.hook";

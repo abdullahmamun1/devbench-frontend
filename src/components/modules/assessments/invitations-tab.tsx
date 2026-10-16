@@ -8,6 +8,7 @@ import DataTable, {
 } from "@/components/shared/data-table";
 import EmptyState from "@/components/shared/empty-state";
 import FilterTabs from "@/components/shared/filter-tabs";
+import SearchInput from "@/components/shared/search-input";
 import StatusBadge from "@/components/shared/status-badge";
 import TablePagination from "@/components/shared/table-pagination";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ import { InviteCandidateForm } from "./invite-candidate-form";
 
 const LIMIT = 10;
 const PARAM = "invStatus";
+const SEARCH_PARAM = "invSearch";
 
 const STATUS_OPTIONS = [
   { label: "Pending", value: "PENDING" },
@@ -48,11 +50,13 @@ export function InvitationsTab({ assessment }: { assessment: Assessment }) {
   const page = Number(get("page", "1")) || 1;
   const statusParam = get(PARAM);
   const status = isStatus(statusParam) ? statusParam : undefined;
+  const search = get(SEARCH_PARAM);
 
   const { data, isLoading, isError, refetch } = useInvitations(assessment.id, {
     page,
     limit: LIMIT,
     status,
+    search: search || undefined,
   });
   const resend = useResendInvitation(assessment.id);
   const revoke = useRevokeInvitation(assessment.id);
@@ -125,7 +129,10 @@ export function InvitationsTab({ assessment }: { assessment: Assessment }) {
         </p>
       )}
 
-      <FilterTabs options={STATUS_OPTIONS} paramKey={PARAM} />
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <FilterTabs options={STATUS_OPTIONS} paramKey={PARAM} />
+        <SearchInput paramKey={SEARCH_PARAM} placeholder="Search by email..." />
+      </div>
 
       <DataTable
         columns={columns}

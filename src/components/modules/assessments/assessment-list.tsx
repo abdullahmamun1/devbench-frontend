@@ -8,6 +8,7 @@ import DataTable, {
 } from "@/components/shared/data-table";
 import EmptyState from "@/components/shared/empty-state";
 import FilterTabs from "@/components/shared/filter-tabs";
+import SearchInput from "@/components/shared/search-input";
 import StatusBadge from "@/components/shared/status-badge";
 import TablePagination from "@/components/shared/table-pagination";
 import { Button } from "@/components/ui/button";
@@ -35,11 +36,13 @@ export function AssessmentList() {
   const page = Number(get("page", "1")) || 1;
   const statusParam = get("status");
   const status = isStatus(statusParam) ? statusParam : undefined;
+  const search = get("search");
 
   const { data, isLoading, isError, refetch } = useAssessments({
     page,
     limit: LIMIT,
     status,
+    search: search || undefined,
     sortBy: "createdAt",
     sortOrder: "desc",
   });
@@ -128,14 +131,17 @@ export function AssessmentList() {
     <div className="space-y-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <FilterTabs options={STATUS_OPTIONS} paramKey="status" />
-        {canEdit && (
-          <Button
-            nativeButton={false}
-            render={<Link href="/company/assessments/new" />}
-          >
-            New assessment
-          </Button>
-        )}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <SearchInput placeholder="Search assessments..." />
+          {canEdit && (
+            <Button
+              nativeButton={false}
+              render={<Link href="/company/assessments/new" />}
+            >
+              New assessment
+            </Button>
+          )}
+        </div>
       </div>
 
       <DataTable
