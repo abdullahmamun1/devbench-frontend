@@ -22,14 +22,17 @@ export default function HighlightedCode({
 
   return (
     <figure
-      className={cn("overflow-hidden rounded-xl border bg-muted/30", className)}
+      className={cn(
+        "overflow-hidden rounded-2xl border bg-muted/30",
+        className,
+      )}
     >
       {label && (
         <figcaption className="border-b bg-muted/50 px-3 py-2 text-xs font-semibold text-muted-foreground">
           {label}
         </figcaption>
       )}
-      <div className="max-h-96 overflow-auto py-2">
+      <div className="relative max-h-96 overflow-auto py-2">
         <ol
           className={cn(
             "min-w-max text-sm",

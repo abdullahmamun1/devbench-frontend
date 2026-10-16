@@ -18,7 +18,7 @@ export default function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="mx-auto max-w-4xl space-y-14 px-4 py-24 sm:px-6"
+      className="mx-auto max-w-4xl space-y-14 px-4 py-24 sm:px-6 overflow-x-clip"
     >
       <SectionHeading
         eyebrow="How it works"

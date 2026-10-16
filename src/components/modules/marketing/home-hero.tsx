@@ -25,44 +25,45 @@ export default function HomeHero({ stats }: { stats: PublicStats | null }) {
         className="pointer-events-none absolute inset-x-0 -top-40 -z-10 mx-auto h-[36rem] max-w-5xl rounded-full bg-linear-to-tr from-primary/20 via-brand-2/10 to-transparent blur-3xl"
       />
 
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 pt-14 pb-20 sm:px-6 lg:grid-cols-[1fr_1.15fr] lg:pt-20">
-        <Reveal className="space-y-8">
-          <p className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-4 py-1.5 text-sm font-medium text-primary">
+      {/* Kept to about two thirds of the screen, so the next section peeks in */}
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 pt-10 pb-14 sm:px-6 md:min-h-[calc(62svh-5rem)] lg:min-h-[calc(66svh-5rem)] lg:grid-cols-[1fr_1.1fr] lg:pt-8 lg:pb-12">
+        <Reveal className="space-y-6">
+          <p className="hidden items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-4 py-1.5 text-sm font-medium text-primary sm:inline-flex">
             <Sparkles className="size-4" aria-hidden="true" />
             Coding, MCQ and written assessments
           </p>
-          <h1 className="text-display font-bold">
+          <h1 className="text-[clamp(2.25rem,3.4vw+1rem,3.75rem)] leading-[1.05] font-bold tracking-[-0.03em]">
             Hire developers by{" "}
             <span className="text-gradient-brand">what they can build</span>
           </h1>
-          <p className="max-w-xl text-xl text-muted-foreground text-pretty">
+          <p className="max-w-xl text-lg text-muted-foreground text-pretty sm:text-xl">
             Create timed assessments, invite candidates by email and review
             every attempt with your hiring team, all in one workspace.
           </p>
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
               href="/register"
-              className={buttonVariants({ variant: "brand", size: "xl" })}
+              className={buttonVariants({ variant: "brand", size: "lg" })}
             >
               Start hiring
               <ArrowRight />
             </Link>
             <Link
               href="/login"
-              className={buttonVariants({ variant: "outline", size: "xl" })}
+              className={buttonVariants({ variant: "outline", size: "lg" })}
             >
               Try the live demo
             </Link>
           </div>
 
           {chips.length > 0 && (
-            <dl className="flex flex-wrap gap-x-8 gap-y-4 border-t pt-6">
+            <dl className="hidden flex-wrap gap-x-8 gap-y-3 border-t pt-5 sm:flex">
               {chips.map((chip) => (
                 <div key={chip.label} className="flex flex-col-reverse">
                   <dt className="text-sm text-muted-foreground">
                     {chip.label}
                   </dt>
-                  <dd className="font-heading text-3xl font-bold">
+                  <dd className="font-heading text-2xl font-bold">
                     <CountUp value={chip.value} />
                   </dd>
                 </div>
@@ -71,7 +72,12 @@ export default function HomeHero({ stats }: { stats: PublicStats | null }) {
           )}
         </Reveal>
 
-        <Reveal direction="left" delay={0.15} className="[perspective:2000px]">
+        {/* On phones and tablets the visual would double the hero; the product tour shows the app instead */}
+        <Reveal
+          direction="left"
+          delay={0.15}
+          className="hidden [perspective:2000px] lg:block"
+        >
           <HeroVisual
             fallback={
               <BrowserFrame

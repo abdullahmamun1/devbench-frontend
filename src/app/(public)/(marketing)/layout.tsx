@@ -9,7 +9,8 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
       <main
         id="main-content"
         tabIndex={-1}
-        className="flex-1 text-[1.0625rem] outline-none"
+        // Clip sideways reveal animations so they never widen the page on phones
+        className="flex-1 overflow-x-clip text-[1.0625rem] outline-none"
       >
         {children}
       </main>

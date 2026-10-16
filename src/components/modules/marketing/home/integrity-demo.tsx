@@ -150,7 +150,7 @@ export default function IntegrityDemo() {
             </Button>
           </div>
 
-          <div className="grid items-start gap-6 lg:grid-cols-[1fr_auto_1fr]">
+          <div className="grid items-start gap-6 lg:grid-cols-[1fr_auto_1fr] *:min-w-0">
             {editing ? (
               <Textarea
                 aria-label="First answer"
