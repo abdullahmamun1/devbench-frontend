@@ -6,6 +6,8 @@ import {
   Building2,
   CalendarClock,
   Clock,
+  Link2Off,
+  type LucideIcon,
   ShieldCheck,
   Target,
 } from "lucide-react";
@@ -24,19 +26,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAcceptInvitation, useGetMe, useInvitationPreview } from "@/hooks";
-import { getErrorMessage } from "@/utils/error";
+import { getErrorMessage, getErrorStatus } from "@/utils/error";
 import { formatDateTime } from "@/utils/format";
 import { acceptInvitationSchema } from "@/validation/invitation.validation";
-
-function getStatus(error: unknown): number | undefined {
-  if (typeof error !== "object" || error === null) return undefined;
-  const e = error as {
-    statusCode?: number;
-    status?: number;
-    response?: { status?: number };
-  };
-  return e.statusCode ?? e.status ?? e.response?.status;
-}
 
 function InfoRow({
   icon,
@@ -61,24 +53,33 @@ function InfoRow({
 function StateCard({
   title,
   description,
+  icon: Icon = AlertTriangle,
   children,
 }: {
   title: string;
   description: string;
+  icon?: LucideIcon;
   children?: ReactNode;
 }) {
   return (
     <Card className="mx-auto w-full max-w-lg">
-      <CardHeader className="items-center text-center">
-        <div className="mb-2 flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-          <AlertTriangle className="size-6" />
+      <CardHeader className="items-center gap-2 py-4 text-center">
+        <div className="mx-auto mb-2 flex size-14 items-center justify-center rounded-2xl bg-brand-3/15 text-brand-3-foreground dark:text-brand-3">
+          <Icon className="size-7" aria-hidden="true" />
         </div>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle className="text-xl">{title}</CardTitle>
+        <CardDescription className="text-base">{description}</CardDescription>
       </CardHeader>
-      {children ? (
-        <CardFooter className="justify-center">{children}</CardFooter>
-      ) : null}
+      <CardFooter className="flex-wrap justify-center gap-3">
+        {children}
+        <Button
+          variant="outline"
+          render={<Link href="/" />}
+          nativeButton={false}
+        >
+          Back to home
+        </Button>
+      </CardFooter>
     </Card>
   );
 }
@@ -118,7 +119,7 @@ function NewCandidateForm({ token }: { token: string }) {
     },
   });
 
-  const errorStatus = getStatus(accept.error);
+  const errorStatus = getErrorStatus(accept.error);
 
   return (
     <form
@@ -302,11 +303,12 @@ export default function InvitationAccept({ token }: { token: string }) {
   if (isLoading) return <PreviewSkeleton />;
 
   if (error || !data?.data) {
-    const status = getStatus(error);
+    const status = getErrorStatus(error);
 
     if (status === 410) {
       return (
         <StateCard
+          icon={CalendarClock}
           title="This invitation has expired"
           description="Ask the company to resend the invitation and you will get a fresh link."
         />
@@ -327,6 +329,7 @@ export default function InvitationAccept({ token }: { token: string }) {
     if (status === 404) {
       return (
         <StateCard
+          icon={Link2Off}
           title="Invitation not found"
           description="Check that you opened the full link from your email."
         />
