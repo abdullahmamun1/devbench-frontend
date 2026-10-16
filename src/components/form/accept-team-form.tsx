@@ -51,7 +51,7 @@ export default function AcceptTeamForm({ token }: { token: string }) {
     },
   });
 
-  if (isLoading) return <Skeleton className="h-48 w-full rounded-xl" />;
+  if (isLoading) return <Skeleton className="h-48 w-full rounded-2xl" />;
 
   const user = data?.data;
 

@@ -88,7 +88,7 @@ export function ProblemDetail({ id }: { id: string }) {
           }}
         />
       ) : (
-        <div className="rounded-xl border p-5">
+        <div className="rounded-2xl border p-5">
           <ReviewStep values={values} />
         </div>
       )}

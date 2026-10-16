@@ -9,7 +9,7 @@ export function AssessmentSettings({ assessment }: { assessment: Assessment }) {
   const locked = (assessment._count?.invitations ?? 0) > 0;
 
   return (
-    <div className="max-w-2xl rounded-xl border p-5">
+    <div className="max-w-2xl rounded-2xl border p-5">
       <AssessmentForm
         key={assessment.updatedAt}
         lockDuration={locked}

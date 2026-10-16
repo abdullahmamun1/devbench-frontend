@@ -30,7 +30,7 @@ export default function LiveStats({ stats }: { stats: PublicStats | null }) {
           {tiles.map((tile) => (
             <StaggerItem
               key={tile.label}
-              className="flex flex-col-reverse gap-2 rounded-3xl border bg-card/80 p-7 text-center shadow-sm backdrop-blur"
+              className="flex flex-col-reverse gap-2 rounded-2xl border bg-card/80 p-7 text-center shadow-sm backdrop-blur"
             >
               <dt className="text-muted-foreground">{tile.label}</dt>
               <dd className="font-heading text-5xl font-bold text-gradient-brand">

@@ -125,7 +125,7 @@ export function ProblemWizard({
     >
       <WizardStepper steps={STEPS} current={step} />
 
-      <div className="rounded-xl border p-5">
+      <div className="rounded-2xl border p-5">
         {step === 0 && (
           <div className="space-y-5">
             <form.Field name="title">

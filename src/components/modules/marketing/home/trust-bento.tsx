@@ -28,7 +28,7 @@ function Tile({
     <StaggerItem
       as="li"
       className={cn(
-        "group relative flex flex-col justify-between gap-6 overflow-hidden rounded-3xl border bg-card p-7 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-primary/10",
+        "group relative flex flex-col justify-between gap-6 overflow-hidden rounded-2xl border bg-card p-7 shadow-sm transition-shadow duration-300 hover:shadow-xl hover:shadow-primary/10",
         className,
       )}
     >

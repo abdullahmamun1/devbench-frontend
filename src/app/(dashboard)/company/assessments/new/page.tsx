@@ -14,7 +14,7 @@ export default function NewAssessmentPage() {
           Set the basics now. You will attach problems on the next page.
         </p>
       </div>
-      <div className="rounded-xl border p-5">
+      <div className="rounded-2xl border p-5">
         <CreateAssessmentForm />
       </div>
     </div>

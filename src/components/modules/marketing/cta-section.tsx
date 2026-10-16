@@ -12,7 +12,7 @@ export default function CtaSection({
 }) {
   return (
     <section className="px-4 py-20 sm:px-6">
-      <Reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl bg-primary px-6 py-20 text-center text-primary-foreground shadow-2xl shadow-primary/25">
+      <Reveal className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl bg-primary px-6 py-20 text-center text-primary-foreground shadow-2xl shadow-primary/25">
         {/* Slow-drifting colour mesh */}
         <div
           aria-hidden="true"

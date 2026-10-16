@@ -35,7 +35,7 @@ export default function ContactPage() {
         </Reveal>
 
         <Stagger className="space-y-4">
-          <StaggerItem className="flex gap-4 rounded-3xl border bg-card p-6">
+          <StaggerItem className="flex gap-4 rounded-2xl border bg-card p-6">
             <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
               <MessageSquare className="size-5" />
             </span>
@@ -51,7 +51,7 @@ export default function ContactPage() {
           </StaggerItem>
 
           {contactEmail && (
-            <StaggerItem className="flex gap-4 rounded-3xl border bg-card p-6">
+            <StaggerItem className="flex gap-4 rounded-2xl border bg-card p-6">
               <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-2/12 text-brand-2">
                 <Mail className="size-5" />
               </span>
@@ -70,7 +70,7 @@ export default function ContactPage() {
             </StaggerItem>
           )}
 
-          <StaggerItem className="flex gap-4 rounded-3xl border bg-card p-6">
+          <StaggerItem className="flex gap-4 rounded-2xl border bg-card p-6">
             <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-3/25 text-brand-3-foreground dark:bg-brand-3/15 dark:text-brand-3">
               <CircleQuestionMark className="size-5" />
             </span>

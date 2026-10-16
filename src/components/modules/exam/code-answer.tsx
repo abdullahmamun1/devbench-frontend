@@ -12,7 +12,7 @@ import { useIsDarkMode } from "@/hooks";
 // Monaco is large, so load it only when a coding question is on screen.
 const Editor = dynamic(() => import("@monaco-editor/react"), {
   ssr: false,
-  loading: () => <Skeleton className="h-105 w-full rounded-xl" />,
+  loading: () => <Skeleton className="h-105 w-full rounded-2xl" />,
 });
 
 interface CodeAnswerProps {
@@ -60,7 +60,7 @@ export default function CodeAnswer({
         </select>
       </div>
 
-      <div className="overflow-hidden rounded-xl border">
+      <div className="overflow-hidden rounded-2xl border">
         <Editor
           height="420px"
           path={modelPath}

@@ -22,7 +22,7 @@ export default function ProblemFix() {
             <StaggerItem
               as="li"
               key={id}
-              className="group flex flex-col overflow-hidden rounded-3xl border bg-card shadow-sm transition-[translate,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 motion-reduce:hover:translate-y-0"
+              className="group flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm transition-[translate,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 motion-reduce:hover:translate-y-0"
             >
               <div className="bg-linear-to-br from-primary/8 via-transparent to-brand-2/8 px-8 pt-8">
                 <div className="mx-auto max-w-xs">

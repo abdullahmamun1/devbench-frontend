@@ -32,7 +32,7 @@ export function InviteCandidateForm({
   });
 
   return (
-    <div className="space-y-3 rounded-xl border p-4">
+    <div className="space-y-3 rounded-2xl border p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h3 className="font-medium">Invite a candidate</h3>

@@ -176,7 +176,7 @@ function Arrow({
 export default function ArchitectureDiagram() {
   return (
     <figure className="space-y-4">
-      <div className="hidden overflow-x-auto rounded-3xl border bg-muted/30 p-6 md:block">
+      <div className="hidden overflow-x-auto rounded-2xl border bg-muted/30 p-6 md:block">
         <svg
           viewBox="0 0 970 410"
           role="img"

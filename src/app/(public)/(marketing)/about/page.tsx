@@ -158,7 +158,7 @@ export default function AboutPage() {
               as="li"
               key={title}
               direction="left"
-              className="flex gap-4 rounded-3xl border bg-card p-6 shadow-sm"
+              className="flex gap-4 rounded-2xl border bg-card p-6 shadow-sm"
             >
               <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <Icon className="size-5" />
@@ -201,7 +201,7 @@ export default function AboutPage() {
             <StaggerItem
               as="li"
               key={title}
-              className="flex flex-col gap-4 rounded-3xl border bg-card p-6 shadow-sm transition-[translate,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 motion-reduce:hover:translate-y-0"
+              className="flex flex-col gap-4 rounded-2xl border bg-card p-6 shadow-sm transition-[translate,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/10 motion-reduce:hover:translate-y-0"
             >
               <span className="flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
                 <Icon className="size-5" />
@@ -236,7 +236,7 @@ export default function AboutPage() {
             {STACK.map(({ layer, items }) => (
               <StaggerItem
                 key={layer}
-                className="space-y-4 rounded-3xl border bg-card p-6"
+                className="space-y-4 rounded-2xl border bg-card p-6"
               >
                 <h3 className="font-heading text-lg font-semibold">{layer}</h3>
                 <ul className="flex flex-wrap gap-2">

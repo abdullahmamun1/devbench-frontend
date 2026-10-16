@@ -19,7 +19,7 @@ function series(
 }
 const TrendChart = dynamic(() => import("./trend-chart"), {
   ssr: false,
-  loading: () => <Skeleton className="h-72 w-full rounded-xl" />,
+  loading: () => <Skeleton className="h-72 w-full rounded-2xl" />,
 });
 
 export default function AdminOverview() {

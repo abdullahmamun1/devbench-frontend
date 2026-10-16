@@ -8,7 +8,7 @@ import type { FaqItem } from "@/constants/faqs";
 
 export default function FaqAccordion({ items }: { items: FaqItem[] }) {
   return (
-    <Accordion className="overflow-hidden rounded-xl border">
+    <Accordion className="overflow-hidden rounded-2xl border">
       {items.map((item) => (
         <AccordionItem
           key={item.question}

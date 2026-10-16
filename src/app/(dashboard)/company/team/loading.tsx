@@ -4,7 +4,7 @@ export default function Loading() {
   return (
     <div className="space-y-6">
       <Skeleton className="h-10 w-full max-w-md" />
-      <Skeleton className="h-64 rounded-xl" />
+      <Skeleton className="h-64 rounded-2xl" />
     </div>
   );
 }

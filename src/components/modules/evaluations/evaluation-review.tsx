@@ -80,7 +80,7 @@ export function EvaluationReview({ id }: { id: string }) {
         </div>
 
         <aside className="space-y-6 lg:col-span-2">
-          <div className="space-y-4 rounded-xl border p-5">
+          <div className="space-y-4 rounded-2xl border p-5">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold">Grade</h2>
               <StatusBadge status={evaluation.status} />

@@ -94,7 +94,7 @@ export default function PricingPage() {
             title="Work out a hiring round"
             description="Pick how many candidates you plan to invite. You only buy credits when you need them."
           />
-          <div className="overflow-hidden rounded-3xl border bg-card">
+          <div className="overflow-hidden rounded-2xl border bg-card">
             <table className="w-full text-left">
               <caption className="sr-only">
                 Example hiring rounds and their cost
@@ -149,7 +149,7 @@ export default function PricingPage() {
               <StaggerItem
                 as="li"
                 key={title}
-                className="flex gap-4 rounded-3xl border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg hover:shadow-primary/10"
+                className="flex gap-4 rounded-2xl border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg hover:shadow-primary/10"
               >
                 <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
                   <Icon className="size-5" />

@@ -48,7 +48,7 @@ export default function StatusPage({
             {code}
           </p>
         ) : Icon ? (
-          <div className="flex size-20 items-center justify-center rounded-3xl bg-destructive/10 text-destructive">
+          <div className="flex size-20 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
             <Icon className="size-10" aria-hidden="true" />
           </div>
         ) : null}

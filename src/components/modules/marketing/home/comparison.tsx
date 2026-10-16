@@ -37,7 +37,7 @@ export default function Comparison() {
       />
       {/* relative: the sr-only labels are absolutely positioned and would
           otherwise escape the scroll container and widen the page */}
-      <Reveal className="relative overflow-x-auto rounded-3xl border bg-card shadow-sm">
+      <Reveal className="relative overflow-x-auto rounded-2xl border bg-card shadow-sm">
         <table className="w-full min-w-[40rem] text-left">
           <caption className="sr-only">
             Screening methods compared by what they guarantee

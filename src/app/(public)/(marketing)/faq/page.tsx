@@ -35,7 +35,7 @@ export default function FaqPage() {
       <div className="mx-auto max-w-3xl space-y-12 px-4 py-16 sm:px-6">
         <FaqExplorer groups={FAQ_GROUPS} />
 
-        <aside className="flex flex-col items-start gap-4 rounded-3xl border bg-linear-to-br from-primary/8 to-brand-2/8 p-7 sm:flex-row sm:items-center">
+        <aside className="flex flex-col items-start gap-4 rounded-2xl border bg-linear-to-br from-primary/8 to-brand-2/8 p-7 sm:flex-row sm:items-center">
           <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
             <MessageSquare className="size-5" />
           </span>

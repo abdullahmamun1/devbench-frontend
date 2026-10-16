@@ -12,8 +12,8 @@ export default function Loading() {
           <Skeleton key={index} className="h-28 rounded-xl" />
         ))}
       </div>
-      <Skeleton className="h-24 rounded-xl" />
-      <Skeleton className="h-64 rounded-xl" />
+      <Skeleton className="h-24 rounded-2xl" />
+      <Skeleton className="h-64 rounded-2xl" />
     </div>
   );
 }
