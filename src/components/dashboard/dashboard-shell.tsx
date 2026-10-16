@@ -13,7 +13,6 @@ import { findRouteTitle, getRoutesForRole } from "@/utils/sidebar";
 import ThemeToggle from "../shared/theme-toggle";
 import CreditBadge from "./credit-badge";
 import { DashboardSidebar } from "./dashboard-sidebar";
-import UserMenu from "./user-menu";
 
 export default function DashboardShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -27,19 +26,27 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <DashboardSidebar user={user} />
-      <SidebarInset id="main-content" tabIndex={-1} className="outline-none">
+      <SidebarInset
+        id="main-content"
+        tabIndex={-1}
+        className="min-w-0 outline-none"
+      >
         <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-background/80 px-4 backdrop-blur">
           <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mx-1 h-5" />
-          <p className="font-semibold">{title}</p>
+          <Separator
+            orientation="vertical"
+            className="mx-1 data-vertical:h-5 data-vertical:self-center"
+          />
+          <p className="font-heading text-lg font-semibold">{title}</p>
 
           <div className="ml-auto flex items-center gap-2">
             <ThemeToggle />
             <CreditBadge user={user} />
-            <UserMenu user={user} />
           </div>
         </header>
-        <div className="flex-1 p-4 md:p-6">{children}</div>
+        <div className="mx-auto w-full max-w-7xl flex-1 p-5 md:p-8">
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

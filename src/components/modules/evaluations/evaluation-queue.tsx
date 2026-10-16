@@ -34,12 +34,13 @@ const columns: DataTableColumn<PendingEvaluation>[] = [
   {
     key: "assessment",
     header: "Assessment",
-    className: "hidden md:table-cell",
+    className: "hidden min-w-44 whitespace-normal md:table-cell",
     cell: (e) => e.submission.attempt.assessment.title,
   },
   {
     key: "problem",
     header: "Problem",
+    className: "min-w-48 whitespace-normal",
     cell: (e) => (
       <div className="flex flex-wrap items-center gap-2">
         <span>{e.submission.problem.title}</span>
@@ -50,7 +51,7 @@ const columns: DataTableColumn<PendingEvaluation>[] = [
   {
     key: "maxScore",
     header: "Max score",
-    className: "hidden sm:table-cell",
+    className: "hidden xl:table-cell",
     cell: (e) => e.maxScore,
   },
   {

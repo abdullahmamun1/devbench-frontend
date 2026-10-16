@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -21,6 +22,7 @@ import { ROLE_HOME } from "@/constants/roles";
 import { usePendingEvaluationCount } from "@/hooks";
 import type { User } from "@/types";
 import { filterRoutesByRole, getRoutesForRole } from "@/utils/sidebar";
+import UserMenu from "./user-menu";
 
 // Overview links must match exactly, otherwise they'd stay active on every subpage.
 const ROOT_URLS = new Set<string>(Object.values(ROLE_HOME));
@@ -56,13 +58,15 @@ export function DashboardSidebar({ user }: { user: User }) {
         <Link
           href="/"
           onClick={closeOnMobile}
-          className="flex items-center gap-2 px-2 py-1.5"
+          className="flex items-center gap-3 px-2 py-2"
         >
-          <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Code2 className="size-5" />
           </span>
           <span className="min-w-0 leading-tight">
-            <span className="block font-bold">DevBench</span>
+            <span className="block font-heading text-lg font-bold">
+              DevBench
+            </span>
             <span className="block truncate text-xs text-muted-foreground">
               {portalLabel}
             </span>
@@ -101,6 +105,10 @@ export function DashboardSidebar({ user }: { user: User }) {
           </SidebarGroup>
         ))}
       </SidebarContent>
+
+      <SidebarFooter className="border-t">
+        <UserMenu user={user} onNavigate={closeOnMobile} />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   );

@@ -49,6 +49,7 @@ export function AssessmentList() {
     {
       key: "title",
       header: "Title",
+      className: "min-w-48 whitespace-normal",
       cell: (a) => (
         <Link
           href={`/company/assessments/${a.id}`}

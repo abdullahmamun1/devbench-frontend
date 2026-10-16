@@ -53,6 +53,7 @@ export function ProblemList() {
     {
       key: "title",
       header: "Title",
+      className: "min-w-40 whitespace-normal",
       cell: (p) => (
         <Link
           href={`/company/problems/${p.id}`}
