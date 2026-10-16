@@ -115,3 +115,50 @@ export interface AttemptInsights {
   durationMinutes: number;
   summary: string;
 }
+
+// Smart assessment builder
+
+export type DifficultyLevel = "easy" | "medium" | "hard";
+export type DifficultyPreference = "easier" | "balanced" | "harder";
+
+export interface ProblemSuggestionParams {
+  minutes: number;
+  coding: number;
+  mcq: number;
+  written: number;
+  difficulty: DifficultyPreference;
+}
+
+export interface ProblemSuggestion {
+  problemId: string;
+  title: string;
+  type: ProblemType;
+  points: number;
+  minutes: number;
+  minutesSource: "observed" | "estimate";
+  timeSamples: number;
+  difficulty: DifficultyLevel | null;
+  averageScore: number | null;
+  scoreSamples: number;
+  reason: string;
+}
+
+export interface ProblemSuggestions {
+  assessmentId: string;
+  targetMinutes: number;
+  bufferMinutes: number;
+  attachedCount: number;
+  attachedMinutes: number;
+  budgetMinutes: number;
+  difficulty: DifficultyPreference;
+  picks: ProblemSuggestion[];
+  byType: {
+    type: ProblemType;
+    targetMinutes: number;
+    minutes: number;
+    count: number;
+  }[];
+  totalMinutes: number;
+  totalPoints: number;
+  notes: string[];
+}

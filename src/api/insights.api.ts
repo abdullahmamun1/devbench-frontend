@@ -4,6 +4,8 @@ import type {
   AssessmentInsights,
   AttemptInsights,
   AttemptSignals,
+  ProblemSuggestionParams,
+  ProblemSuggestions,
   SubmissionSimilarity,
 } from "@/types";
 
@@ -23,4 +25,13 @@ export const getAttemptInsights = (attemptId: string) =>
 export const getAssessmentInsights = (assessmentId: string) =>
   apiClient<ApiResponse<AssessmentInsights>>(
     `/insights/assessments/${assessmentId}`,
+  );
+
+export const getProblemSuggestions = (
+  assessmentId: string,
+  params: ProblemSuggestionParams,
+) =>
+  apiClient<ApiResponse<ProblemSuggestions>>(
+    `/insights/assessments/${assessmentId}/suggestions`,
+    { query: params },
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { Plus, Trash2, Wand2 } from "lucide-react";
 import { useState } from "react";
 import ConfirmDialog from "@/components/shared/confirm-dialog";
 import EmptyState from "@/components/shared/empty-state";
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useDetachProblem } from "@/hooks";
 import type { Assessment } from "@/types";
 import { AttachProblemDialog } from "./attach-problem-dialog";
+import { SmartPickDialog } from "./smart-pick-dialog";
 
 interface AssessmentProblemsProps {
   assessment: Assessment;
@@ -22,6 +24,7 @@ export function AssessmentProblems({
   canEdit,
 }: AssessmentProblemsProps) {
   const [adding, setAdding] = useState(false);
+  const [smartPicking, setSmartPicking] = useState(false);
   const { mutate: detach, isPending } = useDetachProblem(assessment.id);
 
   const items = assessment.assessmentProblems ?? [];
@@ -45,9 +48,20 @@ export function AssessmentProblems({
           </p>
         </div>
         {canEdit && (
-          <Button onClick={() => setAdding(true)} disabled={locked}>
-            Add problems
-          </Button>
+          <div className="flex flex-wrap justify-end gap-2">
+            <Button
+              variant="soft"
+              onClick={() => setSmartPicking(true)}
+              disabled={locked}
+            >
+              <Wand2 />
+              Smart pick
+            </Button>
+            <Button onClick={() => setAdding(true)} disabled={locked}>
+              <Plus />
+              Add problems
+            </Button>
+          </div>
         )}
       </div>
 
@@ -69,10 +83,10 @@ export function AssessmentProblems({
       {items.length === 0 ? (
         <EmptyState
           title="No problems attached"
-          description="Add at least one problem before you can publish."
+          description="Add at least one problem before you can publish, or let Smart pick fill the time for you."
         />
       ) : (
-        <ul className="divide-y rounded-xl border">
+        <ul className="divide-y rounded-2xl border">
           {items.map((item, index) => (
             <li
               key={item.id}
@@ -95,7 +109,7 @@ export function AssessmentProblems({
                 <StatusBadge status={item.problem.type} />
                 {canEdit && (
                   <Button
-                    variant="outline"
+                    variant="destructive"
                     size="sm"
                     disabled={locked}
                     onClick={() =>
@@ -105,6 +119,7 @@ export function AssessmentProblems({
                       })
                     }
                   >
+                    <Trash2 />
                     Remove
                   </Button>
                 )}
@@ -120,6 +135,14 @@ export function AssessmentProblems({
         open={adding}
         onOpenChange={setAdding}
       />
+      {canEdit && !locked && (
+        <SmartPickDialog
+          assessmentId={assessment.id}
+          durationMinutes={assessment.durationMinutes}
+          open={smartPicking}
+          onOpenChange={setSmartPicking}
+        />
+      )}
       <ConfirmDialog
         open={Boolean(toRemove)}
         onOpenChange={(o) => !o && setToRemove(null)}

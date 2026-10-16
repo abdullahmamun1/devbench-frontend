@@ -40,6 +40,10 @@ const STATUS_TONE: Record<string, Tone> = {
   DEDUCTION: "neutral",
   REFUND: "info",
   ADJUSTMENT: "info",
+  // difficulty (smart assessment builder)
+  EASY: "success",
+  MEDIUM: "warning",
+  HARD: "danger",
   // problem types
   CODING: "info",
   MCQ: "highlight",
