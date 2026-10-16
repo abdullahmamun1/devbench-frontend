@@ -2,7 +2,7 @@
 
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -14,20 +14,24 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useLogin } from "@/hooks";
 import { getErrorMessage, getErrorStatus } from "@/utils/error";
+import { focusFirstInvalid, shake } from "@/utils/form";
 import { loginSchema } from "@/validation/auth.validation";
 import PasswordInput from "./password-input";
 
 export default function LoginForm() {
   const { mutate: login, isPending } = useLogin();
   const [blockedMessage, setBlockedMessage] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   const form = useForm({
     defaultValues: { email: "", password: "" },
     validators: { onSubmit: loginSchema },
+    onSubmitInvalid: () => focusFirstInvalid(formRef.current),
     onSubmit: ({ value }) => {
       setBlockedMessage("");
       login(value, {
         onError: (error) => {
+          shake(formRef.current);
           const message = getErrorMessage(error);
           // 403 that is not "please verify" means the account is blocked.
           // Unverified users are already redirected by the hook.
@@ -41,6 +45,7 @@ export default function LoginForm() {
 
   return (
     <form
+      ref={formRef}
       noValidate
       className="flex flex-col gap-6"
       onSubmit={(e) => {
@@ -123,7 +128,7 @@ export default function LoginForm() {
           }}
         </form.Field>
 
-        <Button type="submit" disabled={isPending}>
+        <Button type="submit" variant="brand" size="lg" disabled={isPending}>
           {isPending ? (
             <>
               <Spinner />

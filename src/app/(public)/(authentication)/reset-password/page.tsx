@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import ResetPasswordForm from "@/components/form/reset-password-form";
+import AuthSteps from "@/components/modules/auth/auth-steps";
+import { RESET_STEPS } from "@/constants/auth";
 
 export const metadata: Metadata = {
   title: "Reset password",
@@ -12,10 +14,11 @@ export const metadata: Metadata = {
 export default function ResetPasswordPage() {
   return (
     <div className="space-y-5">
-      <div className="space-y-1 text-center">
-        <h1 className="text-4xl font-bold">Set a new password</h1>
-        <p className="text-sm text-muted-foreground">
-          Enter the code from your email and choose a new password
+      <div className="space-y-4 text-center">
+        <AuthSteps steps={RESET_STEPS} current={1} />
+        <h1 className="text-h2 font-bold">Set a new password</h1>
+        <p className="text-muted-foreground">
+          Enter the code from your email and choose a new password.
         </p>
       </div>
 

@@ -8,6 +8,7 @@ import {
   forgotPassword,
   getMe,
   googleLogin,
+  resendOtp,
   resetPassword,
   userLogin,
   userLogout,
@@ -128,6 +129,16 @@ export function useVerifyEmail() {
     },
     onError: (error) =>
       toast.error(getErrorMessage(error, "Could not verify your email")),
+  });
+}
+
+export function useResendOtp() {
+  return useMutation({
+    mutationFn: resendOtp,
+    onSuccess: () =>
+      toast.success("A new code is on its way. Check your inbox."),
+    onError: (error) =>
+      toast.error(getErrorMessage(error, "Could not send a new code")),
   });
 }
 

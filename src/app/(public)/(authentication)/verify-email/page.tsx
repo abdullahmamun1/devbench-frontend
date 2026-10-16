@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import VerifyEmailForm from "@/components/form/verify-email-form";
+import AuthSteps from "@/components/modules/auth/auth-steps";
+import { REGISTER_STEPS } from "@/constants/auth";
 
 export const metadata: Metadata = {
   title: "Verify your email",
@@ -13,10 +15,12 @@ export const metadata: Metadata = {
 export default function VerifyEmailPage() {
   return (
     <div className="space-y-6">
-      <div className="space-y-1 text-center">
-        <h1 className="text-4xl font-bold">Check your email</h1>
-        <p className="text-sm text-muted-foreground">
-          Enter the 6-digit code we just sent you
+      <div className="space-y-4 text-center">
+        <AuthSteps steps={REGISTER_STEPS} current={1} />
+        <h1 className="text-h2 font-bold">Check your email</h1>
+        <p className="text-muted-foreground">
+          Enter the 6-digit code we just sent you. It verifies as soon as you
+          type the last digit.
         </p>
       </div>
 
@@ -26,11 +30,13 @@ export default function VerifyEmailPage() {
       </Suspense>
 
       <p className="text-center text-sm text-muted-foreground">
-        Didn&apos;t get a code? Check your spam folder, or{" "}
-        <Link href="/register" className="...">
-          go back to register
+        Wrong email address?{" "}
+        <Link
+          href="/register"
+          className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
+        >
+          Go back to register
         </Link>
-        .
       </p>
     </div>
   );

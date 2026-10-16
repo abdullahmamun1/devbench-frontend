@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowRight,
   Building2,
   ClipboardCheck,
   FilePlus2,
@@ -20,43 +21,84 @@ const ICONS = {
   evaluator: ClipboardCheck,
 } as const;
 
+// The company owner sees the most of the product, so it leads for recruiters
+const FEATURED = "company";
+
 export default function DemoLogin() {
   const { mutate, isPending, variables } = useLogin();
+  const featured = DEMO_ACCOUNTS.find((a) => a.key === FEATURED);
+  const others = DEMO_ACCOUNTS.filter((a) => a.key !== FEATURED);
 
-  const renderButton = ({ key, label, hint, email, password }: DemoAccount) => {
-    const Icon = ICONS[key];
-    const isLoading = isPending && variables?.email === email;
-
-    return (
-      <Button
-        key={key}
-        type="button"
-        variant="outline"
-        disabled={isPending}
-        aria-label={`Log in as ${label}. ${hint}`}
-        onClick={() => mutate({ email, password })}
-        className="h-auto flex-col gap-1 px-2 py-2.5 text-center text-xs whitespace-normal"
-      >
-        {isLoading ? <Spinner /> : <Icon className="size-4" />}
-        <span className="font-semibold">{label}</span>
-        <span className="hidden text-[11px] font-normal text-muted-foreground sm:block">
-          {hint}
-        </span>
-      </Button>
-    );
-  };
+  const loading = (account: DemoAccount) =>
+    isPending && variables?.email === account.email;
 
   return (
-    <section aria-labelledby="demo-login-title" className="space-y-3 pt-2">
-      <h2 id="demo-login-title" className="text-center text-sm font-medium">
-        Quick demo login{" "}
+    <section
+      id="demo-login"
+      aria-labelledby="demo-login-title"
+      className="space-y-3 rounded-3xl border bg-muted/40 p-4"
+    >
+      <h2 id="demo-login-title" className="text-center font-semibold">
+        Explore with a demo account{" "}
         <span className="font-normal text-muted-foreground">(one click)</span>
       </h2>
-      <div className="grid grid-cols-3 gap-2">
-        {DEMO_ACCOUNTS.filter((a) => a.group === "primary").map(renderButton)}
-      </div>
+
+      {featured && (
+        <Button
+          type="button"
+          variant="brand"
+          disabled={isPending}
+          aria-label={`Log in as ${featured.label}. ${featured.hint}`}
+          onClick={() =>
+            mutate({ email: featured.email, password: featured.password })
+          }
+          className="h-auto w-full justify-start gap-3 rounded-2xl px-4 py-3.5 text-left whitespace-normal"
+        >
+          {loading(featured) ? <Spinner /> : <Building2 className="size-5" />}
+          <span className="flex-1">
+            <span className="block font-semibold">
+              Hiring? Open the Acme Corp workspace
+            </span>
+            <span className="block text-sm font-normal text-primary-foreground/85">
+              Signs you in as the company owner, with problems, assessments and
+              candidates already in place
+            </span>
+          </span>
+          <ArrowRight />
+        </Button>
+      )}
+
       <div className="grid grid-cols-2 gap-2">
-        {DEMO_ACCOUNTS.filter((a) => a.group === "team").map(renderButton)}
+        {others.map((account) => {
+          const Icon = ICONS[account.key];
+          return (
+            <Button
+              key={account.key}
+              type="button"
+              variant="outline"
+              disabled={isPending}
+              aria-label={`Log in as ${account.label}. ${account.hint}`}
+              onClick={() =>
+                mutate({ email: account.email, password: account.password })
+              }
+              className="h-auto justify-start gap-2.5 rounded-2xl bg-card px-3 py-2.5 text-left whitespace-normal"
+            >
+              {loading(account) ? (
+                <Spinner />
+              ) : (
+                <Icon className="size-4 text-primary" />
+              )}
+              <span className="min-w-0">
+                <span className="block text-sm font-semibold">
+                  {account.label}
+                </span>
+                <span className="block text-xs font-normal text-muted-foreground">
+                  {account.hint}
+                </span>
+              </span>
+            </Button>
+          );
+        })}
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import type {
   LoginPayload,
   LoginResult,
   RegisterPayload,
+  ResendOtpResult,
   ResetPasswordPayload,
   User,
   VerifyEmailPayload,
@@ -22,6 +23,12 @@ export const userRegister = (body: RegisterPayload) =>
 
 export const verifyEmail = (body: VerifyEmailPayload) =>
   apiClient<ApiResponse<unknown>>("/auth/verify-email", {
+    method: "POST",
+    body,
+  });
+
+export const resendOtp = (body: { email: string }) =>
+  apiClient<ApiResponse<ResendOtpResult>>("/auth/resend-otp", {
     method: "POST",
     body,
   });

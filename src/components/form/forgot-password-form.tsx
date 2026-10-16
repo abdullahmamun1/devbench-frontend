@@ -1,6 +1,7 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -11,19 +12,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { useForgotPassword } from "@/hooks";
+import { focusFirstInvalid } from "@/utils/form";
 import { forgotPasswordSchema } from "@/validation/auth.validation";
 
 export default function ForgotPasswordForm() {
   const { mutate: sendCode, isPending } = useForgotPassword();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const form = useForm({
     defaultValues: { email: "" },
     validators: { onSubmit: forgotPasswordSchema },
+    onSubmitInvalid: () => focusFirstInvalid(formRef.current),
     onSubmit: ({ value }) => sendCode({ email: value.email.trim() }),
   });
 
   return (
     <form
+      ref={formRef}
       noValidate
       className="flex flex-col gap-4"
       onSubmit={(e) => {
@@ -56,7 +61,7 @@ export default function ForgotPasswordForm() {
           }}
         </form.Field>
 
-        <Button type="submit" disabled={isPending}>
+        <Button type="submit" variant="brand" size="lg" disabled={isPending}>
           {isPending ? (
             <>
               <Spinner />

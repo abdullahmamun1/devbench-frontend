@@ -14,10 +14,18 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="space-y-5">
-      <div className="space-y-1 text-center">
-        <h1 className="text-4xl font-bold">Welcome back!</h1>
-        <p className="text-sm text-muted-foreground">Login to your account</p>
+    <div className="space-y-6">
+      <div className="space-y-2 text-center">
+        <h1 className="text-h2 font-bold">Welcome back</h1>
+        <p className="text-muted-foreground">
+          Log in to your workspace.{" "}
+          <a
+            href="#demo-login"
+            className="font-medium text-primary underline-offset-4 hover:underline"
+          >
+            Just exploring? Use a demo account
+          </a>
+        </p>
       </div>
 
       {/* useLogin reads ?redirect= via useSearchParams, so it needs Suspense */}
@@ -28,13 +36,13 @@ export default function LoginPage() {
         <DemoLogin />
       </Suspense>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-muted-foreground">
         Don&apos;t have an account?{" "}
         <Link
           href="/register"
           className="font-medium text-foreground underline underline-offset-4 hover:text-primary"
         >
-          Register
+          Create one
         </Link>
       </p>
     </div>

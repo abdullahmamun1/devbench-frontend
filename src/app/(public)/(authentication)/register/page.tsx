@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import RegisterForm from "@/components/form/register-form";
+import AuthSteps from "@/components/modules/auth/auth-steps";
+import { REGISTER_STEPS } from "@/constants/auth";
 
 export const metadata: Metadata = {
   title: "Create account",
@@ -12,10 +14,12 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
   return (
     <div className="space-y-5">
-      <div className="space-y-1 text-center">
-        <h1 className="text-4xl font-bold">Create your account</h1>
-        <p className="text-sm text-muted-foreground">
-          We&apos;ll email you a 6-digit code to verify it
+      <div className="space-y-4 text-center">
+        <AuthSteps steps={REGISTER_STEPS} current={0} />
+        <h1 className="text-h2 font-bold">Create your account</h1>
+        <p className="text-muted-foreground">
+          Free to create. Next, we&apos;ll email you a 6-digit code to confirm
+          your address.
         </p>
       </div>
 
@@ -23,7 +27,7 @@ export default function RegisterPage() {
         <RegisterForm />
       </Suspense>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-muted-foreground">
         Already have an account?{" "}
         <Link
           href="/login"

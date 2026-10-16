@@ -3,7 +3,7 @@
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Field,
@@ -14,13 +14,16 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { useResetPassword } from "@/hooks";
 import { getErrorMessage } from "@/utils/error";
+import { focusFirstInvalid } from "@/utils/form";
 import { resetPasswordSchema } from "@/validation/auth.validation";
 import OtpInput from "./otp-input";
+import PasswordChecklist from "./password-checklist";
 import PasswordInput from "./password-input";
 
 export default function ResetPasswordForm() {
   const email = useSearchParams().get("email") ?? "";
   const { mutate: reset, isPending } = useResetPassword();
+  const formRef = useRef<HTMLFormElement>(null);
   const [serverError, setServerError] = useState("");
 
   const form = useForm({
@@ -31,6 +34,7 @@ export default function ResetPasswordForm() {
       confirmPassword: "",
     },
     validators: { onChange: resetPasswordSchema },
+    onSubmitInvalid: () => focusFirstInvalid(formRef.current),
     onSubmit: ({ value }) => {
       const { confirmPassword: _confirm, ...payload } = value;
       reset(payload, {
@@ -60,6 +64,7 @@ export default function ResetPasswordForm() {
 
   return (
     <form
+      ref={formRef}
       noValidate
       className="flex flex-col gap-4"
       onSubmit={(e) => {
@@ -117,12 +122,13 @@ export default function ResetPasswordForm() {
                     name={field.name}
                     placeholder="Create a new password"
                     autoComplete="new-password"
+                    aria-describedby="password-rules"
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                     onBlur={field.handleBlur}
                     aria-invalid={isInvalid}
                   />
-                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                  {/* The checklist below explains what is missing */}
                 </Field>
               );
             }}
@@ -161,12 +167,13 @@ export default function ResetPasswordForm() {
           </form.Field>
         </div>
 
-        <p className="-mt-2 text-xs text-muted-foreground">
-          Use 8+ characters with upper and lower case letters, a number and a
-          symbol.
-        </p>
+        <form.Subscribe selector={(state) => state.values.newPassword}>
+          {(password) => (
+            <PasswordChecklist id="password-rules" value={password} />
+          )}
+        </form.Subscribe>
 
-        <Button type="submit" disabled={isPending}>
+        <Button type="submit" variant="brand" size="lg" disabled={isPending}>
           {isPending ? (
             <>
               <Spinner />

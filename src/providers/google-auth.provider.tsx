@@ -11,7 +11,11 @@ export default function GoogleAuthProvider({
   if (!clientId) {
     return <>{children}</>;
   }
+  // locale: without it Google labels the button in the visitor's regional
+  // language instead of the site's
   return (
-    <GoogleOAuthProvider clientId={clientId}>{children}</GoogleOAuthProvider>
+    <GoogleOAuthProvider clientId={clientId} locale="en">
+      {children}
+    </GoogleOAuthProvider>
   );
 }

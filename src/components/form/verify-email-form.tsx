@@ -7,7 +7,8 @@ import { useState } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
-import { useVerifyEmail } from "@/hooks";
+import { useResendOtp, useVerifyEmail } from "@/hooks";
+import { useCountdown } from "@/hooks/countdown.hook";
 import { getErrorMessage } from "@/utils/error";
 import { verifyEmailSchema } from "@/validation/auth.validation";
 import OtpInput from "./otp-input";
@@ -16,6 +17,10 @@ export default function VerifyEmailForm() {
   const email = useSearchParams().get("email") ?? "";
   const { mutate: verify, isPending } = useVerifyEmail();
   const [serverError, setServerError] = useState("");
+  const { mutate: resend, isPending: isResending } = useResendOtp();
+  // The code was sent moments ago (on register), so start on a cooldown
+  const [resendAt, setResendAt] = useState(() => Date.now() + 60_000);
+  const resendIn = useCountdown(resendAt, () => {});
 
   const form = useForm({
     defaultValues: { email, otp: "" },
@@ -67,7 +72,9 @@ export default function VerifyEmailForm() {
 
           return (
             <Field data-invalid={isInvalid} className="items-center">
-              <FieldLabel htmlFor="otp">Verification code</FieldLabel>
+              <FieldLabel htmlFor="otp" className="w-full justify-center">
+                Verification code
+              </FieldLabel>
               <OtpInput
                 value={field.state.value}
                 onChange={(value) => {
@@ -77,15 +84,25 @@ export default function VerifyEmailForm() {
                 onBlur={field.handleBlur}
                 invalid={isInvalid}
                 disabled={isPending}
+                onComplete={() => form.handleSubmit()}
+                centered
                 autoFocus
               />
-              {isInvalid && <FieldError errors={errors} />}
+              {isInvalid && (
+                <FieldError errors={errors} className="text-center" />
+              )}
             </Field>
           );
         }}
       </form.Field>
 
-      <Button type="submit" className="w-full" disabled={isPending}>
+      <Button
+        type="submit"
+        variant="brand"
+        size="lg"
+        className="w-full"
+        disabled={isPending}
+      >
         {isPending ? (
           <>
             <Spinner />
@@ -95,6 +112,31 @@ export default function VerifyEmailForm() {
           "Verify email"
         )}
       </Button>
+      <p className="text-sm text-muted-foreground" aria-live="polite">
+        Didn&apos;t get it? Check your spam folder, or{" "}
+        {resendIn > 0 ? (
+          <span>request a new code in {resendIn}s</span>
+        ) : (
+          <button
+            type="button"
+            disabled={isResending}
+            onClick={() =>
+              resend(
+                { email },
+                {
+                  onSuccess: (res) =>
+                    setResendAt(
+                      Date.now() + res.data.resendAvailableInSeconds * 1000,
+                    ),
+                },
+              )
+            }
+            className="font-medium text-primary underline-offset-4 hover:underline disabled:opacity-50"
+          >
+            {isResending ? "sending..." : "send a new code"}
+          </button>
+        )}
+      </p>
     </form>
   );
 }

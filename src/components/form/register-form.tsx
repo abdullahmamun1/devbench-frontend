@@ -2,6 +2,7 @@
 
 import { useForm } from "@tanstack/react-form";
 import { Building2, UserRound } from "lucide-react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -15,17 +16,30 @@ import { Spinner } from "@/components/ui/spinner";
 import { useRegister } from "@/hooks";
 import { cn } from "@/lib/utils";
 import type { RegisterRole } from "@/types";
+import { focusFirstInvalid } from "@/utils/form";
 import { registerSchema } from "@/validation/auth.validation";
 import GoogleAuthButton from "../modules/auth/google-auth-button";
+import PasswordChecklist from "./password-checklist";
 import PasswordInput from "./password-input";
 
 const ROLE_OPTIONS = [
-  { value: "CANDIDATE", label: "Candidate", icon: UserRound },
-  { value: "COMPANY_OWNER", label: "Company", icon: Building2 },
+  {
+    value: "CANDIDATE",
+    label: "Candidate",
+    description: "Take assessments you're invited to",
+    icon: UserRound,
+  },
+  {
+    value: "COMPANY_OWNER",
+    label: "Company",
+    description: "Build assessments and hire",
+    icon: Building2,
+  },
 ] as const;
 
 export default function RegisterForm() {
   const { mutate: register, isPending } = useRegister();
+  const formRef = useRef<HTMLFormElement>(null);
 
   const form = useForm({
     defaultValues: {
@@ -37,6 +51,7 @@ export default function RegisterForm() {
       companyName: "",
     },
     validators: { onChange: registerSchema },
+    onSubmitInvalid: () => focusFirstInvalid(formRef.current),
     onSubmit: ({ value }) => {
       const { confirmPassword: _confirm, ...rest } = value;
       register({
@@ -51,6 +66,7 @@ export default function RegisterForm() {
 
   return (
     <form
+      ref={formRef}
       noValidate
       className="flex flex-col gap-4"
       onSubmit={(e) => {
@@ -59,32 +75,51 @@ export default function RegisterForm() {
       }}
     >
       <FieldGroup className="gap-4">
-        {/* Role switch */}
+        {/* Role choice: two cards acting as a radio group */}
         <form.Field name="role">
           {(field) => (
             <Field>
-              <FieldLabel>I am signing up as</FieldLabel>
-              <div className="grid grid-cols-2 gap-1 rounded-lg bg-muted p-1">
-                {ROLE_OPTIONS.map(({ value, label, icon: Icon }) => {
-                  const active = field.state.value === value;
-                  return (
-                    <button
-                      key={value}
-                      type="button"
-                      aria-pressed={active}
-                      onClick={() => field.handleChange(value)}
-                      className={cn(
-                        "flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                        active
-                          ? "bg-background shadow-sm"
-                          : "text-muted-foreground hover:text-foreground",
-                      )}
-                    >
-                      <Icon className="size-4" />
-                      {label}
-                    </button>
-                  );
-                })}
+              <FieldLabel id="role-label">I am signing up as</FieldLabel>
+              <div
+                role="radiogroup"
+                aria-labelledby="role-label"
+                className="grid grid-cols-2 gap-3"
+              >
+                {ROLE_OPTIONS.map(
+                  ({ value, label, description, icon: Icon }) => {
+                    const active = field.state.value === value;
+                    return (
+                      <button
+                        key={value}
+                        type="button"
+                        role="radio"
+                        aria-checked={active}
+                        onClick={() => field.handleChange(value)}
+                        className={cn(
+                          "flex flex-col items-start gap-2 rounded-2xl border-2 p-4 text-left transition-all",
+                          active
+                            ? "border-primary bg-primary/8 shadow-md shadow-primary/10"
+                            : "border-border bg-card hover:border-primary/40",
+                        )}
+                      >
+                        <span
+                          className={cn(
+                            "flex size-9 items-center justify-center rounded-xl transition-colors",
+                            active
+                              ? "bg-primary text-primary-foreground"
+                              : "bg-muted text-muted-foreground",
+                          )}
+                        >
+                          <Icon className="size-4.5" />
+                        </span>
+                        <span className="font-semibold">{label}</span>
+                        <span className="text-sm text-muted-foreground">
+                          {description}
+                        </span>
+                      </button>
+                    );
+                  },
+                )}
               </div>
             </Field>
           )}
@@ -161,7 +196,10 @@ export default function RegisterForm() {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid;
                   return (
-                    <Field data-invalid={isInvalid}>
+                    <Field
+                      data-invalid={isInvalid}
+                      className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-2"
+                    >
                       <FieldLabel htmlFor={field.name}>Company name</FieldLabel>
                       <Input
                         id={field.name}
@@ -198,12 +236,13 @@ export default function RegisterForm() {
                     name={field.name}
                     placeholder="Create a password"
                     autoComplete="new-password"
+                    aria-describedby="password-rules"
                     value={field.state.value}
                     onChange={(e) => field.handleChange(e.target.value)}
                     onBlur={field.handleBlur}
                     aria-invalid={isInvalid}
                   />
-                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                  {/* The checklist below explains what is missing */}
                 </Field>
               );
             }}
@@ -242,12 +281,13 @@ export default function RegisterForm() {
           </form.Field>
         </div>
 
-        <p className="-mt-2 text-xs text-muted-foreground">
-          Use 8+ characters with upper and lower case letters, a number and a
-          symbol.
-        </p>
+        <form.Subscribe selector={(state) => state.values.password}>
+          {(password) => (
+            <PasswordChecklist id="password-rules" value={password} />
+          )}
+        </form.Subscribe>
 
-        <Button type="submit" disabled={isPending}>
+        <Button type="submit" variant="brand" size="lg" disabled={isPending}>
           {isPending ? (
             <>
               <Spinner />

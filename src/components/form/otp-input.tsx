@@ -4,6 +4,7 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 import {
   InputOTP,
   InputOTPGroup,
+  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
@@ -16,9 +17,10 @@ interface OtpInputProps {
   invalid?: boolean;
   disabled?: boolean;
   autoFocus?: boolean;
+  onComplete?: () => void;
+  /** Centre the boxes (for centred layouts like the verify page) */
+  centered?: boolean;
 }
-
-const SLOT_CLASS = "size-11 text-lg font-semibold sm:size-12";
 
 export default function OtpInput({
   id = "otp",
@@ -29,6 +31,8 @@ export default function OtpInput({
   invalid,
   disabled,
   autoFocus,
+  onComplete,
+  centered = false,
 }: OtpInputProps) {
   return (
     <InputOTP
@@ -42,18 +46,24 @@ export default function OtpInput({
       inputMode="numeric"
       autoComplete="one-time-code"
       autoFocus={autoFocus}
+      onComplete={onComplete}
       disabled={disabled}
+      containerClassName={centered ? "w-full justify-center" : undefined}
     >
-      <InputOTPGroup>
-        {[0, 1, 2, 3, 4, 5].map((i) => (
-          <InputOTPSlot
-            key={i}
-            index={i}
-            aria-invalid={invalid}
-            className={SLOT_CLASS}
-          />
-        ))}
-      </InputOTPGroup>
+      {/* Two groups of three, the way codes are usually read out */}
+      {[
+        [0, 1, 2],
+        [3, 4, 5],
+      ].map((group, g) => (
+        <div key={group[0]} className="flex items-center">
+          {g > 0 && <InputOTPSeparator />}
+          <InputOTPGroup>
+            {group.map((i) => (
+              <InputOTPSlot key={i} index={i} aria-invalid={invalid} />
+            ))}
+          </InputOTPGroup>
+        </div>
+      ))}
     </InputOTP>
   );
 }
