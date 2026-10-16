@@ -19,7 +19,7 @@ export default function HeaderActions({
   const user = data?.data;
 
   if (isLoading) {
-    return <Skeleton className={cn("h-9 w-40", className)} />;
+    return <Skeleton className={cn("h-10 w-44", className)} />;
   }
 
   if (user) {
@@ -55,7 +55,11 @@ export default function HeaderActions({
       >
         Login
       </Link>
-      <Link href="/register" onClick={onNavigate} className={buttonVariants()}>
+      <Link
+        href="/register"
+        onClick={onNavigate}
+        className={buttonVariants({ variant: "brand" })}
+      >
         Get started
       </Link>
     </div>
