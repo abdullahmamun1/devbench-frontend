@@ -2,6 +2,7 @@
 
 import type { UseQueryResult } from "@tanstack/react-query";
 import {
+  ArrowRight,
   ClipboardCheck,
   ClipboardList,
   Code2,
@@ -17,7 +18,6 @@ import DataTable, {
 import EmptyState from "@/components/shared/empty-state";
 import StatCard from "@/components/shared/stat-card";
 import StatusBadge from "@/components/shared/status-badge";
-import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ROLE_LABELS } from "@/constants/roles";
 import {
@@ -33,30 +33,35 @@ import { formatDateTime } from "@/utils/format";
 
 const ACTIONS: {
   label: string;
+  description: string;
   href: string;
   icon: LucideIcon;
   roles: UserRole[];
 }[] = [
   {
     label: "Create a problem",
+    description: "Add a coding, MCQ or written question",
     href: "/company/problems/new",
     icon: Code2,
     roles: ["COMPANY_OWNER", "ASSESSMENT_CREATOR"],
   },
   {
     label: "Create an assessment",
+    description: "Bundle problems into a timed test",
     href: "/company/assessments/new",
     icon: ClipboardList,
     roles: ["COMPANY_OWNER", "ASSESSMENT_CREATOR"],
   },
   {
     label: "Review submissions",
+    description: "Grade written and coding answers",
     href: "/company/evaluations",
     icon: ClipboardCheck,
     roles: ["COMPANY_OWNER", "EVALUATOR"],
   },
   {
     label: "Buy credits",
+    description: "One credit sends one invitation",
     href: "/company/billing",
     icon: CreditCard,
     roles: ["COMPANY_OWNER"],
@@ -178,15 +183,28 @@ export default function CompanyOverview() {
         <CardHeader>
           <CardTitle>Quick actions</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-3">
-          {actions.map(({ label, href, icon: Icon }) => (
+        <CardContent className="grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-3">
+          {actions.map(({ label, description, href, icon: Icon }) => (
             <Link
               key={href}
               href={href}
-              className={buttonVariants({ variant: "outline" })}
+              className="group flex items-start gap-4 rounded-2xl border bg-background/60 p-4 transition-[border-color,translate,box-shadow] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             >
-              <Icon />
-              {label}
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <Icon className="size-5" aria-hidden="true" />
+              </span>
+              <span className="min-w-0 flex-1 space-y-0.5">
+                <span className="flex items-center gap-1 font-semibold">
+                  {label}
+                  <ArrowRight
+                    className="size-4 text-muted-foreground opacity-0 transition-[opacity,translate] group-hover:translate-x-0.5 group-hover:opacity-100"
+                    aria-hidden="true"
+                  />
+                </span>
+                <span className="block text-sm text-muted-foreground">
+                  {description}
+                </span>
+              </span>
             </Link>
           ))}
         </CardContent>

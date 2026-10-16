@@ -1,8 +1,11 @@
 "use client";
 
+import { SearchX } from "lucide-react";
+
 import Link from "next/link";
 import { useState } from "react";
 import ConfirmDialog from "@/components/shared/confirm-dialog";
+import EmptyState from "@/components/shared/empty-state";
 import StatusBadge from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -39,19 +42,20 @@ export function AssessmentDetail({ id }: { id: string }) {
 
   if (isError || !assessment) {
     return (
-      <div className="space-y-3 rounded-xl border p-8 text-center">
-        <h2 className="text-lg font-semibold">Assessment not found</h2>
-        <p className="text-sm text-muted-foreground">
-          It may have been deleted, or it belongs to another company.
-        </p>
-        <Button
-          variant="outline"
-          nativeButton={false}
-          render={<Link href="/company/assessments" />}
-        >
-          Back to assessments
-        </Button>
-      </div>
+      <EmptyState
+        icon={SearchX}
+        title="Assessment not found"
+        description="It may have been deleted, or it belongs to another company."
+        action={
+          <Button
+            variant="outline"
+            nativeButton={false}
+            render={<Link href="/company/assessments" />}
+          >
+            Back to assessments
+          </Button>
+        }
+      />
     );
   }
 

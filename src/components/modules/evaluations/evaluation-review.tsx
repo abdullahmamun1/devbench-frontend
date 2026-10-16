@@ -1,8 +1,9 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, SearchX } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import EmptyState from "@/components/shared/empty-state";
 import StatusBadge from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -32,19 +33,20 @@ export function EvaluationReview({ id }: { id: string }) {
 
   if (isError || !evaluation) {
     return (
-      <div className="space-y-3 rounded-xl border p-8 text-center">
-        <h2 className="text-lg font-semibold">Submission not found</h2>
-        <p className="text-sm text-muted-foreground">
-          It may belong to another company, or it no longer exists.
-        </p>
-        <Button
-          variant="outline"
-          nativeButton={false}
-          render={<Link href="/company/evaluations" />}
-        >
-          Back to evaluations
-        </Button>
-      </div>
+      <EmptyState
+        icon={SearchX}
+        title="Submission not found"
+        description="It may belong to another company, or it no longer exists."
+        action={
+          <Button
+            variant="outline"
+            nativeButton={false}
+            render={<Link href="/company/evaluations" />}
+          >
+            Back to evaluations
+          </Button>
+        }
+      />
     );
   }
 

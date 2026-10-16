@@ -21,21 +21,19 @@ export default function ErrorState({
     <div
       role="alert"
       className={cn(
-        "flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-destructive/40 px-6 py-14 text-center",
+        "flex flex-col items-center justify-center gap-3 rounded-2xl border border-dashed border-destructive/40 bg-destructive/3 px-6 py-14 text-center",
         className,
       )}
     >
-      <div className="flex size-12 items-center justify-center rounded-full bg-destructive/10">
-        <TriangleAlert className="size-6 text-destructive" aria-hidden="true" />
+      <div className="flex size-14 items-center justify-center rounded-2xl bg-destructive/10">
+        <TriangleAlert className="size-7 text-destructive" aria-hidden="true" />
       </div>
       <div className="space-y-1">
-        <p className="font-semibold">{title}</p>
-        <p className="mx-auto max-w-sm text-sm text-muted-foreground">
-          {description}
-        </p>
+        <p className="font-heading text-lg font-semibold">{title}</p>
+        <p className="mx-auto max-w-sm text-muted-foreground">{description}</p>
       </div>
       {onRetry && (
-        <Button type="button" variant="outline" size="sm" onClick={onRetry}>
+        <Button type="button" variant="outline" onClick={onRetry}>
           <RotateCw />
           Try again
         </Button>

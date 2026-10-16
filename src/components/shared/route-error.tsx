@@ -1,6 +1,6 @@
 "use client";
 
-import { TriangleAlert } from "lucide-react";
+import { RotateCw, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -36,15 +36,18 @@ export default function RouteError({
         className,
       )}
     >
-      <div className="flex size-14 items-center justify-center rounded-full bg-destructive/10 text-destructive">
-        <TriangleAlert className="size-7" />
+      <div className="flex size-16 items-center justify-center rounded-2xl bg-destructive/10 text-destructive">
+        <TriangleAlert className="size-8" aria-hidden="true" />
       </div>
-      <div className="max-w-md space-y-1">
-        <h2 className="text-xl font-semibold">{title}</h2>
-        <p className="text-sm text-muted-foreground">{description}</p>
+      <div className="max-w-md space-y-2">
+        <h2 className="font-heading text-2xl font-bold">{title}</h2>
+        <p className="text-muted-foreground">{description}</p>
       </div>
-      <div className="flex flex-wrap justify-center gap-2">
-        <Button onClick={reset}>Try again</Button>
+      <div className="flex flex-wrap justify-center gap-3">
+        <Button variant="brand" onClick={reset}>
+          <RotateCw />
+          Try again
+        </Button>
         {link && (
           <Button
             variant="outline"

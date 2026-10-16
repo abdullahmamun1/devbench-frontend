@@ -1,8 +1,10 @@
 "use client";
 
+import { SearchX } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import EmptyState from "@/components/shared/empty-state";
 import StatusBadge from "@/components/shared/status-badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -30,19 +32,20 @@ export function ProblemDetail({ id }: { id: string }) {
 
   if (isError || !problem) {
     return (
-      <div className="space-y-3 rounded-xl border p-8 text-center">
-        <h2 className="text-lg font-semibold">Problem not found</h2>
-        <p className="text-sm text-muted-foreground">
-          It may have been deleted, or it belongs to another company.
-        </p>
-        <Button
-          variant="outline"
-          nativeButton={false}
-          render={<Link href="/company/problems" />}
-        >
-          Back to problem bank
-        </Button>
-      </div>
+      <EmptyState
+        icon={SearchX}
+        title="Problem not found"
+        description="It may have been deleted, or it belongs to another company."
+        action={
+          <Button
+            variant="outline"
+            nativeButton={false}
+            render={<Link href="/company/problems" />}
+          >
+            Back to problem bank
+          </Button>
+        }
+      />
     );
   }
 
