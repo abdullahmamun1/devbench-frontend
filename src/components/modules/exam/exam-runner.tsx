@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
   useAttempt,
+  useAttemptSignals,
   useCountdown,
   useMyAttempts,
   useSaveAnswer,
@@ -62,7 +63,7 @@ function SaveIndicator({
   if (state === "saved") {
     return (
       <span className="inline-flex items-center gap-1.5 text-sm text-muted-foreground">
-        <CircleCheck className="size-4 text-emerald-600" />
+        <CircleCheck className="size-4 text-brand-2" />
         Saved
       </span>
     );
@@ -111,6 +112,13 @@ function ExamSession({
     async () => {},
   );
 
+  // Integrity signals (tab switches, pastes, question views) for evaluators
+  const signals = useAttemptSignals(
+    detail.id,
+    problems[current]?.problemId,
+    finishing === null,
+  );
+
   const problemById = useMemo(
     () => new Map(problems.map((p) => [p.problemId, p])),
     [problems],
@@ -152,6 +160,8 @@ function ExamSession({
 
       flushPending();
       await chain.current;
+      // Send the last signals while the attempt is still open
+      await signals.flush();
 
       try {
         await submitAsync();
@@ -171,7 +181,7 @@ function ExamSession({
       }
       router.replace(`/candidate/attempts/${detail.id}`);
     },
-    [detail.id, flushPending, router, submitAsync],
+    [detail.id, flushPending, router, signals.flush, submitAsync],
   );
 
   useEffect(() => {

@@ -7,12 +7,14 @@ import DataTable, {
 import EmptyState from "@/components/shared/empty-state";
 import StatCard from "@/components/shared/stat-card";
 import StatusBadge from "@/components/shared/status-badge";
-import { useAssessmentResults } from "@/hooks";
-import type { AssessmentResultRow } from "@/types";
+import { useAssessmentInsights, useAssessmentResults } from "@/hooks";
+import type { AssessmentResultRow, RankingEntry } from "@/types";
 import { formatDateTime } from "@/utils/format";
+import { AssessmentInsightsPanels } from "./assessment-insights";
 
 interface RankedRow extends AssessmentResultRow {
   rank: number | null;
+  percentile: number | null;
 }
 
 // The badge key for a row: a verdict once graded, otherwise where it is stuck
@@ -28,14 +30,22 @@ function pendingCount(row: AssessmentResultRow): number {
   ).length;
 }
 
-function rankRows(rows: AssessmentResultRow[]): RankedRow[] {
-  const scored = rows
-    .filter((r) => r.totalScore !== null)
-    .sort((a, b) => (b.totalScore ?? 0) - (a.totalScore ?? 0));
-  const unscored = rows.filter((r) => r.totalScore === null);
+// Ranks come from the insights API, where tied scores share a rank
+function rankRows(
+  rows: AssessmentResultRow[],
+  ranking: RankingEntry[] | undefined,
+): RankedRow[] {
+  const byAttempt = new Map(ranking?.map((r) => [r.attemptId, r]));
+  const withRank = rows.map((r) => ({
+    ...r,
+    rank: byAttempt.get(r.attemptId)?.rank ?? null,
+    percentile: byAttempt.get(r.attemptId)?.percentile ?? null,
+  }));
   return [
-    ...scored.map((r, i) => ({ ...r, rank: i + 1 })),
-    ...unscored.map((r) => ({ ...r, rank: null })),
+    ...withRank
+      .filter((r) => r.rank !== null)
+      .sort((a, b) => (a.rank ?? 0) - (b.rank ?? 0)),
+    ...withRank.filter((r) => r.rank === null),
   ];
 }
 
@@ -76,6 +86,19 @@ const columns: DataTableColumn<RankedRow>[] = [
     },
   },
   {
+    key: "percentile",
+    header: "Standing",
+    className: "hidden sm:table-cell",
+    cell: (r) =>
+      r.percentile === null ? (
+        <span className="text-muted-foreground">-</span>
+      ) : (
+        <span className="text-sm">
+          Beat <span className="font-semibold">{r.percentile}%</span>
+        </span>
+      ),
+  },
+  {
     key: "result",
     header: "Result",
     cell: (r) => <StatusBadge status={verdict(r)} />,
@@ -90,8 +113,9 @@ const columns: DataTableColumn<RankedRow>[] = [
 
 export function ResultsTab({ assessmentId }: { assessmentId: string }) {
   const { data, isLoading, isError } = useAssessmentResults(assessmentId);
+  const insights = useAssessmentInsights(assessmentId);
 
-  const rows = rankRows(data?.results ?? []);
+  const rows = rankRows(data?.results ?? [], insights.data?.ranking);
   const scored = rows.filter((r) => r.totalScore !== null);
   const passed = rows.filter((r) => r.passed === true).length;
   const decided = rows.filter((r) => r.passed !== null).length;
@@ -163,6 +187,11 @@ export function ResultsTab({ assessmentId }: { assessmentId: string }) {
             description="Results appear here once invited candidates start the assessment."
           />
         }
+      />
+
+      <AssessmentInsightsPanels
+        data={insights.data}
+        isLoading={insights.isLoading}
       />
     </div>
   );

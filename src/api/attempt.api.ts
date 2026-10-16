@@ -33,3 +33,27 @@ export const submitAttempt = (attemptId: string) =>
   apiClient<ApiResponse<Attempt>>(`/attempts/${attemptId}/submit`, {
     method: "POST",
   });
+
+export type AttemptEventType =
+  | "TAB_HIDDEN"
+  | "TAB_VISIBLE"
+  | "PASTE"
+  | "QUESTION_VIEWED";
+
+export interface AttemptEventInput {
+  type: AttemptEventType;
+  problemId?: string;
+  occurredAt: string;
+  chars?: number;
+}
+
+// keepalive lets the last batch finish even while the page is unloading
+export const recordAttemptEvents = (
+  attemptId: string,
+  events: AttemptEventInput[],
+  keepalive = false,
+) =>
+  apiClient<ApiResponse<{ accepted: number; dropped: number }>>(
+    `/attempts/${attemptId}/events`,
+    { method: "POST", body: { events }, keepalive },
+  );

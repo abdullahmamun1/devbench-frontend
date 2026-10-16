@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEvaluation, useGradeEvaluation } from "@/hooks";
 import { formatDateTime } from "@/utils/format";
+import { CandidateOverview } from "./candidate-overview";
 import { GradeForm } from "./grade-form";
+import { IntegrityPanel } from "./integrity-panel";
 import { SubmissionView } from "./submission-view";
 
 export function EvaluationReview({ id }: { id: string }) {
@@ -68,12 +70,15 @@ export function EvaluationReview({ id }: { id: string }) {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-5">
-        <div className="lg:col-span-3">
+        <div className="space-y-6 lg:col-span-3">
           <SubmissionView evaluation={evaluation} />
+          {evaluation.submission.problem.type !== "MCQ" && (
+            <IntegrityPanel evaluation={evaluation} />
+          )}
         </div>
 
-        <aside className="lg:col-span-2">
-          <div className="space-y-4 rounded-xl border p-5 lg:sticky lg:top-4">
+        <aside className="space-y-6 lg:col-span-2">
+          <div className="space-y-4 rounded-xl border p-5">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold">Grade</h2>
               <StatusBadge status={evaluation.status} />
@@ -113,6 +118,7 @@ export function EvaluationReview({ id }: { id: string }) {
               </div>
             )}
           </div>
+          <CandidateOverview attemptId={evaluation.submission.attempt.id} />
         </aside>
       </div>
     </div>
