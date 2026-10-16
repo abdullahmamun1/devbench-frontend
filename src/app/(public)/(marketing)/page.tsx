@@ -1,14 +1,23 @@
-import AudienceSplit from "@/components/modules/marketing/audience-split";
 import CtaSection from "@/components/modules/marketing/cta-section";
 import FaqTeaser from "@/components/modules/marketing/faq-teaser";
-import FeatureCard from "@/components/modules/marketing/feature-card";
+import BuiltWith from "@/components/modules/marketing/home/built-with";
+import Comparison from "@/components/modules/marketing/home/comparison";
+import IntegrityDemo from "@/components/modules/marketing/home/integrity-demo";
+import LanguageMarquee from "@/components/modules/marketing/home/language-marquee";
+import LiveStats from "@/components/modules/marketing/home/live-stats";
+import PricingSection from "@/components/modules/marketing/home/pricing-section";
+import ProblemFix from "@/components/modules/marketing/home/problem-fix";
+import ProductTour from "@/components/modules/marketing/home/product-tour";
+import RoleTabs from "@/components/modules/marketing/home/role-tabs";
+import TrustBento from "@/components/modules/marketing/home/trust-bento";
 import HomeHero from "@/components/modules/marketing/home-hero";
 import HowItWorks from "@/components/modules/marketing/how-it-works";
-import PricingTeaser from "@/components/modules/marketing/pricing-teaser";
-import SectionHeading from "@/components/modules/marketing/section-heading";
-import { CORE_FEATURES } from "@/constants/marketing";
 import { SITE_DESCRIPTION } from "@/constants/site";
+import { getPublicStats } from "@/lib/public-stats";
 import { buildMetadata } from "@/utils/metadata";
+
+// Rebuild at most every ten minutes so the live numbers stay current
+export const revalidate = 600;
 
 export const metadata = buildMetadata({
   title: "Developer assessment platform",
@@ -16,29 +25,25 @@ export const metadata = buildMetadata({
   path: "/",
 });
 
-export default function HomePage() {
+export default async function HomePage() {
+  const stats = await getPublicStats();
+
   return (
     <>
-      <HomeHero />
+      <HomeHero stats={stats} />
+      <LanguageMarquee />
+      <ProblemFix />
+      <ProductTour />
       <HowItWorks />
-
-      <section className="mx-auto max-w-7xl space-y-10 px-4 py-16 sm:px-6">
-        <SectionHeading
-          eyebrow="Features"
-          title="Built for the whole hiring workflow"
-          description="Everything from writing the first question to reviewing the last answer."
-        />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {CORE_FEATURES.map((feature) => (
-            <FeatureCard key={feature.title} {...feature} />
-          ))}
-        </div>
-      </section>
-
-      <AudienceSplit />
-      <PricingTeaser />
+      <RoleTabs />
+      <TrustBento />
+      <IntegrityDemo />
+      <LiveStats stats={stats} />
+      <Comparison />
+      <PricingSection />
       <FaqTeaser />
       <CtaSection />
+      <BuiltWith />
     </>
   );
 }

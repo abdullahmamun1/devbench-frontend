@@ -1,27 +1,60 @@
+"use client";
+
+import { motion, useReducedMotion, useScroll } from "motion/react";
+import { useRef } from "react";
+import { Stagger, StaggerItem } from "@/components/shared/reveal";
 import { HOW_IT_WORKS } from "@/constants/marketing";
 import SectionHeading from "./section-heading";
 
+// Vertical timeline whose line fills in as the section scrolls past.
 export default function HowItWorks() {
+  const listRef = useRef<HTMLOListElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: listRef,
+    offset: ["start 75%", "end 55%"],
+  });
+
   return (
-    <section className="border-y bg-muted/30">
-      <div className="mx-auto max-w-7xl space-y-10 px-4 py-16 sm:px-6">
-        <SectionHeading
-          eyebrow="How it works"
-          title="From question bank to hiring decision in four steps"
+    <section
+      id="how-it-works"
+      className="mx-auto max-w-4xl space-y-14 px-4 py-24 sm:px-6"
+    >
+      <SectionHeading
+        eyebrow="How it works"
+        title="From question bank to hiring decision in four steps"
+      />
+      <div className="relative">
+        {/* Track and fill, aligned with the step numbers */}
+        <div
+          aria-hidden="true"
+          className="absolute top-2 bottom-2 left-6 w-0.5 -translate-x-1/2 rounded-full bg-border"
         />
-        <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          aria-hidden="true"
+          style={{ scaleY: reduce ? 1 : scrollYProgress }}
+          className="absolute top-2 bottom-2 left-6 w-0.5 origin-top -translate-x-1/2 rounded-full bg-linear-to-b from-primary to-brand-2"
+        />
+        <Stagger as="ol" stagger={0.15} className="relative space-y-12">
           {HOW_IT_WORKS.map((step, index) => (
-            <li key={step.title} className="space-y-3">
-              <span className="flex size-10 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground">
+            <StaggerItem
+              as="li"
+              key={step.title}
+              direction="left"
+              className="flex gap-6"
+            >
+              <span className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full border-4 border-background bg-primary font-heading text-lg font-bold text-primary-foreground shadow-lg shadow-primary/25">
                 {index + 1}
               </span>
-              <h3 className="font-semibold">{step.title}</h3>
-              <p className="text-sm text-muted-foreground">
-                {step.description}
-              </p>
-            </li>
+              <div className="space-y-2 pt-2">
+                <h3 className="text-h3 font-semibold">{step.title}</h3>
+                <p className="text-lg text-muted-foreground">
+                  {step.description}
+                </p>
+              </div>
+            </StaggerItem>
           ))}
-        </ol>
+        </Stagger>
       </div>
     </section>
   );

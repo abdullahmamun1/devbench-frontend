@@ -48,7 +48,7 @@ export default function CreditCalculator() {
         : { label: "Create an account to buy", href: "/register" };
 
   return (
-    <Card className="mx-auto w-full max-w-xl">
+    <Card id="calculator" className="mx-auto w-full max-w-xl">
       <CardContent className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="credits">How many credits?</Label>

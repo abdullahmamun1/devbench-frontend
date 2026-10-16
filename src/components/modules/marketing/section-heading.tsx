@@ -1,3 +1,4 @@
+import Reveal from "@/components/shared/reveal";
 import { cn } from "@/lib/utils";
 
 export default function SectionHeading({
@@ -12,9 +13,9 @@ export default function SectionHeading({
   align?: "center" | "left";
 }) {
   return (
-    <div
+    <Reveal
       className={cn(
-        "max-w-2xl space-y-3",
+        "max-w-2xl space-y-4",
         align === "center" && "mx-auto text-center",
       )}
     >
@@ -23,12 +24,12 @@ export default function SectionHeading({
           {eyebrow}
         </p>
       )}
-      <h2 className="font-heading text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-        {title}
-      </h2>
+      <h2 className="text-h2 font-bold">{title}</h2>
       {description && (
-        <p className="text-muted-foreground text-pretty">{description}</p>
+        <p className="text-lg text-muted-foreground text-pretty">
+          {description}
+        </p>
       )}
-    </div>
+    </Reveal>
   );
 }
