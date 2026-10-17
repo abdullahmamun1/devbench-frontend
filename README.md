@@ -141,8 +141,8 @@ The home page demo runs the same code (`src/lib/similarity.ts`, kept in sync wit
 
 ```mermaid
 flowchart LR
-  B["Browser<br/>React 19 + TanStack Query"] -->|"pages"| N["Next.js 16<br/>App Router · proxy.ts role guard"]
-  B -->|"/api/v1/* (same origin,<br/>httpOnly cookies)"| N
+  B["Browser<br/>React 19 + TanStack Query"] -->|pages| N["Next.js 16<br/>App Router · proxy.ts role guard"]
+  B -->|"API calls, same origin, httpOnly cookies"| N
   N -->|"rewrite to BACKEND_URL"| A["Express 5 API"]
   A --> P[("PostgreSQL<br/>Prisma 7")]
   A --> R[("Upstash Redis<br/>refresh tokens · rate limits · cache")]
