@@ -8,10 +8,11 @@ import SectionHeading from "./section-heading";
 
 // Vertical timeline whose line fills in as the section scrolls past.
 export default function HowItWorks() {
-  const listRef = useRef<HTMLOListElement>(null);
+  // On the wrapper: Stagger renders the <ol> and does not forward refs
+  const timelineRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({
-    target: listRef,
+    target: timelineRef,
     offset: ["start 75%", "end 55%"],
   });
 
@@ -24,7 +25,7 @@ export default function HowItWorks() {
         eyebrow="How it works"
         title="From question bank to hiring decision in four steps"
       />
-      <div className="relative">
+      <div ref={timelineRef} className="relative">
         {/* Track and fill, aligned with the step numbers */}
         <div
           aria-hidden="true"
