@@ -101,7 +101,7 @@ export function SubmissionView({
                     weight {tc.weight}
                   </span>
                 </div>
-                <div className="grid gap-2 md:grid-cols-2">
+                <div className="grid gap-2 md:grid-cols-2 [&>*]:min-w-0">
                   <div>
                     <p className="mb-1 text-xs font-medium">Input</p>
                     <pre className={PRE_CLASS}>{tc.input}</pre>

@@ -72,14 +72,14 @@ export function EvaluationReview({ id }: { id: string }) {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-5">
-        <div className="space-y-6 lg:col-span-3">
+        <div className="min-w-0 space-y-6 lg:col-span-3">
           <SubmissionView evaluation={evaluation} />
           {evaluation.submission.problem.type !== "MCQ" && (
             <IntegrityPanel evaluation={evaluation} />
           )}
         </div>
 
-        <aside className="space-y-6 lg:col-span-2">
+        <aside className="min-w-0 space-y-6 lg:col-span-2">
           <div className="space-y-4 rounded-2xl border p-5">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold">Grade</h2>
