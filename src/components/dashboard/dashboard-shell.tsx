@@ -44,7 +44,7 @@ export default function DashboardShell({ children }: { children: ReactNode }) {
             <CreditBadge user={user} />
           </div>
         </header>
-        <div className="mx-auto w-full max-w-7xl flex-1 p-5 md:p-8">
+        <div className="mx-auto w-full max-w-7xl flex-1 p-5 wrap-break-word md:p-8">
           {children}
         </div>
       </SidebarInset>

@@ -203,6 +203,7 @@ export function IntegrityPanel({
                   <Button
                     variant="outline"
                     size="sm"
+                    className="size-11 px-0 sm:h-9 sm:w-auto sm:px-3.5"
                     aria-label={`Compare with ${match.candidate.name}`}
                     onClick={() => setComparing(match)}
                   >

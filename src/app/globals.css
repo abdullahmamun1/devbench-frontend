@@ -195,6 +195,14 @@
   --text-3xl: 2.125rem;
 }
 
+/* Dashboard grid columns may shrink below their content. With the default
+   min-width:auto, long code or text in a column widens the page on phones. */
+@layer base {
+  [data-slot="sidebar-inset"] .grid > * {
+    min-width: 0;
+  }
+}
+
 @utility text-gradient-brand {
   background-image: linear-gradient(
     100deg,

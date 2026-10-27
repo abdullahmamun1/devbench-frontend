@@ -18,7 +18,7 @@ export function SubmissionView({
     <div className="space-y-6">
       <section className="space-y-2">
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-lg font-semibold">{problem.title}</h2>
+          <h2 className="min-w-0 text-lg font-semibold">{problem.title}</h2>
           <StatusBadge status={problem.type} />
         </div>
         <p className="whitespace-pre-wrap text-sm">{problem.description}</p>
@@ -101,7 +101,7 @@ export function SubmissionView({
                     weight {tc.weight}
                   </span>
                 </div>
-                <div className="grid gap-2 md:grid-cols-2 [&>*]:min-w-0">
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                   <div>
                     <p className="mb-1 text-xs font-medium">Input</p>
                     <pre className={PRE_CLASS}>{tc.input}</pre>
